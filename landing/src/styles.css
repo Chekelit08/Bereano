@@ -589,6 +589,57 @@ a {
   cursor: pointer;
 }
 
+/* ---------- Consentimiento ---------- */
+.consent {
+  position: fixed;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
+  z-index: 20;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px;
+  font-size: 0.9375rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.consent p {
+  margin-bottom: 12px;
+}
+
+.consent__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.consent .btn {
+  min-height: 44px;
+  padding: 0 12px;
+}
+
+.consent .btn + .btn {
+  margin-top: 0;
+}
+
+/* ---------- Páginas de texto ---------- */
+.prose h2 {
+  font-size: 1.5rem;
+  margin-top: 1.75em;
+}
+
+.prose ul {
+  padding-left: 1.25em;
+  margin: 0 0 1em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+}
+
 /* ---------- Footer ---------- */
 .footer {
   padding: 32px 0 48px;

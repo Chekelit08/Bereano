@@ -17,6 +17,14 @@
       content="Un compañero de estudio bíblico con IA, en español. Súmate a la lista de espera."
     />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Bereano: Entiende la Biblia. Vívela cada día." />
+    <meta property="og:locale" content="es_LA" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Aplica el tema guardado antes de pintar, para evitar el parpadeo. -->
     <script src="/theme.js"></script>
@@ -193,7 +201,7 @@
               </div>
               <p class="form__error" id="waitlist-error" role="alert" hidden></p>
               <button class="btn btn--primary btn--block" type="submit">Unirme a la lista</button>
-              <p class="fine">Solo te escribiremos sobre Bereano. No vendemos tus datos.</p>
+              <p class="fine">Solo te escribiremos sobre Bereano. No vendemos tus datos. <a href="/privacidad.html">Política de privacidad</a>.</p>
             </form>
           </div>
 
@@ -214,9 +222,22 @@
     <footer class="footer">
       <div class="wrap">
         <p>Bereano no reemplaza a tu iglesia local ni a tu pastor: es un compañero para tu lectura diaria.</p>
-        <p>© <span id="year"></span> Bereano</p>
+        <p>© <span id="year"></span> Bereano · <a href="/privacidad.html">Privacidad</a></p>
       </div>
     </footer>
+
+    <!-- Consentimiento de cookies: solo se muestra en Europa (ver src/consent.js) -->
+    <aside id="consent" class="consent" aria-label="Cookies" hidden>
+      <p>
+        ¿Nos dejas usar cookies analíticas para entender qué te interesa? Si dices que no, igual
+        contamos la visita de forma anónima, sin guardar nada en tu dispositivo.
+        <a href="/privacidad.html">Más información</a>
+      </p>
+      <div class="consent__actions">
+        <button class="btn btn--ghost" type="button" data-consent="no">No, gracias</button>
+        <button class="btn btn--primary" type="button" data-consent="yes">Aceptar</button>
+      </div>
+    </aside>
 
     <!-- Aviso de "próximamente" para las puertas falsas -->
     <dialog id="soon-dialog" class="dialog" aria-labelledby="soon-title">

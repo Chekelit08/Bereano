@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- Plantilla de la imagen para compartir (og:image, 1200×630).
+     Para regenerarla: node scripts/og-image.mjs  (necesita Playwright). -->
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<style>
+  @font-face { font-family: Fraunces; src: url(../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2); font-weight: 100 900; }
+  @font-face { font-family: Fraunces; font-style: italic; src: url(../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2); font-weight: 100 900; }
+  @font-face { font-family: Literata; src: url(../node_modules/@fontsource-variable/literata/files/literata-latin-opsz-normal.woff2); font-weight: 200 900; }
+  html, body { margin: 0; }
+  body {
+    width: 1200px; height: 630px; box-sizing: border-box;
+    padding: 72px 88px;
+    background: #f8f1e6; color: #2b2119;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font-family: Literata, serif;
+    position: relative; overflow: hidden;
+  }
+  body::after {
+    content: ""; position: absolute; right: -120px; top: -120px;
+    width: 520px; height: 520px; border-radius: 50%;
+    background: radial-gradient(circle, #f1d9bd 0%, rgba(241,217,189,0) 70%);
+  }
+  .brand { display: flex; align-items: center; gap: 16px; font-family: Fraunces, serif; font-size: 40px; font-weight: 600; position: relative; z-index: 1; }
+  .brand svg { width: 52px; height: 52px; fill: none; stroke: #a8482a; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  h1 { font-family: Fraunces, serif; font-weight: 400; font-size: 96px; line-height: 1.02; letter-spacing: -0.01em; margin: 0; font-variation-settings: "opsz" 144; position: relative; z-index: 1; }
+  h1 em { color: #a8482a; }
+  .foot { display: flex; justify-content: space-between; align-items: end; font-size: 28px; color: #6e5d4e; position: relative; z-index: 1; }
+  .pill { background: #a8482a; color: #fff8f0; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 26px; }
+</style>
+</head>
+<body>
+  <div class="brand">
+    <svg viewBox="0 0 32 32"><path d="M16 7c-3-2-7-2.5-11-1.5v19c4-1 8-.5 11 1.5 3-2 7-2.5 11-1.5v-19C23 4.5 19 5 16 7Z"/><path d="M16 7v19"/></svg>
+    Bereano
+  </div>
+  <h1>Entiende la Biblia.<br /><em>Vívela cada día.</em></h1>
+  <div class="foot">
+    <span>Tu compañero de estudio bíblico con IA</span>
+    <span class="pill">Lista de espera</span>
+  </div>
+</body>
+</html>

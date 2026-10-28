@@ -1,10 +1,7 @@
-import '@fontsource-variable/fraunces/opsz.css';
-import '@fontsource-variable/fraunces/opsz-italic.css';
-import '@fontsource-variable/literata/opsz.css';
-import '@fontsource-variable/literata/opsz-italic.css';
-import './styles.css';
+import './page.js';
 
-import { initAnalytics, track } from './analytics.js';
+import { enablePersistence, initAnalytics, track } from './analytics.js';
+import { needsBanner, saveConsent } from './consent.js';
 import { COUNTRIES, DOORS, PRICES, SHARE_TEXT } from './config.js';
 import {
   errorMessage,
@@ -156,6 +153,18 @@ $('#share-btn').addEventListener('click', async () => {
   } catch {
     status.textContent = shareUrl;
   }
+});
+
+// ---------- Consentimiento de cookies (solo Europa) ----------
+const banner = $('#consent');
+if (needsBanner()) banner.hidden = false;
+banner.addEventListener('click', (event) => {
+  const choice = event.target.closest('[data-consent]')?.dataset.consent;
+  if (!choice) return;
+  saveConsent(choice);
+  if (choice === 'yes') enablePersistence();
+  track('consentimiento_cookies', { eleccion: choice === 'yes' ? 'acepta' : 'rechaza' });
+  banner.hidden = true;
 });
 
 // ---------- Puertas falsas ----------
