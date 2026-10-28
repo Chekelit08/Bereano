@@ -54,5 +54,22 @@ export async function joinWaitlist({ name = null, email, country = null, source 
 
   if (res.status === 201) return 'ok';
   if (res.status === 409) return 'ok'; // email duplicado (violación de UNIQUE)
+
+  const body = await res.json().catch(() => ({}));
+  if (body.message === 'rate_limited') throw new RateLimitError();
   throw new Error(`Supabase respondió ${res.status}`);
+}
+
+// Lo lanza el trigger anti-spam de la base (supabase/migrations/*_waitlist_rate_limit.sql).
+export class RateLimitError extends Error {
+  constructor() {
+    super('rate_limited');
+    this.name = 'RateLimitError';
+  }
+}
+
+export function errorMessage(err) {
+  return err instanceof RateLimitError
+    ? 'Recibimos muchas altas desde esta conexión. Prueba de nuevo en un rato.'
+    : 'No pudimos guardar tus datos. Prueba de nuevo en un momento.';
 }

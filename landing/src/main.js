@@ -6,7 +6,15 @@ import './styles.css';
 
 import { initAnalytics, track } from './analytics.js';
 import { COUNTRIES, DOORS, PRICES, SHARE_TEXT } from './config.js';
-import { isValidEmail, isValidName, joinWaitlist, normalizeEmail, normalizeName } from './waitlist.js';
+import {
+  errorMessage,
+  isValidEmail,
+  isValidName,
+  joinWaitlist,
+  normalizeEmail,
+  normalizeName,
+  RateLimitError,
+} from './waitlist.js';
 
 initAnalytics();
 
@@ -109,8 +117,8 @@ form.addEventListener('submit', async (event) => {
     showThanks(name);
   } catch (err) {
     console.error(err);
-    track('waitlist_registro_error');
-    showError(formError, 'No pudimos guardar tus datos. Prueba de nuevo en un momento.');
+    track('waitlist_registro_error', { motivo: err instanceof RateLimitError ? 'limite_ip' : 'otro' });
+    showError(formError, errorMessage(err));
     button.disabled = false;
     button.textContent = 'Unirme a la lista';
   }
@@ -174,9 +182,14 @@ document.querySelectorAll('[data-door]').forEach((btn) => {
   });
 });
 
-// Cerrar tocando el fondo.
+// Cerrar tocando el fondo. Comparamos con el rectángulo porque un clic en el
+// padding del diálogo también tiene como target al propio <dialog>.
 dialog.addEventListener('click', (event) => {
-  if (event.target === dialog) dialog.close();
+  if (event.target !== dialog) return;
+  const r = dialog.getBoundingClientRect();
+  const inside =
+    event.clientX >= r.left && event.clientX <= r.right && event.clientY >= r.top && event.clientY <= r.bottom;
+  if (!inside) dialog.close();
 });
 
 soonForm.addEventListener('submit', async (event) => {
@@ -201,7 +214,7 @@ soonForm.addEventListener('submit', async (event) => {
     $('#soon-thanks').hidden = false;
   } catch (err) {
     console.error(err);
-    showError(soonError, 'No pudimos guardar tu email. Prueba de nuevo en un momento.');
+    showError(soonError, errorMessage(err));
   } finally {
     button.disabled = false;
   }
