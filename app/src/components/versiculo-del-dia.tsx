@@ -69,7 +69,7 @@ export function VersiculoDelDia({ devocional: d }: { devocional: Devocional }) {
             <T
               key={s.id}
               style={{
-                fontFamily: s.id === cardStyle ? Fonts.displayItalic : Fonts.body,
+                fontFamily: s.id === cardStyle ? Fonts.displayItalic : Fonts.ui,
                 fontSize: 14,
                 color: s.id === cardStyle ? c.accent : c.muted,
               }}>
@@ -87,11 +87,9 @@ export function VersiculoDelDia({ devocional: d }: { devocional: Devocional }) {
           }}
           style={({ pressed }) => [
             styles.share,
-            { backgroundColor: c.accent, opacity: pressed || busy ? 0.7 : 1 },
+            { backgroundColor: c.fill, opacity: pressed || busy ? 0.7 : 1 },
           ]}>
-          <T style={{ color: c.accentInk, fontFamily: Fonts.displayMedium, fontSize: 16 }}>
-            Compartir en historias
-          </T>
+          <T style={{ color: c.fillInk, fontFamily: Fonts.uiBold, fontSize: 16 }}>Compartir en historias</T>
         </Touchable>
       </View>
 

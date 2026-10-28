@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { IconChevron, IconSearch } from '@/components/icons';
 import { PressLink, Touchable } from '@/components/press-link';
+import { SkyHeader } from '@/components/sky-header';
 import { T } from '@/components/text';
-import { Fonts, Space, usePalette } from '@/constants/theme';
+import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { books, getBook, SECTIONS, VERSION } from '@/lib/bible';
 import { useSettings } from '@/lib/settings';
 
@@ -12,98 +13,92 @@ type Testament = 'AT' | 'NT';
 
 export default function Biblia() {
   const c = usePalette();
-  const insets = useSafeAreaInsets();
   const { lastRead } = useSettings();
   const last = lastRead && getBook(lastRead.book);
   const [testament, setTestament] = useState<Testament>(last?.testament ?? 'AT');
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { paddingTop: insets.top + Space.lg }]}>
-      <T variant="label">{VERSION}</T>
-      <T variant="title" style={{ marginTop: Space.sm }}>
-        La{' '}
-        <T variant="title" style={{ fontFamily: Fonts.displayItalic, color: c.accent }}>
-          Biblia
-        </T>
-      </T>
-
-      <PressLink
-        href="/buscar"
-        accessibilityRole="search"
-        style={({ pressed }) => [
-          styles.search,
-          { borderColor: c.line, backgroundColor: c.surface, opacity: pressed ? 0.7 : 1 },
-        ]}>
-        <T variant="muted">Buscar: Juan 3 16, amor, “buen pastor”…</T>
-      </PressLink>
-
-      {last && lastRead.chapter <= last.chapters && (
+    <ScrollView style={{ backgroundColor: c.bg }}>
+      <SkyHeader kicker={VERSION} title="La" accent="Biblia">
         <PressLink
-          href={{ pathname: '/[book]/[chapter]', params: { book: last.code, chapter: lastRead.chapter } }}
-          style={({ pressed }) => [
-            styles.continue,
-            { backgroundColor: c.text, opacity: pressed ? 0.85 : 1 },
-          ]}>
-          <View>
-            <T variant="label" style={{ color: c.bg, opacity: 0.7 }}>
-              Seguir leyendo
-            </T>
-            <T variant="heading" style={{ color: c.bg, marginTop: Space.xs }}>
-              {last.name} {lastRead.chapter}
-            </T>
-          </View>
-          <T style={{ color: c.bg, fontSize: 22 }}>→</T>
+          href="/buscar"
+          accessibilityRole="search"
+          style={({ pressed }) => [styles.search, { opacity: pressed ? 0.8 : 1 }]}>
+          <IconSearch color="#FFFFFF" />
+          <T style={{ fontFamily: Fonts.ui, fontSize: 15, color: '#FFFFFFD9' }}>
+            Juan 3 16, amor, “buen pastor”…
+          </T>
         </PressLink>
-      )}
-
-      {/* Antiguo / Nuevo Testamento */}
-      <View
-        style={[styles.segment, { backgroundColor: c.surface, borderColor: c.line }]}
-        accessibilityRole="tablist">
-        {(['AT', 'NT'] as const).map((t) => {
-          const on = t === testament;
-          return (
-            <Touchable
-              key={t}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: on }}
-              onPress={() => setTestament(t)}
-              style={[styles.segmentItem, on && { backgroundColor: c.text }]}>
-              <T style={{ fontFamily: Fonts.displayMedium, fontSize: 15, color: on ? c.bg : c.muted }}>
-                {t === 'AT' ? 'Antiguo Testamento' : 'Nuevo Testamento'}
+      </SkyHeader>
+      <View style={[styles.page, styles.sheet, { backgroundColor: c.bg }]}>
+        {last && lastRead.chapter <= last.chapters && (
+          <PressLink
+            href={{ pathname: '/[book]/[chapter]', params: { book: last.code, chapter: lastRead.chapter } }}
+            style={({ pressed }) => [
+              styles.continue,
+              { backgroundColor: c.fill, opacity: pressed ? 0.85 : 1 },
+            ]}>
+            <View>
+              <T variant="label" style={{ color: c.fillInk, opacity: 0.7 }}>
+                Seguir leyendo
               </T>
-            </Touchable>
-          );
-        })}
-      </View>
+              <T style={{ fontFamily: Fonts.display, fontSize: 30, color: c.fillInk, marginTop: 2 }}>
+                {last.name} {lastRead.chapter}
+              </T>
+            </View>
+            <IconChevron color={c.fillInk} size={22} />
+          </PressLink>
+        )}
 
-      {SECTIONS.filter((s) => s.testament === testament).map((section) => (
-        <View key={section.title} style={styles.section}>
-          <View style={styles.sectionHead}>
-            <T variant="label">{section.title}</T>
-            <View style={[styles.rule, { backgroundColor: c.line }]} />
-          </View>
-          <View style={styles.grid}>
-            {books.slice(section.from - 1, section.to).map((b) => (
-              <PressLink
-                key={b.code}
-                href={{ pathname: '/[book]', params: { book: b.code } }}
-                accessibilityLabel={`${b.name}, ${b.chapters} capítulos`}
-                style={({ pressed }) => [
-                  styles.card,
-                  { borderColor: c.line, backgroundColor: pressed ? c.surface : 'transparent' },
-                ]}>
-                <T style={styles.bookName} numberOfLines={1} adjustsFontSizeToFit>
-                  {b.name}
+        {/* Antiguo / Nuevo Testamento */}
+        <View
+          style={[styles.segment, { backgroundColor: c.surface, borderColor: c.line }]}
+          accessibilityRole="tablist">
+          {(['AT', 'NT'] as const).map((t) => {
+            const on = t === testament;
+            return (
+              <Touchable
+                key={t}
+                accessibilityRole="tab"
+                accessibilityState={{ selected: on }}
+                onPress={() => setTestament(t)}
+                style={[styles.segmentItem, on && { backgroundColor: c.fill }]}>
+                <T style={{ fontFamily: Fonts.uiBold, fontSize: 15, color: on ? c.fillInk : c.muted }}>
+                  {t === 'AT' ? 'Antiguo Testamento' : 'Nuevo Testamento'}
                 </T>
-                <T variant="muted" style={{ fontSize: 13 }}>
-                  {b.chapters} {b.chapters === 1 ? 'capítulo' : 'capítulos'}
-                </T>
-              </PressLink>
-            ))}
-          </View>
+              </Touchable>
+            );
+          })}
         </View>
-      ))}
+
+        {SECTIONS.filter((s) => s.testament === testament).map((section) => (
+          <View key={section.title} style={styles.section}>
+            <View style={styles.sectionHead}>
+              <T variant="label">{section.title}</T>
+              <View style={[styles.rule, { backgroundColor: c.line }]} />
+            </View>
+            <View style={styles.grid}>
+              {books.slice(section.from - 1, section.to).map((b) => (
+                <PressLink
+                  key={b.code}
+                  href={{ pathname: '/[book]', params: { book: b.code } }}
+                  accessibilityLabel={`${b.name}, ${b.chapters} capítulos`}
+                  style={({ pressed }) => [
+                    styles.card,
+                    { borderColor: c.line, backgroundColor: pressed ? c.surface : 'transparent' },
+                  ]}>
+                  <T style={styles.bookName} numberOfLines={1} adjustsFontSizeToFit>
+                    {b.name}
+                  </T>
+                  <T variant="muted" style={{ fontSize: 13 }}>
+                    {b.chapters} {b.chapters === 1 ? 'capítulo' : 'capítulos'}
+                  </T>
+                </PressLink>
+              ))}
+            </View>
+          </View>
+        ))}
+      </View>
     </ScrollView>
   );
 }
@@ -116,16 +111,21 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
+  sheet: { marginTop: -28, borderTopLeftRadius: 28, borderTopRightRadius: 28, paddingTop: Space.lg },
   search: {
     marginTop: Space.lg,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: '#FFFFFF24',
+    borderColor: '#FFFFFF40',
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 14,
+    borderRadius: Radius.pill,
     paddingHorizontal: Space.md,
     paddingVertical: 14,
   },
   continue: {
-    marginTop: Space.md,
-    borderRadius: 18,
+    borderRadius: Radius.md,
     padding: Space.lg,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -147,9 +147,9 @@ const styles = StyleSheet.create({
     flexBasis: '47%',
     flexGrow: 1,
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 14,
+    borderRadius: Radius.md,
     paddingHorizontal: Space.md,
     paddingVertical: 14,
   },
-  bookName: { fontFamily: Fonts.display, fontSize: 19, lineHeight: 24 },
+  bookName: { fontFamily: Fonts.display, fontSize: 25, lineHeight: 30 },
 });

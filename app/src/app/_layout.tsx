@@ -1,10 +1,15 @@
 import { Archivo_700Bold, Archivo_800ExtraBold } from '@expo-google-fonts/archivo';
 import { Caveat_700Bold } from '@expo-google-fonts/caveat';
 import {
-  Fraunces_400Regular,
-  Fraunces_400Regular_Italic,
-  Fraunces_500Medium,
-} from '@expo-google-fonts/fraunces';
+  InstrumentSerif_400Regular,
+  InstrumentSerif_400Regular_Italic,
+} from '@expo-google-fonts/instrument-serif';
+import {
+  Manrope_500Medium,
+  Manrope_600SemiBold,
+  Manrope_700Bold,
+  Manrope_800ExtraBold,
+} from '@expo-google-fonts/manrope';
 import {
   Literata_400Regular,
   Literata_400Regular_Italic,
@@ -32,9 +37,12 @@ export default function RootLayout() {
     colors: { ...base.colors, background: c.bg, card: c.bg, text: c.text, border: c.line, primary: c.accent },
   };
   const [loaded, error] = useFonts({
-    Fraunces_400Regular,
-    Fraunces_400Regular_Italic,
-    Fraunces_500Medium,
+    InstrumentSerif_400Regular,
+    InstrumentSerif_400Regular_Italic,
+    Manrope_500Medium,
+    Manrope_600SemiBold,
+    Manrope_700Bold,
+    Manrope_800ExtraBold,
     Literata_400Regular,
     Literata_400Regular_Italic,
     Literata_500Medium,
@@ -57,7 +65,7 @@ export default function RootLayout() {
           screenOptions={{
             headerStyle: { backgroundColor: c.bg },
             headerTintColor: c.accent,
-            headerTitleStyle: { fontFamily: Fonts.displayMedium, color: c.text },
+            headerTitleStyle: { fontFamily: Fonts.uiBold, color: c.text },
             headerShadowVisible: false,
             headerBackButtonDisplayMode: 'minimal',
             contentStyle: { backgroundColor: c.bg },

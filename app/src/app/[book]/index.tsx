@@ -26,9 +26,9 @@ export default function Chapters() {
             accessibilityLabel={`${book.name} capítulo ${n}`}
             style={({ pressed }) => [
               styles.cell,
-              { borderColor: c.line, backgroundColor: pressed ? c.accent : c.surface },
+              { borderColor: c.line, backgroundColor: pressed ? c.fill : c.surface },
             ]}>
-            {({ pressed }) => <T style={[styles.num, { color: pressed ? c.accentInk : c.text }]}>{n}</T>}
+            {({ pressed }) => <T style={[styles.num, { color: pressed ? c.fillInk : c.text }]}>{n}</T>}
           </PressLink>
         ))}
       </View>
@@ -42,10 +42,10 @@ const styles = StyleSheet.create({
   cell: {
     width: 56,
     height: 56,
-    borderRadius: 14,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  num: { fontFamily: Fonts.display, fontSize: 19 },
+  num: { fontFamily: Fonts.uiBold, fontSize: 16 },
 });

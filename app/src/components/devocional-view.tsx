@@ -8,12 +8,15 @@ import { Fonts, Space, usePalette } from '@/constants/theme';
 import { shareRange, shareText, type Devocional } from '@/data/devocionales';
 import { MARKS } from '@/data/marcas';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
+import { dayKey } from '@/lib/dias';
+import { success } from '@/lib/haptics';
 import { useSettings } from '@/lib/settings';
 import { shareCard } from '@/lib/share';
 
 export function DevocionalView({ devocional: d, kicker }: { devocional: Devocional; kicker: string }) {
   const c = usePalette();
-  const { saved, toggleSaved, fontSize, cardStyle } = useSettings();
+  const { saved, toggleSaved, fontSize, cardStyle, days, markDay } = useSettings();
+  const read = !!days[dayKey()]?.devo;
   const card = useRef<ViewInstance>(null);
   const [sharing, setSharing] = useState(false);
 
@@ -39,7 +42,11 @@ Bereano`,
     setSharing(false);
   }
 
-  const body = { fontSize: fontSize - 1, lineHeight: Math.round((fontSize - 1) * 1.7) };
+  const body = {
+    fontFamily: Fonts.read,
+    fontSize: fontSize - 1,
+    lineHeight: Math.round((fontSize - 1) * 1.75),
+  };
 
   return (
     <View>
@@ -78,6 +85,22 @@ Bereano`,
         <T style={styles.questionText}>{d.question}</T>
       </View>
 
+      <Touchable
+        accessibilityRole="button"
+        accessibilityState={{ checked: read }}
+        onPress={() => {
+          if (!read) success();
+          markDay('devo');
+        }}
+        style={({ pressed }) => [
+          styles.done,
+          { backgroundColor: read ? c.surface2 : c.fill, opacity: pressed ? 0.85 : 1 },
+        ]}>
+        <T style={[styles.buttonText, { color: read ? c.text : c.fillInk }]}>
+          {read ? 'Leído hoy ✓' : 'Marcar como leído'}
+        </T>
+      </Touchable>
+
       <View style={styles.actions}>
         <Touchable
           onPress={() => toggleSaved(d.id)}
@@ -101,9 +124,9 @@ Bereano`,
           accessibilityRole="button"
           style={({ pressed }) => [
             styles.button,
-            { borderColor: c.accent, backgroundColor: c.accent, opacity: pressed || sharing ? 0.7 : 1 },
+            { borderColor: c.text, backgroundColor: 'transparent', opacity: pressed || sharing ? 0.7 : 1 },
           ]}>
-          <T style={[styles.buttonText, { color: c.accentInk }]}>Compartir imagen</T>
+          <T style={[styles.buttonText, { color: c.text }]}>Compartir imagen</T>
         </Touchable>
       </View>
 
@@ -122,12 +145,13 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: StyleSheet.hairlineWidth,
   },
-  ref: { fontFamily: Fonts.displayItalic, fontSize: 17, marginBottom: Space.sm },
+  ref: { fontFamily: Fonts.displayItalic, fontSize: 22, marginBottom: Space.sm },
   verse: { marginTop: 6 },
-  verseNum: { fontFamily: Fonts.body, fontSize: 12 },
+  verseNum: { fontFamily: Fonts.ui, fontSize: 12 },
   question: { marginTop: Space.xl, paddingLeft: Space.md, borderLeftWidth: 2 },
-  questionText: { fontFamily: Fonts.displayItalic, fontSize: 22, lineHeight: 30, marginTop: Space.sm },
-  actions: { flexDirection: 'row', gap: Space.sm, marginTop: Space.xl },
+  questionText: { fontFamily: Fonts.displayItalic, fontSize: 28, lineHeight: 34, marginTop: Space.sm },
+  done: { marginTop: Space.xl, borderRadius: 999, paddingVertical: 16, alignItems: 'center' },
+  actions: { flexDirection: 'row', gap: Space.sm, marginTop: Space.sm },
   button: {
     flex: 1,
     borderWidth: 1,
@@ -135,6 +159,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
   },
-  buttonText: { fontFamily: Fonts.displayMedium, fontSize: 16 },
+  buttonText: { fontFamily: Fonts.uiBold, fontSize: 16 },
   offscreen: { position: 'absolute', left: -CARD_WIDTH * 3, top: 0 },
 });

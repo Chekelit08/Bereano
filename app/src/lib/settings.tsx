@@ -2,14 +2,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, use, useEffect, useState, type ReactNode } from 'react';
 
 import { CARD_STYLES, type CardStyle } from '@/components/story-card';
+import { dayKey, parseDays, type Activity, type Days } from '@/lib/dias';
 
 export const FONT_SIZES = [16, 18, 20, 22, 25, 28] as const;
 
 export type LastRead = { book: string; chapter: number };
-type Settings = { fontStep: number; lastRead: LastRead | null; saved: string[]; cardStyle: CardStyle };
+type Settings = {
+  fontStep: number;
+  lastRead: LastRead | null;
+  saved: string[];
+  cardStyle: CardStyle;
+  days: Days;
+};
 
 const KEY = 'bereano.settings.v1';
-const DEFAULTS: Settings = { fontStep: 2, lastRead: null, saved: [], cardStyle: 'editorial' };
+const DEFAULTS: Settings = { fontStep: 2, lastRead: null, saved: [], cardStyle: 'editorial', days: {} };
 
 type Ctx = Settings & {
   fontSize: number;
@@ -18,6 +25,8 @@ type Ctx = Settings & {
   /** Guarda o quita un devocional de la lista de guardados. */
   toggleSaved: (id: string) => void;
   setCardStyle: (s: CardStyle) => void;
+  /** Registra que hoy hizo algo (para la racha y el momento de hoy). */
+  markDay: (a: Activity) => void;
 };
 
 const SettingsContext = createContext<Ctx | null>(null);
@@ -44,7 +53,7 @@ function parse(raw: string | null): Settings {
     const cardStyle = CARD_STYLES.some((c) => c.id === v.cardStyle)
       ? (v.cardStyle as CardStyle)
       : DEFAULTS.cardStyle;
-    return { fontStep, lastRead, saved, cardStyle };
+    return { fontStep, lastRead, saved, cardStyle, days: parseDays(v.days) };
   } catch {
     return DEFAULTS;
   }
@@ -80,6 +89,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           ? s
           : { ...s, lastRead },
       ),
+    markDay: (a) =>
+      setSettings((s) => {
+        const k = dayKey();
+        if (s.days[k]?.[a]) return s;
+        return { ...s, days: { ...s.days, [k]: { ...s.days[k], [a]: 1 } } };
+      }),
     setCardStyle: (cardStyle) => setSettings((s) => ({ ...s, cardStyle })),
     toggleSaved: (id) =>
       setSettings((s) => ({

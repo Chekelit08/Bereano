@@ -35,7 +35,7 @@ export default function Ayuda() {
             <T variant="label">{country}</T>
             {lines.map((l) => (
               <View key={l.phone} style={{ marginTop: Space.sm }}>
-                <T style={{ fontFamily: Fonts.displayMedium, fontSize: 18 }}>{l.name}</T>
+                <T style={{ fontFamily: Fonts.uiBold, fontSize: 18 }}>{l.name}</T>
                 {l.note && <T variant="muted">{l.note}</T>}
                 <Touchable
                   accessibilityRole="button"
@@ -43,9 +43,9 @@ export default function Ayuda() {
                   onPress={() => Linking.openURL(`tel:${l.phone.replace(/\s/g, '')}`)}
                   style={({ pressed }) => [
                     styles.call,
-                    { backgroundColor: c.accent, opacity: pressed ? 0.8 : 1 },
+                    { backgroundColor: c.fill, opacity: pressed ? 0.8 : 1 },
                   ]}>
-                  <T style={{ color: c.accentInk, fontFamily: Fonts.displayMedium, fontSize: 18 }}>
+                  <T style={{ color: c.fillInk, fontFamily: Fonts.uiBold, fontSize: 18 }}>
                     Llamar al {l.phone}
                   </T>
                 </Touchable>

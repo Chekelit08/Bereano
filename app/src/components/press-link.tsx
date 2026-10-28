@@ -2,6 +2,8 @@ import { useRouter, type Href } from 'expo-router';
 import { useState, type ReactNode } from 'react';
 import { Pressable, type PressableProps, type StyleProp, type ViewStyle } from 'react-native';
 
+import { tap } from '@/lib/haptics';
+
 type State = { pressed: boolean };
 
 export type TouchableProps = Omit<PressableProps, 'style' | 'children'> & {
@@ -13,11 +15,18 @@ export type TouchableProps = Omit<PressableProps, 'style' | 'children'> & {
  * Pressable que resuelve él mismo el estado `pressed`: en react-native-web 0.21 el estilo
  * en forma de función no se aplica.
  */
-export function Touchable({ style, children, onPressIn, onPressOut, ...props }: TouchableProps) {
+export function Touchable({ style, children, onPressIn, onPressOut, onPress, ...props }: TouchableProps) {
   const [pressed, setPressed] = useState(false);
   return (
     <Pressable
       {...props}
+      onPress={
+        onPress &&
+        ((e) => {
+          tap();
+          onPress(e);
+        })
+      }
       onPressIn={(e) => {
         setPressed(true);
         onPressIn?.(e);
