@@ -6,7 +6,8 @@
 
 1. **Supabase**: crear el proyecto (plan gratis) y aplicar la migración (ver "Comandos útiles" en `CLAUDE.md`).
 2. **PostHog**: crear el proyecto (plan gratis) y copiar la *Project API key* (`phc_...`).
-3. Revisar los pendientes de `docs/decisiones.md` (política de privacidad, precio anual, verificar Hechos 17:11).
+3. Revisar los pendientes de `docs/decisiones.md`. Sobre todo: **completar los datos entre corchetes de `landing/privacidad.html`**.
+4. En PostHog > Project settings: activar *Discard client IP data*.
 
 ## Opción A (recomendada): conectar el repo de GitHub
 
@@ -23,6 +24,7 @@ Cada push a `main` se publica solo, y cada rama tiene su URL de vista previa.
    - `VITE_SUPABASE_ANON_KEY` (la *publishable*, nunca la `service_role`)
    - `VITE_POSTHOG_KEY`
    - `VITE_POSTHOG_HOST` = `https://us.i.posthog.com`
+   - `VITE_SITE_URL` = la URL pública (por ejemplo `https://bereano-landing.pages.dev`, o el dominio cuando exista)
    - `NODE_VERSION` = `22`
 4. Guardar y desplegar. Probar el formulario en la URL `*.pages.dev`.
 

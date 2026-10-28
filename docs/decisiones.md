@@ -12,6 +12,14 @@
 - **Español neutro con "tú"** en la landing: el público principal son los hispanos en EE.UU. (mayoría mexicana y centroamericana) y España. Por eso el botón dice "Pregúntale a tu compañero". Si preferís voseo, se cambia fácil.
 - **Precio anual mostrado: USD 39,99** (el techo del rango). Si después se lanza más barato, es una buena noticia; al revés sería una mala.
 
+## Mejoras (2026-10-28, segunda tanda)
+
+- **Anti-spam en la base: 30 altas por IP por hora.** Un trigger cuenta las altas por IP usando el header que manda Supabase. Es alto a propósito, porque un grupo de una iglesia se anota desde el mismo WiFi. Guarda solo el hash de la IP y lo borra a las 24 horas.
+- **Consentimiento solo en Europa.** Se detecta por la zona horaria del navegador, sin pedir ubicación. Sin consentimiento PostHog cuenta la visita en memoria, sin cookies; si se acepta, pasa a recordarla. Fuera de Europa no se muestra el banner, para no frenar la conversión donde no es obligatorio.
+- **Tests que se verifican solos.** El test SQL falla con error si algo no da lo esperado, y corre en la CI contra Postgres 17 con los roles de Supabase simulados. Un test de JS compara la regex del email y los `source` con la migración, así cliente y base no se desincronizan.
+- **Imagen para compartir generada desde HTML** (`landing/scripts/og-image.html`): se retoca como una página y se regenera con `node scripts/og-image.mjs`.
+- **Verificado:** el texto de Hechos 17:11 coincide con la RV1909.
+
 ## Eventos de PostHog
 
 | Evento | Cuándo |
@@ -21,16 +29,19 @@
 | `waitlist_form_iniciado` | Primer foco en el formulario |
 | `waitlist_form_enviar_click` | Clic en "Unirme a la lista" |
 | `waitlist_form_error_validacion` | Dato inválido (`campo`) |
-| `waitlist_registro_ok` / `waitlist_registro_error` | Respuesta de Supabase (`pais`) |
+| `waitlist_registro_ok` / `waitlist_registro_error` | Respuesta de Supabase (`pais` / `motivo`) |
 | `puerta_falsa_companero` / `_planes_tema` / `_modo_grupo` | Clic en cada puerta |
 | `puerta_falsa_email_enviado` | Email dejado en el aviso (`puerta`) |
 | `compartir_click` | Botón de compartir (`metodo`) |
+| `consentimiento_cookies` | Respuesta al banner (`eleccion`), solo Europa |
 
 ## Pendientes antes de publicar
 
-- [ ] Verificar el texto de Hechos 17:11 contra una fuente confiable de la RV1909.
-- [ ] Política de privacidad, con link desde el formulario. En España hace falta informar el uso de los datos.
-- [ ] Banner de consentimiento para visitantes de la UE (PostHog guarda un identificador en el navegador).
+- [x] Verificar el texto de Hechos 17:11 contra la RV1909.
+- [x] Banner de consentimiento para visitantes de la UE.
+- [x] Imagen para compartir (og:image) de 1200×630.
+- [x] Límite anti-spam básico (30 altas por IP por hora).
+- [ ] **Completar la política de privacidad** (`landing/privacidad.html`): nombre del responsable, email de contacto, región de Supabase y fecha. Que la revise alguien que sepa de RGPD.
 - [ ] Definir el alcance del 50% (¿el primer año?, ¿cuántos son "los primeros"?).
-- [ ] Anti-spam más fuerte que el honeypot (Cloudflare Turnstile + Edge Function), si empiezan a llegar altas basura.
-- [ ] Imagen para compartir (og:image) de 1200×630.
+- [ ] En PostHog: activar "Discard client IP data" en la configuración del proyecto.
+- [ ] Si igual llega spam: Cloudflare Turnstile (requiere cuenta).

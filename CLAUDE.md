@@ -100,6 +100,7 @@ cd landing
 npm install
 cp .env.example .env   # completar con las claves públicas
 npm run dev            # http://localhost:5173
+npm test               # tests de validación
 npm run build          # genera landing/dist
 ```
 
@@ -111,11 +112,13 @@ npx supabase link --project-ref <ref-del-proyecto>
 npx supabase db push   # aplica supabase/migrations
 ```
 
-Test de seguridad de la lista de espera (contra la base local de `npx supabase start`):
+Test de seguridad (migraciones + RLS + anti-spam) en un Postgres temporal, sin Docker:
 
 ```bash
-psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -f supabase/tests/waitlist_security.sql
+./supabase/tests/run-local.sh
 ```
+
+La CI (`.github/workflows/ci.yml`) corre esto y los tests de la landing en cada push a `main` y en cada PR.
 
 ### Deploy
 
