@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "code": "gen",
+    "name": "Génesis",
+    "testament": "AT",
+    "chapters": 50
+  },
+  {
+    "id": 2,
+    "code": "exo",
+    "name": "Éxodo",
+    "testament": "AT",
+    "chapters": 40
+  },
+  {
+    "id": 3,
+    "code": "lev",
+    "name": "Levítico",
+    "testament": "AT",
+    "chapters": 27
+  },
+  {
+    "id": 4,
+    "code": "num",
+    "name": "Números",
+    "testament": "AT",
+    "chapters": 36
+  },
+  {
+    "id": 5,
+    "code": "deu",
+    "name": "Deuteronomio",
+    "testament": "AT",
+    "chapters": 34
+  },
+  {
+    "id": 6,
+    "code": "jos",
+    "name": "Josué",
+    "testament": "AT",
+    "chapters": 24
+  },
+  {
+    "id": 7,
+    "code": "jdg",
+    "name": "Jueces",
+    "testament": "AT",
+    "chapters": 21
+  },
+  {
+    "id": 8,
+    "code": "rut",
+    "name": "Rut",
+    "testament": "AT",
+    "chapters": 4
+  },
+  {
+    "id": 9,
+    "code": "1sa",
+    "name": "1 Samuel",
+    "testament": "AT",
+    "chapters": 31
+  },
+  {
+    "id": 10,
+    "code": "2sa",
+    "name": "2 Samuel",
+    "testament": "AT",
+    "chapters": 24
+  },
+  {
+    "id": 11,
+    "code": "1ki",
+    "name": "1 Reyes",
+    "testament": "AT",
+    "chapters": 22
+  },
+  {
+    "id": 12,
+    "code": "2ki",
+    "name": "2 Reyes",
+    "testament": "AT",
+    "chapters": 25
+  },
+  {
+    "id": 13,
+    "code": "1ch",
+    "name": "1 Crónicas",
+    "testament": "AT",
+    "chapters": 29
+  },
+  {
+    "id": 14,
+    "code": "2ch",
+    "name": "2 Crónicas",
+    "testament": "AT",
+    "chapters": 36
+  },
+  {
+    "id": 15,
+    "code": "ezr",
+    "name": "Esdras",
+    "testament": "AT",
+    "chapters": 10
+  },
+  {
+    "id": 16,
+    "code": "neh",
+    "name": "Nehemías",
+    "testament": "AT",
+    "chapters": 13
+  },
+  {
+    "id": 17,
+    "code": "est",
+    "name": "Ester",
+    "testament": "AT",
+    "chapters": 10
+  },
+  {
+    "id": 18,
+    "code": "job",
+    "name": "Job",
+    "testament": "AT",
+    "chapters": 42
+  },
+  {
+    "id": 19,
+    "code": "psa",
+    "name": "Salmos",
+    "testament": "AT",
+    "chapters": 150
+  },
+  {
+    "id": 20,
+    "code": "pro",
+    "name": "Proverbios",
+    "testament": "AT",
+    "chapters": 31
+  },
+  {
+    "id": 21,
+    "code": "ecc",
+    "name": "Eclesiastés",
+    "testament": "AT",
+    "chapters": 12
+  },
+  {
+    "id": 22,
+    "code": "sng",
+    "name": "Cantares",
+    "testament": "AT",
+    "chapters": 8
+  },
+  {
+    "id": 23,
+    "code": "isa",
+    "name": "Isaías",
+    "testament": "AT",
+    "chapters": 66
+  },
+  {
+    "id": 24,
+    "code": "jer",
+    "name": "Jeremías",
+    "testament": "AT",
+    "chapters": 52
+  },
+  {
+    "id": 25,
+    "code": "lam",
+    "name": "Lamentaciones",
+    "testament": "AT",
+    "chapters": 5
+  },
+  {
+    "id": 26,
+    "code": "ezk",
+    "name": "Ezequiel",
+    "testament": "AT",
+    "chapters": 48
+  },
+  {
+    "id": 27,
+    "code": "dan",
+    "name": "Daniel",
+    "testament": "AT",
+    "chapters": 12
+  },
+  {
+    "id": 28,
+    "code": "hos",
+    "name": "Oseas",
+    "testament": "AT",
+    "chapters": 14
+  },
+  {
+    "id": 29,
+    "code": "jol",
+    "name": "Joel",
+    "testament": "AT",
+    "chapters": 3
+  },
+  {
+    "id": 30,
+    "code": "amo",
+    "name": "Amós",
+    "testament": "AT",
+    "chapters": 9
+  },
+  {
+    "id": 31,
+    "code": "oba",
+    "name": "Abdías",
+    "testament": "AT",
+    "chapters": 1
+  },
+  {
+    "id": 32,
+    "code": "jon",
+    "name": "Jonás",
+    "testament": "AT",
+    "chapters": 4
+  },
+  {
+    "id": 33,
+    "code": "mic",
+    "name": "Miqueas",
+    "testament": "AT",
+    "chapters": 7
+  },
+  {
+    "id": 34,
+    "code": "nam",
+    "name": "Nahúm",
+    "testament": "AT",
+    "chapters": 3
+  },
+  {
+    "id": 35,
+    "code": "hab",
+    "name": "Habacuc",
+    "testament": "AT",
+    "chapters": 3
+  },
+  {
+    "id": 36,
+    "code": "zep",
+    "name": "Sofonías",
+    "testament": "AT",
+    "chapters": 3
+  },
+  {
+    "id": 37,
+    "code": "hag",
+    "name": "Hageo",
+    "testament": "AT",
+    "chapters": 2
+  },
+  {
+    "id": 38,
+    "code": "zec",
+    "name": "Zacarías",
+    "testament": "AT",
+    "chapters": 14
+  },
+  {
+    "id": 39,
+    "code": "mal",
+    "name": "Malaquías",
+    "testament": "AT",
+    "chapters": 4
+  },
+  {
+    "id": 40,
+    "code": "mat",
+    "name": "Mateo",
+    "testament": "NT",
+    "chapters": 28
+  },
+  {
+    "id": 41,
+    "code": "mrk",
+    "name": "Marcos",
+    "testament": "NT",
+    "chapters": 16
+  },
+  {
+    "id": 42,
+    "code": "luk",
+    "name": "Lucas",
+    "testament": "NT",
+    "chapters": 24
+  },
+  {
+    "id": 43,
+    "code": "jhn",
+    "name": "Juan",
+    "testament": "NT",
+    "chapters": 21
+  },
+  {
+    "id": 44,
+    "code": "act",
+    "name": "Hechos",
+    "testament": "NT",
+    "chapters": 28
+  },
+  {
+    "id": 45,
+    "code": "rom",
+    "name": "Romanos",
+    "testament": "NT",
+    "chapters": 16
+  },
+  {
+    "id": 46,
+    "code": "1co",
+    "name": "1 Corintios",
+    "testament": "NT",
+    "chapters": 16
+  },
+  {
+    "id": 47,
+    "code": "2co",
+    "name": "2 Corintios",
+    "testament": "NT",
+    "chapters": 13
+  },
+  {
+    "id": 48,
+    "code": "gal",
+    "name": "Gálatas",
+    "testament": "NT",
+    "chapters": 6
+  },
+  {
+    "id": 49,
+    "code": "eph",
+    "name": "Efesios",
+    "testament": "NT",
+    "chapters": 6
+  },
+  {
+    "id": 50,
+    "code": "php",
+    "name": "Filipenses",
+    "testament": "NT",
+    "chapters": 4
+  },
+  {
+    "id": 51,
+    "code": "col",
+    "name": "Colosenses",
+    "testament": "NT",
+    "chapters": 4
+  },
+  {
+    "id": 52,
+    "code": "1th",
+    "name": "1 Tesalonicenses",
+    "testament": "NT",
+    "chapters": 5
+  },
+  {
+    "id": 53,
+    "code": "2th",
+    "name": "2 Tesalonicenses",
+    "testament": "NT",
+    "chapters": 3
+  },
+  {
+    "id": 54,
+    "code": "1ti",
+    "name": "1 Timoteo",
+    "testament": "NT",
+    "chapters": 6
+  },
+  {
+    "id": 55,
+    "code": "2ti",
+    "name": "2 Timoteo",
+    "testament": "NT",
+    "chapters": 4
+  },
+  {
+    "id": 56,
+    "code": "tit",
+    "name": "Tito",
+    "testament": "NT",
+    "chapters": 3
+  },
+  {
+    "id": 57,
+    "code": "phm",
+    "name": "Filemón",
+    "testament": "NT",
+    "chapters": 1
+  },
+  {
+    "id": 58,
+    "code": "heb",
+    "name": "Hebreos",
+    "testament": "NT",
+    "chapters": 13
+  },
+  {
+    "id": 59,
+    "code": "jas",
+    "name": "Santiago",
+    "testament": "NT",
+    "chapters": 5
+  },
+  {
+    "id": 60,
+    "code": "1pe",
+    "name": "1 Pedro",
+    "testament": "NT",
+    "chapters": 5
+  },
+  {
+    "id": 61,
+    "code": "2pe",
+    "name": "2 Pedro",
+    "testament": "NT",
+    "chapters": 3
+  },
+  {
+    "id": 62,
+    "code": "1jn",
+    "name": "1 Juan",
+    "testament": "NT",
+    "chapters": 5
+  },
+  {
+    "id": 63,
+    "code": "2jn",
+    "name": "2 Juan",
+    "testament": "NT",
+    "chapters": 1
+  },
+  {
+    "id": 64,
+    "code": "3jn",
+    "name": "3 Juan",
+    "testament": "NT",
+    "chapters": 1
+  },
+  {
+    "id": 65,
+    "code": "jud",
+    "name": "Judas",
+    "testament": "NT",
+    "chapters": 1
+  },
+  {
+    "id": 66,
+    "code": "rev",
+    "name": "Apocalipsis",
+    "testament": "NT",
+    "chapters": 22
+  }
+]

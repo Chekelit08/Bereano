@@ -49,3 +49,30 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
         run: ./supabase/tests/run-local.sh
+
+  app:
+    name: App (tipos, lint y datos de la Biblia)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx expo lint
+      - name: Los datos de la Biblia coinciden con supabase/data/rv1909.json
+        run: |
+          npm run bible
+          git diff --exit-code -- src/data/bible
+      - name: La app no contiene claves secretas
+        run: |
+          if grep -rEl 'service_role|sb_secret_|sk-ant-' src app.json; then
+            echo "::error::Hay una clave secreta en la app"
+            exit 1
+          fi
