@@ -1,32 +1,35 @@
 /* =========================================================
-   Bereano — estilo editorial: papel, tinta y grabados.
+   Bereano — "Cielo vivo": azul noche, oro de lámpara y el cielo de la hora.
    ========================================================= */
 
 /* ---------- Tokens ---------- */
 :root {
-  --bg: #efe7d8;
-  --bg-tint: #e6dcc9;
-  --surface: #f6f0e4;
-  --text: #16110d;
-  --muted: #5e5146;
-  --line: #16110d2e;
-  --accent: #b83d18;
-  --accent-ink: #fbf5ea;
-  --focus: #b83d18;
+  --bg: #f3f5f9;
+  --bg-tint: #e8ecf4;
+  --surface: #ffffff;
+  --text: #141b2e;
+  --muted: #5b6478;
+  --line: #141b2e1f;
+  --accent: #8a5a00;
+  --accent-ink: #141b2e;
+  --fill: #f2b544;
+  --fill-ink: #141b2e;
+  --focus: #8a5a00;
 
-  /* Bloque invertido (lista de espera) */
-  --inv-bg: #16110d;
-  --inv-text: #efe7d8;
-  --inv-muted: #b3a593;
-  --inv-line: #efe7d833;
-  --inv-accent: #f06a3f;
-  --inv-accent-ink: #16110d;
-  --inv-surface: #221b16;
+  /* Bloque invertido (lista de espera): siempre cielo de noche */
+  --inv-bg: #0b1220;
+  --inv-text: #eef1f7;
+  --inv-muted: #9aa3b8;
+  --inv-line: #eef1f72b;
+  --inv-accent: #f2b544;
+  --inv-accent-ink: #141b2e;
+  --inv-surface: #141c2e;
 
 
-  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
-  --font-body: "Literata Variable", Georgia, "Times New Roman", serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Manrope Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-read: "Literata Variable", Georgia, "Times New Roman", serif;
+  --font-mono: "Manrope Variable", system-ui, sans-serif;
 
   --gutter: 16px;
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
@@ -36,43 +39,47 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0f0c0a;
-    --bg-tint: #17120f;
-    --surface: #1a1511;
-    --text: #efe7d8;
-    --muted: #b3a593;
-    --line: #efe7d82b;
-    --accent: #f06a3f;
-    --accent-ink: #0f0c0a;
-    --focus: #f06a3f;
-    --inv-bg: #efe7d8;
-    --inv-text: #16110d;
-    --inv-muted: #5e5146;
-    --inv-line: #16110d2e;
-    --inv-accent: #b83d18;
-    --inv-accent-ink: #fbf5ea;
-    --inv-surface: #f6f0e4;
+    --bg: #0b1220;
+    --bg-tint: #101829;
+    --surface: #141c2e;
+    --text: #eef1f7;
+    --muted: #9aa3b8;
+    --line: #eef1f71f;
+    --accent: #f2b544;
+    --accent-ink: #141b2e;
+    --fill: #f2b544;
+    --fill-ink: #141b2e;
+    --focus: #f2b544;
+    --inv-bg: #050a18;
+    --inv-text: #eef1f7;
+    --inv-muted: #9aa3b8;
+    --inv-line: #eef1f72b;
+    --inv-accent: #f2b544;
+    --inv-accent-ink: #141b2e;
+    --inv-surface: #101829;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #0f0c0a;
-  --bg-tint: #17120f;
-  --surface: #1a1511;
-  --text: #efe7d8;
-  --muted: #b3a593;
-  --line: #efe7d82b;
-  --accent: #f06a3f;
-  --accent-ink: #0f0c0a;
-  --focus: #f06a3f;
-  --inv-bg: #efe7d8;
-  --inv-text: #16110d;
-  --inv-muted: #5e5146;
-  --inv-line: #16110d2e;
-  --inv-accent: #b83d18;
-  --inv-accent-ink: #fbf5ea;
-  --inv-surface: #f6f0e4;
+  --bg: #0b1220;
+    --bg-tint: #101829;
+    --surface: #141c2e;
+    --text: #eef1f7;
+    --muted: #9aa3b8;
+    --line: #eef1f71f;
+    --accent: #f2b544;
+    --accent-ink: #141b2e;
+    --fill: #f2b544;
+    --fill-ink: #141b2e;
+    --focus: #f2b544;
+    --inv-bg: #050a18;
+    --inv-text: #eef1f7;
+    --inv-muted: #9aa3b8;
+    --inv-line: #eef1f72b;
+    --inv-accent: #f2b544;
+    --inv-accent-ink: #141b2e;
+    --inv-surface: #101829;
   color-scheme: dark;
 }
 
@@ -108,7 +115,7 @@ h3 {
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 0 0 0.5em;
-  font-variation-settings: "opsz" 144;
+  
 }
 
 h1 em,
@@ -129,7 +136,7 @@ a {
 }
 
 mark {
-  background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent) 28%, transparent) 62%);
+  background: linear-gradient(transparent 60%, color-mix(in srgb, var(--fill) 55%, transparent) 60%);
   color: inherit;
 }
 
@@ -187,7 +194,7 @@ mark {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--fill);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -363,9 +370,9 @@ mark {
 }
 
 .btn--primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  border-color: var(--fill);
+  color: var(--fill-ink);
 }
 
 .btn--primary:hover {
@@ -418,7 +425,7 @@ mark {
   border-radius: 50%;
   background:
     radial-gradient(closest-side, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%),
-    radial-gradient(closest-side at 30% 70%, color-mix(in srgb, #d9a441 35%, transparent), transparent 70%);
+    radial-gradient(closest-side at 30% 70%, color-mix(in srgb, #ffd9a8 35%, transparent), transparent 70%);
   filter: blur(30px);
   animation: breathe 9s ease-in-out infinite alternate;
 }
@@ -501,8 +508,8 @@ mark {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  color: var(--fill-ink);
   font-size: 1.375rem;
   transition: transform 0.4s var(--ease);
 }
@@ -537,8 +544,8 @@ mark {
 .marquee {
   overflow: hidden;
   border-block: 1px solid var(--text);
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  color: var(--fill-ink);
 }
 
 .marquee__track {
@@ -641,9 +648,9 @@ mark {
 
 .step:nth-child(3) {
   --stack: 2;
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  border-color: var(--fill);
+  color: var(--fill-ink);
 }
 
 .step:nth-child(3) p {
@@ -651,7 +658,7 @@ mark {
 }
 
 .step:nth-child(3) .step__num {
-  -webkit-text-stroke-color: var(--accent-ink);
+  -webkit-text-stroke-color: var(--fill-ink);
 }
 
 .step__num {
@@ -706,7 +713,7 @@ mark {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--accent);
+  background: var(--fill);
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 0.45s var(--ease);
@@ -754,7 +761,7 @@ mark {
   .door:hover .door__text > span,
   .door:hover .door__index,
   .door:hover .door__arrow {
-    color: var(--accent-ink);
+    color: var(--fill-ink);
   }
 
   .door:hover .door__text strong {
@@ -821,8 +828,8 @@ mark {
   display: inline-block;
   padding: 6px 10px;
   margin-bottom: 18px;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  color: var(--fill-ink);
   transform: rotate(-2deg);
 }
 
@@ -889,22 +896,22 @@ mark {
   aspect-ratio: 9 / 19;
   padding: 10px;
   border-radius: 48px;
-  background: #16110d;
+  background: #050a18;
   box-shadow:
-    inset 0 0 0 2px #3a2f27,
+    inset 0 0 0 2px #26314d,
     0 0 0 1px var(--phone-ring, transparent),
-    0 30px 60px -20px rgb(22 17 13 / 45%),
-    0 12px 24px -12px rgb(22 17 13 / 35%);
+    0 30px 60px -20px rgb(5 10 24 / 45%),
+    0 12px 24px -12px rgb(5 10 24 / 35%);
   transform: rotate(-2deg);
 }
 
 /* En modo oscuro el marco se perdería contra el fondo: un borde claro sutil lo recorta. */
 :root[data-theme="dark"] .phone {
-  --phone-ring: #efe7d840;
+  --phone-ring: #eef1f740;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .phone {
-    --phone-ring: #efe7d840;
+    --phone-ring: #eef1f740;
   }
 }
 
@@ -914,12 +921,13 @@ mark {
   height: 100%;
   overflow: hidden;
   border-radius: 38px;
-  /* La app siempre en papel claro, también en modo oscuro: es una "foto" del producto. */
-  background: #f6f0e4;
-  color: #16110d;
-  --muted: #5e5146;
-  --accent: #b83d18;
-  --accent-ink: #fbf5ea;
+  /* La app con su cielo de noche, en los dos modos: es una "foto" del producto. */
+  background: linear-gradient(180deg, #22356a 0%, #16264d 16%, #0b1220 40%);
+  color: #eef1f7;
+  --muted: #9aa3b8;
+  --accent: #f2b544;
+  --fill: #f2b544;
+  --fill-ink: #141b2e;
 }
 
 .phone__status {
@@ -935,7 +943,7 @@ mark {
   width: 84px;
   height: 22px;
   border-radius: 999px;
-  background: #16110d;
+  background: #050a18;
 }
 
 .phone__head {
@@ -943,7 +951,7 @@ mark {
   gap: 10px;
   align-items: center;
   padding: 10px 18px 12px;
-  border-bottom: 1px solid #16110d1f;
+  border-bottom: 1px solid #eef1f71f;
 }
 
 .phone__head .brand__mark {
@@ -951,7 +959,7 @@ mark {
   height: 30px;
   padding: 5px;
   border-radius: 50%;
-  background: #efe7d8;
+  background: #ffffff1a;
   color: var(--accent);
 }
 
@@ -996,15 +1004,16 @@ mark {
 
 .bubble--user {
   align-self: flex-end;
-  background: #16110d;
-  color: #efe7d8;
+  background: #f2b544;
+  color: #141b2e;
+  font-weight: 600;
   border-bottom-right-radius: 6px;
 }
 
 .bubble--bot {
   align-self: flex-start;
-  background: #fff;
-  border: 1px solid #16110d1a;
+  background: #141c2e;
+  border: 1px solid #eef1f71a;
   border-bottom-left-radius: 6px;
 }
 
@@ -1015,7 +1024,7 @@ mark {
 
 .bubble__apply {
   padding-top: 0.6em;
-  border-top: 1px dashed #16110d2e;
+  border-top: 1px dashed #eef1f72e;
   font-weight: 600;
 }
 
@@ -1024,8 +1033,8 @@ mark {
   align-self: flex-start;
   gap: 4px;
   padding: 12px 14px;
-  background: #fff;
-  border: 1px solid #16110d1a;
+  background: #141c2e;
+  border: 1px solid #eef1f71a;
 }
 
 .bubble--typing span {
@@ -1063,8 +1072,8 @@ mark {
 .cites li {
   padding: 4px 8px;
   border-radius: 999px;
-  background: #e8f0e3;
-  color: #2f5a2a;
+  background: #f2b5441f;
+  color: #f2b544;
   font-size: 0.5625rem;
 }
 
@@ -1075,8 +1084,8 @@ mark {
   margin: 8px 12px 14px;
   padding: 8px 8px 8px 16px;
   border-radius: 999px;
-  background: #fff;
-  border: 1px solid #16110d1f;
+  background: #141c2e;
+  border: 1px solid #eef1f71f;
   color: var(--muted);
   font-size: 0.75rem;
 }
@@ -1087,8 +1096,8 @@ mark {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  color: var(--fill-ink);
 }
 
 /* Estados de la animación (solo si motion.js la activa) */
@@ -1187,9 +1196,9 @@ mark {
 
 .faq__item[open] summary::after {
   transform: rotate(45deg);
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  border-color: var(--fill);
+  color: var(--fill-ink);
 }
 
 .faq__body {
@@ -1214,6 +1223,8 @@ mark {
   --line: var(--inv-line);
   --accent: var(--inv-accent);
   --accent-ink: var(--inv-accent-ink);
+  --fill: var(--inv-accent);
+  --fill-ink: var(--inv-accent-ink);
   --surface: var(--inv-surface);
   --focus: var(--inv-accent);
   background: var(--bg);
@@ -1274,8 +1285,8 @@ mark {
 }
 
 .field select option {
-  color: #16110d;
-  background: #f6f0e4;
+  color: #141b2e;
+  background: #ffffff;
 }
 
 .field input:focus,
@@ -1451,7 +1462,7 @@ mark {
   font-weight: 300;
   line-height: 0.9;
   letter-spacing: -0.05em;
-  font-variation-settings: "opsz" 144;
+  
 }
 
 .intro__word span {
@@ -1500,7 +1511,7 @@ mark {
   right: 0;
   z-index: 45;
   height: 2px;
-  background: var(--accent);
+  background: var(--fill);
   transform: scaleX(var(--p, 0));
   transform-origin: left;
   pointer-events: none;
@@ -1522,7 +1533,7 @@ mark {
     height: 14px;
     margin: -7px 0 0 -7px;
     border-radius: 50%;
-    background: #efe7d8;
+    background: #f2b544;
     mix-blend-mode: difference;
     pointer-events: none;
     opacity: 0;
@@ -1546,7 +1557,7 @@ mark {
     height: 92px;
     margin: -46px 0 0 -46px;
     mix-blend-mode: normal;
-    background: var(--accent);
+    background: var(--fill);
   }
 
   .cursor__label {
@@ -1554,7 +1565,7 @@ mark {
     font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-ink);
+    color: var(--fill-ink);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -1612,7 +1623,7 @@ mark {
   text-align: left;
   font: inherit;
   color: var(--card-ink);
-  background: var(--card-bg);
+  background: var(--card-sky, var(--card-bg));
   border: 1px solid var(--card-line, var(--card-bg));
   cursor: pointer;
   transition: transform 0.5s var(--ease);
@@ -1622,12 +1633,12 @@ mark {
   transform: translateY(-6px) rotate(-1deg);
 }
 
-/* Una paleta cálida, una tarjeta por tema. Iguales en modo claro y oscuro. */
-.plans__track > li:nth-child(1) .plan-card { --card-bg: #b83d18; --card-ink: #fbf5ea; }
-.plans__track > li:nth-child(2) .plan-card { --card-bg: #d9a441; --card-ink: #16110d; }
-.plans__track > li:nth-child(3) .plan-card { --card-bg: #4d5a37; --card-ink: #f3ecdf; }
-.plans__track > li:nth-child(4) .plan-card { --card-bg: #1f3550; --card-ink: #efe7d8; }
-.plans__track > li:nth-child(5) .plan-card { --card-bg: #efe7d8; --card-ink: #16110d; --card-line: #16110d; }
+/* Cada plan, un cielo de un momento del día (como la pantalla Hoy de la app). */
+.plans__track > li:nth-child(1) .plan-card { --card-bg: #1b2650; --card-ink: #ffffff; --card-sky: linear-gradient(160deg, #1b2650, #4a4784 45%, #a9637e 80%, #de8f7a); }
+.plans__track > li:nth-child(2) .plan-card { --card-bg: #f2b544; --card-ink: #141b2e; --card-sky: linear-gradient(160deg, #f6c766, #f2b544 50%, #e39a3b); }
+.plans__track > li:nth-child(3) .plan-card { --card-bg: #1c4a92; --card-ink: #ffffff; --card-sky: linear-gradient(160deg, #1c4a92, #2f67b3 50%, #7fa6d6); }
+.plans__track > li:nth-child(4) .plan-card { --card-bg: #1a1844; --card-ink: #ffffff; --card-sky: linear-gradient(160deg, #1a1844, #4e3473 45%, #a9506c 80%, #d9784f); }
+.plans__track > li:nth-child(5) .plan-card { --card-bg: #050a18; --card-ink: #ffffff; --card-sky: linear-gradient(160deg, #050a18, #0b1631 45%, #22356a); }
 
 .plan-card__meta {
   display: flex;
@@ -1645,7 +1656,7 @@ mark {
   color: transparent;
   -webkit-text-stroke: 1px var(--card-ink);
   transition: color 0.5s var(--ease);
-  font-variation-settings: "opsz" 144;
+  
 }
 
 .plan-card:hover .plan-card__num {
@@ -1758,7 +1769,7 @@ html.lenis body {
   line-height: 0.85;
   letter-spacing: -0.06em;
   white-space: nowrap;
-  font-variation-settings: "opsz" 144;
+  
 }
 
 /* ---------- Movimiento ----------
@@ -1886,7 +1897,7 @@ html.lenis body {
   }
 
   .door:hover .door__tag {
-    color: var(--accent-ink);
+    color: var(--fill-ink);
   }
 
   .pricing {
@@ -1980,4 +1991,149 @@ html.lenis body {
   .verse-section__note {
     grid-column: 2;
   }
+}
+
+/* =========================================================
+   Cielo vivo: el hero es una ventana al cielo de la hora
+   (alba, día, tarde o noche), como la pantalla Hoy de la app.
+   ========================================================= */
+:root {
+  --sky: linear-gradient(180deg, #050a18 0%, #0b1631 35%, #16264d 70%, #22356a 100%);
+  --sun-x: 78%;
+  --sun-y: 18%;
+  --sun: #f2e8c9;
+  --stars: 1;
+}
+:root[data-moment="alba"] {
+  --sky: linear-gradient(180deg, #1b2650 0%, #4a4784 35%, #a9637e 72%, #de8f7a 100%);
+  --sun-x: 78%;
+  --sun-y: 92%;
+  --sun: #ffd9a8;
+  --stars: 0;
+}
+:root[data-moment="dia"] {
+  --sky: linear-gradient(180deg, #1c4a92 0%, #2f67b3 35%, #4f86c8 70%, #7fa6d6 100%);
+  --sun-x: 82%;
+  --sun-y: 14%;
+  --sun: #fff4d6;
+  --stars: 0;
+}
+:root[data-moment="tarde"] {
+  --sky: linear-gradient(180deg, #1a1844 0%, #4e3473 35%, #a9506c 72%, #d9784f 100%);
+  --sun-x: 22%;
+  --sun-y: 94%;
+  --sun: #ffc27a;
+  --stars: 0;
+}
+
+.hero {
+  margin: 10px 10px 0;
+  padding: 40px 0 96px;
+  border-radius: 32px;
+  background: var(--sky);
+  color: #ffffff;
+  --text: #ffffff;
+  --muted: #ffffffd0;
+  --line: #ffffff38;
+  --accent: #ffd98a;
+  --focus: #f2b544;
+}
+
+/* El sol o la luna: un halo que respira. */
+.hero::before {
+  top: calc(var(--sun-y) - 35%);
+  left: calc(var(--sun-x) - 35%);
+  right: auto;
+  width: min(70%, 760px);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--sun) 70%, transparent), transparent 72%);
+  filter: blur(18px);
+  opacity: 0.85;
+}
+
+/* Estrellas (solo de noche) y colinas lejanas. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M0 9 C15 3 28 7 40 4 C55 0 68 6 80 3 C90 1 96 4 100 3 L100 20 L0 20 Z' fill='%23000' fill-opacity='0.28'/%3E%3C/svg%3E")
+      bottom / 100% 90px no-repeat,
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent),
+    radial-gradient(1px 1px at 24% 42%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 37% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 46% 30%, #fff, transparent),
+    radial-gradient(2px 2px at 58% 22%, #fff, transparent),
+    radial-gradient(1px 1px at 66% 48%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 74% 8%, #fff, transparent),
+    radial-gradient(1px 1px at 88% 36%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 93% 62%, #fff, transparent),
+    radial-gradient(1px 1px at 8% 58%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 70%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 52% 64%, #fff, transparent);
+}
+:root:not([data-moment="noche"]) .hero::after {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M0 9 C15 3 28 7 40 4 C55 0 68 6 80 3 C90 1 96 4 100 3 L100 20 L0 20 Z' fill='%23000' fill-opacity='0.14'/%3E%3C/svg%3E")
+      bottom / 100% 90px no-repeat;
+}
+
+.hero__title {
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 30px rgb(0 0 0 / 18%);
+}
+
+.hero__title em,
+.hero__title em * {
+  color: var(--accent);
+}
+
+.hero .btn--primary {
+  box-shadow: 0 10px 30px -10px rgb(0 0 0 / 45%);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    margin: 12px 16px 0;
+    border-radius: 40px;
+  }
+}
+
+/* Lista de espera: el cielo de noche, con su luna. */
+.inverse {
+  background:
+    radial-gradient(circle at 82% 12%, #f2e8c933, transparent 32%),
+    linear-gradient(180deg, #050a18 0%, #0b1631 50%, #16264d 100%);
+}
+
+/* Títulos en Instrument Serif: un poco más grandes, que respiren. */
+h2 {
+  letter-spacing: -0.02em;
+}
+
+/* Esquinas redondeadas y botones en píldora, como en la app. */
+.btn {
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.step {
+  border-radius: 28px;
+  box-shadow: 0 20px 40px -28px rgb(11 18 32 / 35%);
+}
+
+.plan-card {
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.phone__input {
+  border-radius: 999px;
+}
+
+.step:not(:nth-child(3)) {
+  border-color: var(--line);
 }
