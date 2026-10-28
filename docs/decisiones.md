@@ -31,6 +31,11 @@ Referencias de Ezequiel: Pear, Dead North, Apocalypse Coffee, Illoca, Santioni, 
 - **IBM Plex Mono** para las etiquetas, autoalojada como las otras dos fuentes (solo el subconjunto latino, 2 pesos).
 - **Imagen que sigue al cursor** sobre las puertas falsas: solo con mouse y en pantallas grandes. En el celular son filas grandes y fáciles de tocar.
 
+## Deploy en Cloudflare Workers en vez de Pages (2026-10-28)
+
+- El panel de Cloudflare ofrece primero Workers y el proyecto quedó creado así. En vez de borrarlo y rehacerlo como Pages, nos quedamos con Workers con static assets: es lo que Cloudflare recomienda hoy para sitios estáticos, es gratis con uso comercial y respeta el mismo `_headers` de seguridad. Solo cambia `landing/wrangler.toml`.
+- El comando de deploy fija `wrangler@4` para que una versión mayor nueva no rompa el deploy sin aviso.
+
 ## Eventos de PostHog
 
 | Evento | Cuándo |

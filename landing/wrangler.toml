@@ -1,5 +1,11 @@
-# Config para Cloudflare Pages (solo se usa si deployás con `wrangler pages deploy`).
-# Todavía no existe el proyecto en Cloudflare: crearlo es un paso manual (ver docs/deploy-cloudflare.md).
-name = "bereano-landing"
-pages_build_output_dir = "./dist"
+# Config de Cloudflare Workers (sitio estático con "static assets").
+# El nombre tiene que coincidir con el Worker creado en el panel: "bereano".
+# Cloudflare Builds corre `npm run build` (genera dist/) y después `npx wrangler deploy`.
+name = "bereano"
 compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./dist"
+# /privacidad.html también responde como /privacidad
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"
