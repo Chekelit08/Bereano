@@ -61,6 +61,9 @@ assert len(BOOK_NUMBER) == len(BOOKS) == 66
 # Cartas que terminan con una nota de cierre después del último "Amén." (código VPL).
 COLOPHON_BOOKS = {'ROM', '1CO', '2CO', 'GAL', 'EPH', 'PHI', 'COL', '1TH', '2TH', '1TI', '2TI', 'TIT', 'PHM', 'HEB'}
 
+# Letras capitales de dos palabras que las reglas no cubren (revisadas a mano).
+TEXT_FIXES = {('PSA', 39, 1): [('Yo DIJE:', 'Yo dije:')]}
+
 # Únicas capitales a mitad de capítulo ("HUBO en los días de Herodes").
 SECTION_OPENERS = {('LUK', 1, 5)}
 
@@ -91,6 +94,9 @@ def learn_case(texts) -> None:
             counts[0 if w[0].isupper() else 1] += 1
 
 
+AFTER_TITLE_CAPS = re.compile(rf'(?<=[.:] )((?:[A-ZÁÉÍÓÚ] )?[{UPPER}])([{UPPER}]+)(?=[ ,;:])')
+
+
 def _fix_caps(m: re.Match) -> str:
     prefix, word = m.groups()
     lower = word.lower()
@@ -113,6 +119,9 @@ def clean(text: str, starts_chapter: bool) -> str:
     text = text.replace('[', '').replace(']', '')
     if starts_chapter:
         text = LEADING_CAPS.sub(_fix_caps, text)
+        # En los Salmos la letra capital va después del título ("Salmo de David. JEHOVÁ es mi
+        # pastor"). Después de un punto siempre lleva mayúscula inicial: "Jehová", "Respóndeme".
+        text = AFTER_TITLE_CAPS.sub(lambda m: _fix_caps(re.match(r'^(.*?)(\S+)$', m.group(0))), text, count=1)
     return re.sub(r'\s+', ' ', text).strip()
 
 
@@ -157,7 +166,11 @@ def main(src: str) -> None:
             if not text:
                 sys.exit(f'{code} {chapter}:{verse} quedó vacío')
             opener = verse == 1 or text in chapter_openers or (code, chapter, verse) in SECTION_OPENERS
-            verses.append([BOOK_NUMBER[code], chapter, verse, clean(text, opener)])
+            text = clean(text, opener)
+            for old, new in TEXT_FIXES.get((code, chapter, verse), []):
+                assert old in text, f'{code} {chapter}:{verse}: no encontré {old!r}'
+                text = text.replace(old, new)
+            verses.append([BOOK_NUMBER[code], chapter, verse, text])
 
     # Controles mínimos: si alguno falla, el archivo de origen cambió y hay que revisarlo.
     books_seen = {v[0] for v in verses}

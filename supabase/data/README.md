@@ -13,7 +13,7 @@ El texto bíblico no se modifica: solo se arreglan errores de la edición digita
 1. **Numeración** (`rv1909_versificacion.json`, generado por `align_rv1909.py`). En 23 capítulos eBible sigue el corte de capítulos del hebreo y deja 18 versículos vacíos: capítulos corridos un lugar y dos versículos fusionados al final. Se renumeraron con la numeración estándar, la misma que la RVR1960, usando bibliaparalela.com solo como referencia de dónde empieza cada versículo. En cada capítulo se verificó que el texto de eBible quedara idéntico, sin agregar ni perder una palabra. Ejemplo: "Y después movió el pueblo de Haseroth" es Números 12:16 y no 13:1.
 2. **Notas de cierre.** 14 cartas traían al final la nota antigua "Fué escrita de Corinto á los Romanos…", que no es texto bíblico. Se sacaron del versículo y quedan en `colophons`.
 3. **Corchetes.** La edición original ponía en cursiva las palabras agregadas por los traductores; eBible las marca con corchetes, que se quitaron.
-4. **Letra capital.** La primera palabra de cada capítulo venía en mayúsculas ("EN el principio", "Y DESPUÉS"); se pasó a minúsculas, respetando los nombres propios ("Y Jehová"). Las mayúsculas legítimas, como los encabezados hebreos del Salmo 119 ("ALEPH.") o "MENE, MENE, TEKEL", no se tocan.
+4. **Letra capital.** La primera palabra de cada capítulo venía en mayúsculas ("EN el principio", "Y DESPUÉS", y en los Salmos después del título: "Salmo de David. JEHOVÁ es mi pastor"); se pasó a minúsculas, respetando los nombres propios ("Y Jehová", "Jehová es mi pastor"). Las mayúsculas legítimas, como los encabezados hebreos del Salmo 119 ("ALEPH.") o "MENE, MENE, TEKEL", no se tocan.
 
 La ortografía de 1909 ("fué", "á", "crió") se deja tal cual: es el texto auténtico.
 
@@ -32,7 +32,7 @@ python3 supabase/data/build_rv1909.py rv1909/spaRV1909_vpl.txt
 ### Cargar
 
 - **Local o CI:** `./supabase/tests/run-local.sh` aplica las migraciones, carga los datos con `load_bible.py` y corre los tests.
-- **Producción:** se cargó una sola vez con la extensión `http` de Supabase, leyendo el JSON desde GitHub en un commit fijo. Después se borró la extensión. Ver `docs/decisiones.md`.
+- **Producción:** se cargó una sola vez con la extensión `http` de Supabase, leyendo el JSON desde GitHub en un commit fijo (después se borró la extensión). Los arreglos posteriores se aplicaron con `UPDATE` de los versículos que cambiaron. Para comprobar que producción coincide con el repo, comparar la huella `md5(string_agg(book_id||'|'||chapter||'|'||verse||'|'||text, E'\n' order by book_id, chapter, verse))` con la del JSON.
 
 ## Sumar otra versión (por ejemplo, la RVR1960 con licencia)
 

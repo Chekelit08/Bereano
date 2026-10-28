@@ -50,6 +50,8 @@ select pg_temp.esperar('Números 12:16 con la numeración estándar', (select te
   'Y después movió el pueblo de Haseroth, y asentaron el campo en el desierto de Parán.');
 select pg_temp.esperar('Romanos 16:27 sin la nota de cierre', (select text from public.bible_passage('ROM', 16, 27)) =
   'Al solo Dios sabio, sea gloria por Jesucristo para siempre. Amén.');
+select pg_temp.esperar('Salmos 23:1 sin la letra capital después del título', (select text from public.bible_passage('PSA', 23, 1)) =
+  'Salmo de David. Jehová es mi pastor; nada me faltará.');
 select pg_temp.esperar('pasaje de varios versículos', (select count(*) = 4 from public.bible_passage('Salmos', 23, 1, 4)));
 select pg_temp.esperar('libro por nombre sin acento', (select count(*) = 1 from public.bible_passage('genesis', 1, 1)));
 
@@ -58,6 +60,8 @@ select pg_temp.esperar('buscar "mansos heredaran" encuentra Salmos 37:11',
   (select bool_or(book = 'Salmos' and chapter = 37 and verse = 11) from public.bible_search('mansos heredaran')));
 select pg_temp.esperar('buscar "jehova es mi pastor" encuentra Salmos 23:1',
   (select bool_or(book = 'Salmos' and chapter = 23 and verse = 1) from public.bible_search('jehova es mi pastor')));
+select pg_temp.esperar('la frase exacta aparece primero: "jehova es mi pastor" -> Salmos 23:1',
+  (select book = 'Salmos' and chapter = 23 and verse = 1 from public.bible_search('jehova es mi pastor', 'rv1909', 1)));
 select pg_temp.esperar('la búsqueda devuelve como máximo 50', (select count(*) <= 50 from public.bible_search('dios', 'rv1909', 1000)));
 
 -- Verificación de citas (para el compañero)
