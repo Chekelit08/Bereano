@@ -42,6 +42,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'Jesús no invita a los que ya tienen todo resuelto. Llama a los cansados: «Venid á mí todos los que estáis trabajados y cargados».\n\nSu descanso no es dejar de vivir, sino aprender a vivir con Él. Un yugo se lleva de a dos. Él camina a tu lado y dice de sí mismo que es «manso y humilde de corazón».',
     question: '¿Qué carga estás llevando solo que podrías entregarle hoy en oración?',
+    share: [28, 28],
   },
   {
     id: 'afan',
@@ -53,6 +54,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'Pablo escribe esto desde la cárcel. No es una frase de alguien sin problemas. Su receta para la ansiedad es concreta: convertir cada preocupación en oración, y hacerlo «con hacimiento de gracias».\n\nLa paz que promete no depende de entender todo. Es una paz que «sobrepuja todo entendimiento» y que cuida el corazón como un guardia.',
     question: '¿Qué te preocupa hoy? Escríbelo como una oración y agrega algo por lo que puedas dar gracias.',
+    share: [7, 7],
   },
   {
     id: 'de-tal-manera',
@@ -64,6 +66,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'Es tal vez el versículo más conocido de la Biblia, y por eso es fácil leerlo rápido. Detente en la medida del amor: «de tal manera amó Dios al mundo» que dio a su Hijo.\n\nEl versículo siguiente aclara la intención: Dios no envió a su Hijo para condenar, sino «para que el mundo sea salvo por él». El primer movimiento de Dios hacia ti es de amor.',
     question: '¿Cómo cambiaría tu día si lo vivieras sabiendo que Dios te mira con amor y no con condena?',
+    share: [16, 16],
   },
   {
     id: 'cada-manana',
@@ -86,6 +89,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'Isaías reconoce algo muy humano: hasta los jóvenes se cansan y caen. Nadie tiene energía infinita. Pero Dios «multiplica las fuerzas al que no tiene ningunas».\n\nLa clave está en esperar en Él. No es una espera pasiva, sino confiada. Los que esperan en Jehová «tendrán nuevas fuerzas»: a veces para volar, a veces solo para seguir caminando.',
     question: '¿En qué área de tu vida te sientes sin fuerzas? ¿Cómo puedes esperar en Dios ahí hoy?',
+    share: [31, 31],
   },
   {
     id: 'nada-nos-separa',
@@ -119,6 +123,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'La Reina-Valera usa la palabra caridad para el amor que se entrega. Pablo no lo define con sentimientos, sino con acciones: «La caridad es sufrida, es benigna».\n\nUn ejercicio sencillo: lee el pasaje poniendo tu nombre en lugar de la palabra caridad. Donde te cueste leerlo, ahí está la invitación de hoy.',
     question: '¿Con quién te pide Dios hoy un amor más paciente y más amable?',
+    share: [7, 7],
   },
   {
     id: 'primeramente',
@@ -153,7 +158,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'El salmo imagina lo peor: la tierra que se mueve, los montes que caen al mar. Y aun así dice: «no temeremos».\n\nNo porque no haya temblor, sino porque hay refugio. Dios es «nuestro pronto auxilio en las tribulaciones»: no llega tarde ni de lejos.',
     question: '¿Dónde buscas refugio primero cuando algo se sacude en tu vida?',
-    share: [2, 3],
+    share: [2, 2],
   },
   {
     id: 'la-vid',
@@ -165,6 +170,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'Una rama no se esfuerza por dar uvas. Simplemente está unida a la planta. Jesús usa esa imagen para hablar de nuestra vida con Él: «Yo soy la vid, vosotros los pámpanos».\n\nEl fruto no sale de la presión, sino de la cercanía. Y Jesús es honesto: «sin mí nada podéis hacer».',
     question: '¿Qué puedes hacer hoy para quedarte cerca de Jesús en medio de tus tareas?',
+    share: [5, 5],
   },
   {
     id: 'fruto',
@@ -187,6 +193,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'La salvación no es un premio por portarse bien: «por gracia sois salvos por la fe». Es un regalo, y por eso nadie puede presumir.\n\nPero la gracia no nos deja quietos. Somos «hechura suya», una obra de Dios, creados para buenas obras que Él ya preparó.',
     question: '¿Qué buena obra sencilla podrías hacer hoy como respuesta a la gracia que recibiste?',
+    share: [8, 9],
   },
   {
     id: 'pruebas',
@@ -210,6 +217,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'Fingir que estamos bien nos aleja de la verdad. Juan lo dice sin vueltas: si negamos el pecado, «nos engañamos á nosotros mismos».\n\nLa buena noticia viene enseguida. Dios no está esperando para castigar, sino para limpiar: «él es fiel y justo para que nos perdone».',
     question: '¿Hay algo que necesitas confesarle a Dios hoy, con la confianza de que te va a perdonar?',
+    share: [9, 9],
   },
   {
     id: 'lo-bueno',
@@ -350,6 +358,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'Las dos casas de la parábola recibieron la misma tormenta. La diferencia no estuvo en el clima, sino en los cimientos.\n\nJesús es claro: el prudente es el que oye sus palabras «y las hace». Escuchar es importante. Ponerlo en práctica es lo que sostiene la casa.',
     question: '¿Qué enseñanza de Jesús que ya conoces necesitas empezar a practicar?',
+    share: [24, 24],
   },
   {
     id: 'mi-socorro',
@@ -361,6 +370,7 @@ export const DEVOCIONALES: Devocional[] = [
     reflection:
       'Los peregrinos subían a Jerusalén cantando este salmo. Miraban los montes y se preguntaban de dónde vendría la ayuda. La respuesta: «Mi socorro viene de Jehová».\n\nTú te cansas y duermes. Dios no: «ni se dormirá el que te guarda». Puedes descansar porque Él sigue despierto.',
     question: '¿Qué te quita el sueño? Entrégaselo a Dios antes de dormir esta noche.',
+    share: [2, 3],
   },
   {
     id: 'todo-nuevo',
@@ -390,7 +400,14 @@ export function devocionalDelDia(date = new Date()): Devocional {
  * no parte del versículo, así que no va en la imagen.
  */
 export function shareText(verses: string[]): string {
-  return verses.join(' ').replace(/^[A-ZÑ]{2,}\. /, '');
+  return (
+    verses
+      .join(' ')
+      .replace(/^[A-ZÑ]{2,}\. /, '')
+      .replace(/\s*\(Selah\.\)/g, '')
+      // Versículo cortado a mitad de oración: se cierra con puntos suspensivos.
+      .replace(/[,;:]$/, '…')
+  );
 }
 
 /** Los versículos que van en la imagen para compartir. */

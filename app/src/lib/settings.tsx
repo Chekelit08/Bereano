@@ -1,13 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, use, useEffect, useState, type ReactNode } from 'react';
 
+import { CARD_STYLES, type CardStyle } from '@/components/story-card';
+
 export const FONT_SIZES = [16, 18, 20, 22, 25, 28] as const;
 
 export type LastRead = { book: string; chapter: number };
-type Settings = { fontStep: number; lastRead: LastRead | null; saved: string[] };
+type Settings = { fontStep: number; lastRead: LastRead | null; saved: string[]; cardStyle: CardStyle };
 
 const KEY = 'bereano.settings.v1';
-const DEFAULTS: Settings = { fontStep: 2, lastRead: null, saved: [] };
+const DEFAULTS: Settings = { fontStep: 2, lastRead: null, saved: [], cardStyle: 'editorial' };
 
 type Ctx = Settings & {
   fontSize: number;
@@ -15,6 +17,7 @@ type Ctx = Settings & {
   setLastRead: (r: LastRead) => void;
   /** Guarda o quita un devocional de la lista de guardados. */
   toggleSaved: (id: string) => void;
+  setCardStyle: (s: CardStyle) => void;
 };
 
 const SettingsContext = createContext<Ctx | null>(null);
@@ -38,7 +41,10 @@ function parse(raw: string | null): Settings {
     const saved = Array.isArray(v.saved)
       ? v.saved.filter((id: unknown) => typeof id === 'string' && /^[a-z0-9-]{1,40}$/.test(id)).slice(0, 500)
       : [];
-    return { fontStep, lastRead, saved };
+    const cardStyle = CARD_STYLES.some((c) => c.id === v.cardStyle)
+      ? (v.cardStyle as CardStyle)
+      : DEFAULTS.cardStyle;
+    return { fontStep, lastRead, saved, cardStyle };
   } catch {
     return DEFAULTS;
   }
@@ -74,6 +80,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           ? s
           : { ...s, lastRead },
       ),
+    setCardStyle: (cardStyle) => setSettings((s) => ({ ...s, cardStyle })),
     toggleSaved: (id) =>
       setSettings((s) => ({
         ...s,

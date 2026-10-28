@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DevocionalView } from '@/components/devocional-view';
+import { VersiculoDelDia } from '@/components/versiculo-del-dia';
 import { PressLink } from '@/components/press-link';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
@@ -19,7 +20,17 @@ export default function Hoy() {
 
   return (
     <ScrollView contentContainerStyle={[styles.page, { paddingTop: insets.top + Space.lg }]}>
-      <DevocionalView devocional={today} kicker={`Devocional · ${date}`} />
+      <T variant="label">{date}</T>
+      <T variant="title" style={{ marginTop: Space.sm, marginBottom: Space.lg }}>
+        Versículo{' '}
+        <T variant="title" style={{ fontFamily: Fonts.displayItalic, color: c.accent }}>
+          del día
+        </T>
+      </T>
+      <VersiculoDelDia devocional={today} />
+
+      <View style={[styles.divider, { backgroundColor: c.line }]} />
+      <DevocionalView devocional={today} kicker="Devocional" />
 
       {savedList.length > 0 && (
         <View style={{ marginTop: Space.xxl }}>
@@ -54,4 +65,5 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   saved: { paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },
+  divider: { height: StyleSheet.hairlineWidth, marginVertical: Space.xl },
 });

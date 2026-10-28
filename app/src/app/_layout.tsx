@@ -1,3 +1,5 @@
+import { Archivo_700Bold, Archivo_800ExtraBold } from '@expo-google-fonts/archivo';
+import { Caveat_700Bold } from '@expo-google-fonts/caveat';
 import {
   Fraunces_400Regular,
   Fraunces_400Regular_Italic,
@@ -36,6 +38,9 @@ export default function RootLayout() {
     Literata_400Regular,
     Literata_400Regular_Italic,
     Literata_500Medium,
+    Archivo_700Bold,
+    Archivo_800ExtraBold,
+    Caveat_700Bold,
   });
 
   useEffect(() => {

@@ -1,19 +1,19 @@
-import * as Sharing from 'expo-sharing';
 import { useRef, useState } from 'react';
-import { Platform, Share, StyleSheet, View, type ViewInstance } from 'react-native';
-import { captureRef } from 'react-native-view-shot';
+import { StyleSheet, View, type ViewInstance } from 'react-native';
 
 import { PressLink, Touchable } from '@/components/press-link';
-import { CARD_HEIGHT, CARD_WIDTH, ShareCard } from '@/components/share-card';
+import { CARD_WIDTH, StoryCard } from '@/components/story-card';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { shareRange, shareText, type Devocional } from '@/data/devocionales';
+import { MARKS } from '@/data/marcas';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
 import { useSettings } from '@/lib/settings';
+import { shareCard } from '@/lib/share';
 
 export function DevocionalView({ devocional: d, kicker }: { devocional: Devocional; kicker: string }) {
   const c = usePalette();
-  const { saved, toggleSaved, fontSize } = useSettings();
+  const { saved, toggleSaved, fontSize, cardStyle } = useSettings();
   const card = useRef<ViewInstance>(null);
   const [sharing, setSharing] = useState(false);
 
@@ -28,24 +28,15 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
 
   async function share() {
     setSharing(true);
-    try {
-      if (Platform.OS !== 'web' && (await Sharing.isAvailableAsync())) {
-        const uri = await captureRef(card, {
-          format: 'png',
-          quality: 1,
-          width: CARD_WIDTH * 3,
-          height: CARD_HEIGHT * 3,
-          result: 'tmpfile',
-        });
-        await Sharing.shareAsync(uri, { mimeType: 'image/png', UTI: 'public.png', dialogTitle: d.title });
-      } else {
-        await Share.share({ message: `“${cardText}”\n— ${shareRef} (RV1909)\n\nBereano` });
-      }
-    } catch {
-      // El usuario canceló o el sistema no pudo compartir: no hay nada que hacer.
-    } finally {
-      setSharing(false);
-    }
+    await shareCard(
+      card,
+      `“${cardText}”
+— ${shareRef} (RV1909)
+
+Bereano`,
+      d.title,
+    );
+    setSharing(false);
   }
 
   const body = { fontSize: fontSize - 1, lineHeight: Math.round((fontSize - 1) * 1.7) };
@@ -118,7 +109,7 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
 
       {/* Fuera de pantalla: solo existe para sacarle la foto. */}
       <View style={styles.offscreen} pointerEvents="none" aria-hidden>
-        <ShareCard ref={card} text={cardText} reference={shareRef} title={d.title} />
+        <StoryCard ref={card} variant={cardStyle} text={cardText} reference={shareRef} marks={MARKS[d.id]} />
       </View>
     </View>
   );
