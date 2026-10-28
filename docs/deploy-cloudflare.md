@@ -1,6 +1,6 @@
-# Deploy de la landing en Cloudflare Pages
+# Deploy de la landing en Cloudflare (Workers)
 
-> Estado: Supabase listo (proyecto `bereano`, ref `annxvazsnzlkeqkrqwfk`, us-east-1). Faltan PostHog y Cloudflare.
+> Estado: Supabase listo (proyecto `bereano`, ref `annxvazsnzlkeqkrqwfk`, us-east-1). Worker de Cloudflare `bereano` creado y conectado al repo. Falta PostHog.
 
 ## Antes de publicar
 
@@ -9,46 +9,50 @@
 3. Revisar los pendientes de `docs/decisiones.md`. Sobre todo: **completar los datos entre corchetes de `landing/privacidad.html`**.
 4. En PostHog > Project settings: activar *Discard client IP data*.
 
-## Opción A (recomendada): conectar el repo de GitHub
+## Cómo está publicado: Cloudflare Workers con static assets
 
-Cada push a `main` se publica solo, y cada rama tiene su URL de vista previa.
+Cloudflare hoy ofrece primero Workers para sitios estáticos (gratis y con uso comercial permitido, igual que Pages), y lee igual el `_headers` de seguridad. El Worker se llama `bereano` y está conectado al repo: cada push a `main` se publica solo, y cada rama tiene su vista previa.
 
-1. Dashboard de Cloudflare > Workers & Pages > Create > Pages > *Connect to Git* > `bereano`.
-2. Configuración del build:
-   - Framework preset: *None* (o Vite)
-   - Root directory: `landing`
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-3. Variables de entorno (Settings > Variables and secrets), en **Production** y **Preview**:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY` (la *publishable*, nunca la `service_role`)
-   - `VITE_POSTHOG_KEY`
-   - `VITE_POSTHOG_HOST` = `https://us.i.posthog.com`
-   - `VITE_SITE_URL` = la URL pública (por ejemplo `https://bereano-landing.pages.dev`, o el dominio cuando exista)
-   - `NODE_VERSION` = `22`
-4. Guardar y desplegar. Probar el formulario en la URL `*.pages.dev`.
+Configuración (Worker `bereano` > Settings > Build):
 
-Las variables `VITE_*` se insertan en el JS durante el build: si las cambiás, hay que volver a desplegar.
+| Campo | Valor |
+| --- | --- |
+| Git repository | `Chekelit08/Bereano`, rama `main` |
+| Root directory | `landing` |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler@4 deploy` |
+| Non-production branch deploy command | `npx wrangler@4 preview` (vistas previas por rama; necesita el bloque `[previews]` de `wrangler.toml`) |
 
-## Opción B: subir desde la terminal
+Variables de build (Settings > Build > **Build variables and secrets**, no las de runtime):
+
+- `VITE_SUPABASE_URL` = `https://annxvazsnzlkeqkrqwfk.supabase.co`
+- `VITE_SUPABASE_ANON_KEY` = la clave publishable (`sb_publishable_...`), nunca la `service_role`
+- `VITE_POSTHOG_KEY` = la clave del proyecto de PostHog (`phc_...`), cuando exista
+- `VITE_POSTHOG_HOST` = `https://us.i.posthog.com`
+- `VITE_SITE_URL` = la URL pública (`https://bereano.<subdominio>.workers.dev`, o el dominio cuando exista)
+- `NODE_VERSION` = `22`
+
+Las variables `VITE_*` se insertan en el JS durante el build: si las cambiás, hay que volver a desplegar (Deployments > Retry build).
+
+La config del Worker está en `landing/wrangler.toml` (`[assets] directory = "./dist"`).
+
+## Subir a mano desde la terminal
 
 ```bash
 cd landing && npm run build
 ```
 
 ```bash
-npx wrangler login
+npx wrangler@4 login
 ```
 
 ```bash
-npx wrangler pages deploy dist --project-name bereano-landing
+npx wrangler@4 deploy
 ```
-
-Con esta opción las variables salen del `.env` local en el momento del build.
 
 ## Dominio
 
-Cuando se compre `bereano.app`: Pages > proyecto > Custom domains. Si el dominio está en Cloudflare, el DNS se configura solo.
+Cuando se compre `bereano.app`: Worker `bereano` > Settings > Domains & Routes > Add > Custom domain. Si el dominio está en Cloudflare, el DNS se configura solo.
 
 ## Después de publicar
 

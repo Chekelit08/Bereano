@@ -35,7 +35,7 @@ Después del MVP (ideas ya pensadas): comparar versiones, concordancia, signific
 - **Suscripciones:** RevenueCat.
 - **IA:** se llama SOLO desde una Supabase Edge Function. Usar un modelo chico y barato para el compañero (por ejemplo, Claude Haiku) y guardar en caché respuestas a preguntas repetidas.
 - **Métricas:** PostHog (eventos, embudos, tests A/B, feature flags para puertas falsas).
-- **Landing:** sitio estático en la carpeta `/landing`, publicado en Cloudflare Pages (el plan gratis permite uso comercial).
+- **Landing:** sitio estático en la carpeta `/landing`, publicada en Cloudflare Workers con static assets (el plan gratis permite uso comercial). Ver `docs/deploy-cloudflare.md`.
 
 Estructura sugerida:
 
