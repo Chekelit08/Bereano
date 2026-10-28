@@ -7,38 +7,31 @@
 <style>
   @font-face { font-family: Fraunces; src: url(../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2); font-weight: 100 900; }
   @font-face { font-family: Fraunces; font-style: italic; src: url(../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2); font-weight: 100 900; }
-  @font-face { font-family: Literata; src: url(../node_modules/@fontsource-variable/literata/files/literata-latin-opsz-normal.woff2); font-weight: 200 900; }
+  @font-face { font-family: Plex; src: url(../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2); }
   html, body { margin: 0; }
   body {
-    width: 1200px; height: 630px; box-sizing: border-box;
-    padding: 72px 88px;
-    background: #f8f1e6; color: #2b2119;
-    display: flex; flex-direction: column; justify-content: space-between;
-    font-family: Literata, serif;
-    position: relative; overflow: hidden;
+    width: 1200px; height: 630px; box-sizing: border-box; padding: 48px 56px;
+    background: #efe7d8; color: #16110d; position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 380px; gap: 40px;
   }
-  body::after {
-    content: ""; position: absolute; right: -120px; top: -120px;
-    width: 520px; height: 520px; border-radius: 50%;
-    background: radial-gradient(circle, #f1d9bd 0%, rgba(241,217,189,0) 70%);
-  }
-  .brand { display: flex; align-items: center; gap: 16px; font-family: Fraunces, serif; font-size: 40px; font-weight: 600; position: relative; z-index: 1; }
-  .brand svg { width: 52px; height: 52px; fill: none; stroke: #a8482a; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  h1 { font-family: Fraunces, serif; font-weight: 400; font-size: 96px; line-height: 1.02; letter-spacing: -0.01em; margin: 0; font-variation-settings: "opsz" 144; position: relative; z-index: 1; }
-  h1 em { color: #a8482a; }
-  .foot { display: flex; justify-content: space-between; align-items: end; font-size: 28px; color: #6e5d4e; position: relative; z-index: 1; }
-  .pill { background: #a8482a; color: #fff8f0; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 26px; }
+  .mono { font-family: Plex, monospace; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: #5e5146; }
+  .left { display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; border-bottom: 1px solid #16110d33; padding-bottom: 14px; }
+  .top b { color: #b83d18; font-weight: 400; }
+  h1 { font-family: Fraunces, serif; font-weight: 300; font-size: 116px; line-height: .9; letter-spacing: -.045em; margin: 0; font-variation-settings: "opsz" 144; }
+  h1 em { color: #b83d18; }
+  .brand { font-family: Fraunces, serif; font-size: 34px; font-weight: 500; }
+  .fig { mix-blend-mode: multiply; position: relative; }
+  .fig img { width: 100%; height: 534px; object-fit: cover; display: block; }
+  .fig p { margin: 8px 0 0; font-size: 12px; }
 </style>
 </head>
 <body>
-  <div class="brand">
-    <svg viewBox="0 0 32 32"><path d="M16 7c-3-2-7-2.5-11-1.5v19c4-1 8-.5 11 1.5 3-2 7-2.5 11-1.5v-19C23 4.5 19 5 16 7Z"/><path d="M16 7v19"/></svg>
-    Bereano
+  <div class="left">
+    <div class="top mono"><span><b>●</b> Lista de espera abierta</span><span>Estudio bíblico con IA</span></div>
+    <h1>Entiende<br />la Biblia.<br /><em>Vívela</em> cada día.</h1>
+    <div class="brand">Bereano</div>
   </div>
-  <h1>Entiende la Biblia.<br /><em>Vívela cada día.</em></h1>
-  <div class="foot">
-    <span>Tu compañero de estudio bíblico con IA</span>
-    <span class="pill">Lista de espera</span>
-  </div>
+  <div class="fig"><img src="../public/img/emaus.webp" alt="" /><p class="mono">Fig. 1 — El camino a Emaús · G. Doré, 1866</p></div>
 </body>
 </html>

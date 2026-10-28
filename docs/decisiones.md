@@ -20,12 +20,23 @@
 - **Imagen para compartir generada desde HTML** (`landing/scripts/og-image.html`): se retoca como una página y se regenera con `node scripts/og-image.mjs`.
 - **Verificado:** el texto de Hechos 17:11 coincide con la RV1909.
 
+## Rediseño editorial (2026-10-28, tercera tanda)
+
+Referencias de Ezequiel: Pear, Dead North, Apocalypse Coffee, Illoca, Santioni, entre otras. Se tomó su lenguaje: tipografía gigante, etiquetas monoespaciadas, líneas de grilla con `+`, grano de papel, secciones numeradas, una cinta en movimiento y un bloque invertido.
+
+- **Grabados de Gustave Doré (1866), de dominio público**, sacados de *The Doré Bible Gallery* en Project Gutenberg (ebook 8710). Son el equivalente bíblico a las estatuas clásicas de Pear. El del hero es *El camino a Emaús*: Jesús camina con dos discípulos y les explica las Escrituras, que es justamente lo que hace el compañero.
+- **Los grabados se funden con el papel** con `mix-blend-mode: multiply` y, en modo oscuro, se invierten con `screen`. Una sola imagen sirve para los dos temas.
+- **Sin pantalla de carga.** Muchas de las referencias tienen una, pero cuesta visitas: con tráfico frío de TikTok, cada segundo cuenta. En su lugar el título entra línea por línea, solo con CSS.
+- **Las animaciones no rompen nada.** El hero se anima con CSS, sin depender de JS. Las secciones de abajo se ocultan solo cuando el script de movimiento ya cargó, y todo queda quieto si el usuario pidió reducir el movimiento.
+- **IBM Plex Mono** para las etiquetas, autoalojada como las otras dos fuentes (solo el subconjunto latino, 2 pesos).
+- **Imagen que sigue al cursor** sobre las puertas falsas: solo con mouse y en pantallas grandes. En el celular son filas grandes y fáciles de tocar.
+
 ## Eventos de PostHog
 
 | Evento | Cuándo |
 | --- | --- |
 | `$pageview` / `$pageleave` | Automáticos |
-| `cta_hero` | Botón principal del hero |
+| `cta_hero` / `cta_header` | Botón principal del hero / botón "Unirme" del encabezado |
 | `waitlist_form_iniciado` | Primer foco en el formulario |
 | `waitlist_form_enviar_click` | Clic en "Unirme a la lista" |
 | `waitlist_form_error_validacion` | Dato inválido (`campo`) |

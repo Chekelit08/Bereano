@@ -2,6 +2,7 @@ import './page.js';
 
 import { enablePersistence, initAnalytics, track } from './analytics.js';
 import { needsBanner, saveConsent } from './consent.js';
+import { initMotion } from './motion.js';
 import { COUNTRIES, DOORS, PRICES, SHARE_TEXT } from './config.js';
 import {
   errorMessage,
@@ -14,6 +15,7 @@ import {
 } from './waitlist.js';
 
 initAnalytics();
+initMotion();
 
 const $ = (sel) => document.querySelector(sel);
 
