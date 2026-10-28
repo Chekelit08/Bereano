@@ -4,15 +4,17 @@ import { createContext, use, useEffect, useState, type ReactNode } from 'react';
 export const FONT_SIZES = [16, 18, 20, 22, 25, 28] as const;
 
 export type LastRead = { book: string; chapter: number };
-type Settings = { fontStep: number; lastRead: LastRead | null };
+type Settings = { fontStep: number; lastRead: LastRead | null; saved: string[] };
 
 const KEY = 'bereano.settings.v1';
-const DEFAULTS: Settings = { fontStep: 2, lastRead: null };
+const DEFAULTS: Settings = { fontStep: 2, lastRead: null, saved: [] };
 
 type Ctx = Settings & {
   fontSize: number;
   changeFont: (delta: 1 | -1) => void;
   setLastRead: (r: LastRead) => void;
+  /** Guarda o quita un devocional de la lista de guardados. */
+  toggleSaved: (id: string) => void;
 };
 
 const SettingsContext = createContext<Ctx | null>(null);
@@ -33,7 +35,10 @@ function parse(raw: string | null): Settings {
       Number.isInteger(lr.chapter)
         ? { book: lr.book, chapter: lr.chapter }
         : null;
-    return { fontStep, lastRead };
+    const saved = Array.isArray(v.saved)
+      ? v.saved.filter((id: unknown) => typeof id === 'string' && /^[a-z0-9-]{1,40}$/.test(id)).slice(0, 500)
+      : [];
+    return { fontStep, lastRead, saved };
   } catch {
     return DEFAULTS;
   }
@@ -69,6 +74,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           ? s
           : { ...s, lastRead },
       ),
+    toggleSaved: (id) =>
+      setSettings((s) => ({
+        ...s,
+        saved: s.saved.includes(id) ? s.saved.filter((x) => x !== id) : [id, ...s.saved],
+      })),
   };
 
   return <SettingsContext value={value}>{children}</SettingsContext>;

@@ -29,7 +29,7 @@ export default function Reader() {
   if (!book || !verses) return <NotFound />;
 
   const { prev, next } = neighbors(book, chapter);
-  const lineHeight = Math.round(fontSize * 1.65);
+  const lineHeight = Math.round(fontSize * 1.8);
 
   return (
     <>
@@ -78,7 +78,7 @@ export default function Reader() {
               }
               style={[styles.verse, highlighted && { backgroundColor: c.surface, borderColor: c.accent }]}>
               <T style={{ fontSize, lineHeight }} selectable>
-                <T style={[styles.verseNum, { color: c.accent, fontSize: fontSize * 0.62 }]}>{n} </T>
+                <T style={[styles.verseNum, { color: c.muted, fontSize: Math.round(fontSize * 0.6) }]}>{n} </T>
                 {text}
               </T>
             </View>
@@ -150,22 +150,23 @@ function NavLink({
 
 const styles = StyleSheet.create({
   page: {
-    paddingHorizontal: Space.lg,
-    paddingTop: Space.md,
+    paddingHorizontal: 28,
+    paddingTop: Space.lg,
     maxWidth: 720,
     width: '100%',
     alignSelf: 'center',
   },
-  chapterNum: { fontFamily: Fonts.display, fontSize: 72, lineHeight: 80, marginBottom: Space.md },
+  chapterNum: { fontFamily: Fonts.display, fontSize: 64, lineHeight: 72, marginTop: Space.xs, marginBottom: Space.lg },
   verse: {
     borderLeftWidth: 2,
     borderColor: 'transparent',
     paddingLeft: Space.sm,
     marginLeft: -Space.sm - 2,
-    paddingVertical: 2,
+    paddingVertical: 4,
+    marginBottom: 10,
     borderRadius: 4,
   },
-  verseNum: { fontFamily: Fonts.bodyMedium },
+  verseNum: { fontFamily: Fonts.body, letterSpacing: 0.5 },
   fontButtons: { flexDirection: 'row', alignItems: 'baseline', gap: 4 },
   nav: {
     flexDirection: 'row',

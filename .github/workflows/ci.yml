@@ -66,6 +66,7 @@ jobs:
       - run: npm ci
       - run: npx tsc --noEmit
       - run: npx expo lint
+      - run: npm test
       - name: Los datos de la Biblia coinciden con supabase/data/rv1909.json
         run: |
           npm run bible
