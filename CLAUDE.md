@@ -93,4 +93,30 @@ Ezequiel es diseñador gráfico: la UI tiene que verse cuidada.
 
 ## Comandos útiles
 
-(Completar a medida que se configure el proyecto: cómo correr la app, la landing, las migraciones y los tests.)
+### Landing (`/landing`)
+
+```bash
+cd landing
+npm install
+cp .env.example .env   # completar con las claves públicas
+npm run dev            # http://localhost:5173
+npm run build          # genera landing/dist
+```
+
+### Supabase
+
+```bash
+npx supabase login
+npx supabase link --project-ref <ref-del-proyecto>
+npx supabase db push   # aplica supabase/migrations
+```
+
+Test de seguridad de la lista de espera (contra la base local de `npx supabase start`):
+
+```bash
+psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -f supabase/tests/waitlist_security.sql
+```
+
+### Deploy
+
+Ver `docs/deploy-cloudflare.md`.
