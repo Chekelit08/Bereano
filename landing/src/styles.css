@@ -1,35 +1,35 @@
 /* =========================================================
-   Bereano — "Cálido y natural": piedra, papel, salvia y oliva.
+   Bereano — estilo Apple: blanco, negro y grises neutros.
    ========================================================= */
 
 /* ---------- Tokens ---------- */
 :root {
-  --bg: #ecebe6;
-  --bg-tint: #e2dfd6;
-  --surface: #f7f6f2;
-  --text: #262821;
-  --muted: #5f6157;
-  --line: #2628211f;
-  --accent: #56633f;
-  --accent-ink: #262821;
-  --fill: #c7d0b6;
-  --fill-ink: #262821;
-  --focus: #56633f;
+  --bg: #ffffff;
+  --bg-tint: #f5f5f7;
+  --surface: #f5f5f7;
+  --text: #1d1d1f;
+  --muted: #6e6e73;
+  --line: #0000001f;
+  --accent: #1d1d1f;
+  --accent-ink: #ffffff;
+  --fill: #1d1d1f;
+  --fill-ink: #ffffff;
+  --focus: #0071e3;
 
   /* Bloque invertido (lista de espera): siempre cielo de noche */
-  --inv-bg: #2e3427;
-  --inv-text: #ecebe6;
-  --inv-muted: #c2c5b6;
-  --inv-line: #ecebe62b;
-  --inv-accent: #c7d0b6;
-  --inv-accent-ink: #262821;
-  --inv-surface: #384030;
+  --inv-bg: #000000;
+  --inv-text: #f5f5f7;
+  --inv-muted: #a1a1a6;
+  --inv-line: #ffffff2b;
+  --inv-accent: #f5f5f7;
+  --inv-accent-ink: #000000;
+  --inv-surface: #1c1c1e;
 
 
-  --font-display: "Newsreader Variable", Georgia, "Times New Roman", serif;
-  --font-body: "Manrope Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Inter Variable", -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  --font-body: "Inter Variable", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   --font-read: "Literata Variable", Georgia, "Times New Roman", serif;
-  --font-mono: "Manrope Variable", system-ui, sans-serif;
+  --font-mono: "Inter Variable", -apple-system, system-ui, sans-serif;
 
   --gutter: 16px;
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
@@ -39,47 +39,47 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1b1d18;
-    --bg-tint: #20231c;
-    --surface: #24271f;
-    --text: #e9e8e1;
-    --muted: #a4a698;
-    --line: #e9e8e11f;
-    --accent: #b5c29a;
-    --accent-ink: #1b1d18;
-    --fill: #b5c29a;
-    --fill-ink: #1b1d18;
-    --focus: #b5c29a;
-    --inv-bg: #2e3427;
-    --inv-text: #ecebe6;
-    --inv-muted: #c2c5b6;
-    --inv-line: #ecebe62b;
-    --inv-accent: #c7d0b6;
-    --inv-accent-ink: #262821;
-    --inv-surface: #384030;
+    --bg: #000000;
+    --bg-tint: #111111;
+    --surface: #1c1c1e;
+    --text: #f5f5f7;
+    --muted: #a1a1a6;
+    --line: #ffffff24;
+    --accent: #f5f5f7;
+    --accent-ink: #000000;
+    --fill: #f5f5f7;
+    --fill-ink: #000000;
+    --focus: #2997ff;
+    --inv-bg: #1c1c1e;
+    --inv-text: #f5f5f7;
+    --inv-muted: #a1a1a6;
+    --inv-line: #ffffff2b;
+    --inv-accent: #f5f5f7;
+    --inv-accent-ink: #000000;
+    --inv-surface: #2c2c2e;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #1b1d18;
-    --bg-tint: #20231c;
-    --surface: #24271f;
-    --text: #e9e8e1;
-    --muted: #a4a698;
-    --line: #e9e8e11f;
-    --accent: #b5c29a;
-    --accent-ink: #1b1d18;
-    --fill: #b5c29a;
-    --fill-ink: #1b1d18;
-    --focus: #b5c29a;
-    --inv-bg: #2e3427;
-    --inv-text: #ecebe6;
-    --inv-muted: #c2c5b6;
-    --inv-line: #ecebe62b;
-    --inv-accent: #c7d0b6;
-    --inv-accent-ink: #262821;
-    --inv-surface: #384030;
+  --bg: #000000;
+    --bg-tint: #111111;
+    --surface: #1c1c1e;
+    --text: #f5f5f7;
+    --muted: #a1a1a6;
+    --line: #ffffff24;
+    --accent: #f5f5f7;
+    --accent-ink: #000000;
+    --fill: #f5f5f7;
+    --fill-ink: #000000;
+    --focus: #2997ff;
+    --inv-bg: #1c1c1e;
+    --inv-text: #f5f5f7;
+    --inv-muted: #a1a1a6;
+    --inv-line: #ffffff2b;
+    --inv-accent: #f5f5f7;
+    --inv-accent-ink: #000000;
+    --inv-surface: #2c2c2e;
   color-scheme: dark;
 }
 
@@ -896,22 +896,22 @@ mark {
   aspect-ratio: 9 / 19;
   padding: 10px;
   border-radius: 48px;
-  background: #262821;
+  background: #1d1d1f;
   box-shadow:
-    inset 0 0 0 2px #3a3d33,
+    inset 0 0 0 2px #3a3a3c,
     0 0 0 1px var(--phone-ring, transparent),
-    0 30px 60px -20px rgb(38 40 33 / 30%),
-    0 12px 24px -12px rgb(38 40 33 / 22%);
+    0 30px 60px -20px rgb(0 0 0 / 30%),
+    0 12px 24px -12px rgb(0 0 0 / 22%);
   transform: rotate(-2deg);
 }
 
 /* En modo oscuro el marco se perdería contra el fondo: un borde claro sutil lo recorta. */
 :root[data-theme="dark"] .phone {
-  --phone-ring: #e9e8e140;
+  --phone-ring: #ffffff40;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .phone {
-    --phone-ring: #e9e8e140;
+    --phone-ring: #ffffff40;
   }
 }
 
@@ -922,12 +922,12 @@ mark {
   overflow: hidden;
   border-radius: 38px;
   /* La app en su modo claro, también en modo oscuro: es una "foto" del producto. */
-  background: #ecebe6;
-  color: #262821;
-  --muted: #5f6157;
-  --accent: #56633f;
-  --fill: #c7d0b6;
-  --fill-ink: #262821;
+  background: #ffffff;
+  color: #1d1d1f;
+  --muted: #6e6e73;
+  --accent: #1d1d1f;
+  --fill: #1d1d1f;
+  --fill-ink: #ffffff;
 }
 
 .phone__status {
@@ -943,7 +943,7 @@ mark {
   width: 84px;
   height: 22px;
   border-radius: 999px;
-  background: #262821;
+  background: #1d1d1f;
 }
 
 .phone__head {
@@ -951,7 +951,7 @@ mark {
   gap: 10px;
   align-items: center;
   padding: 10px 18px 12px;
-  border-bottom: 1px solid #2628211a;
+  border-bottom: 1px solid #1d1d1f1a;
 }
 
 .phone__head .brand__mark {
@@ -959,7 +959,7 @@ mark {
   height: 30px;
   padding: 5px;
   border-radius: 50%;
-  background: #e2dfd6;
+  background: #f5f5f7;
   color: var(--accent);
 }
 
@@ -1004,16 +1004,16 @@ mark {
 
 .bubble--user {
   align-self: flex-end;
-  background: #c7d0b6;
-  color: #262821;
-  font-weight: 600;
+  background: #1d1d1f;
+  color: #ffffff;
+  font-weight: 500;
   border-bottom-right-radius: 6px;
 }
 
 .bubble--bot {
   align-self: flex-start;
-  background: #f7f6f2;
-  border: 1px solid #2628211a;
+  background: #f5f5f7;
+  border: 1px solid #1d1d1f1a;
   border-bottom-left-radius: 6px;
 }
 
@@ -1024,7 +1024,7 @@ mark {
 
 .bubble__apply {
   padding-top: 0.6em;
-  border-top: 1px dashed #2628212e;
+  border-top: 1px dashed #1d1d1f2e;
   font-weight: 600;
 }
 
@@ -1033,8 +1033,8 @@ mark {
   align-self: flex-start;
   gap: 4px;
   padding: 12px 14px;
-  background: #f7f6f2;
-  border: 1px solid #2628211a;
+  background: #f5f5f7;
+  border: 1px solid #1d1d1f1a;
 }
 
 .bubble--typing span {
@@ -1072,8 +1072,8 @@ mark {
 .cites li {
   padding: 4px 8px;
   border-radius: 999px;
-  background: #c7d0b6;
-  color: #2f3622;
+  background: #1d1d1f;
+  color: #ffffff;
   font-size: 0.5625rem;
 }
 
@@ -1084,8 +1084,8 @@ mark {
   margin: 8px 12px 14px;
   padding: 8px 8px 8px 16px;
   border-radius: 999px;
-  background: #f7f6f2;
-  border: 1px solid #2628211f;
+  background: #f5f5f7;
+  border: 1px solid #1d1d1f1f;
   color: var(--muted);
   font-size: 0.75rem;
 }
@@ -1285,8 +1285,8 @@ mark {
 }
 
 .field select option {
-  color: #262821;
-  background: #f7f6f2;
+  color: #1d1d1f;
+  background: #ffffff;
 }
 
 .field input:focus,
@@ -1533,7 +1533,7 @@ mark {
     height: 14px;
     margin: -7px 0 0 -7px;
     border-radius: 50%;
-    background: #c7d0b6;
+    background: #ffffff;
     mix-blend-mode: difference;
     pointer-events: none;
     opacity: 0;
@@ -1633,12 +1633,12 @@ mark {
   transform: translateY(-6px) rotate(-1deg);
 }
 
-/* Cada plan, un tono de tierra apagado. Iguales en modo claro y oscuro. */
-.plans__track > li:nth-child(1) .plan-card { --card-bg: #c7d0b6; --card-ink: #262821; }
-.plans__track > li:nth-child(2) .plan-card { --card-bg: #e2d6c3; --card-ink: #262821; }
-.plans__track > li:nth-child(3) .plan-card { --card-bg: #c9a68c; --card-ink: #262821; }
-.plans__track > li:nth-child(4) .plan-card { --card-bg: #56633f; --card-ink: #f7f6f2; }
-.plans__track > li:nth-child(5) .plan-card { --card-bg: #3a3d33; --card-ink: #f7f6f2; }
+/* Planes: grises de Apple y uno en negro. */
+.plans__track > li:nth-child(1) .plan-card { --card-bg: #f5f5f7; --card-ink: #1d1d1f; }
+.plans__track > li:nth-child(2) .plan-card { --card-bg: #1d1d1f; --card-ink: #f5f5f7; }
+.plans__track > li:nth-child(3) .plan-card { --card-bg: #e8e8ed; --card-ink: #1d1d1f; }
+.plans__track > li:nth-child(4) .plan-card { --card-bg: #f5f5f7; --card-ink: #1d1d1f; }
+.plans__track > li:nth-child(5) .plan-card { --card-bg: #2c2c2e; --card-ink: #f5f5f7; }
 
 .plan-card__meta {
   display: flex;
@@ -1993,7 +1993,7 @@ html.lenis body {
   }
 }
 
-/* Títulos en Newsreader. */
+/* Titulares. */
 h2 {
   letter-spacing: -0.02em;
 }
@@ -2007,7 +2007,7 @@ h2 {
 
 .step {
   border-radius: 28px;
-  box-shadow: 0 20px 40px -28px rgb(38 40 33 / 25%);
+  box-shadow: none;
 }
 
 .plan-card {
@@ -2024,59 +2024,85 @@ h2 {
 }
 
 /* =========================================================
-   Natural: el hero es una tarjeta sobre piedra con manchas
-   difusas de salvia, arena y arcilla (como la tarjeta del
-   versículo en la app). Nada de contrastes fuertes.
+   Estilo Apple: titulares en negrita con tracking ajustado,
+   la segunda parte en gris, mucho blanco y cero decoración.
    ========================================================= */
-.hero {
-  margin: 10px 10px 0;
-  padding: 40px 0 72px;
-  border-radius: 32px;
-  background:
-    radial-gradient(60% 70% at 12% 18%, #b9c4a3b3, transparent 70%),
-    radial-gradient(50% 60% at 92% 12%, #e3d6c2e6, transparent 70%),
-    radial-gradient(55% 65% at 78% 100%, #d7b9a08c, transparent 70%),
-    radial-gradient(45% 55% at 8% 100%, #cbd3bcb3, transparent 70%),
-    var(--surface);
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.035em;
 }
 
-:root[data-theme="dark"] .hero {
-  background:
-    radial-gradient(60% 70% at 12% 18%, #46503acc, transparent 70%),
-    radial-gradient(50% 60% at 92% 12%, #3e3a30cc, transparent 70%),
-    radial-gradient(55% 65% at 78% 100%, #4a3b3099, transparent 70%),
-    var(--surface);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .hero {
-    background:
-      radial-gradient(60% 70% at 12% 18%, #46503acc, transparent 70%),
-      radial-gradient(50% 60% at 92% 12%, #3e3a30cc, transparent 70%),
-      radial-gradient(55% 65% at 78% 100%, #4a3b3099, transparent 70%),
-      var(--surface);
-  }
+h1 em,
+h2 em,
+h3 em {
+  font-style: normal;
+  color: var(--muted);
 }
 
-/* Sin halo: la textura ya da la calidez. */
 .hero::before {
   display: none;
 }
 
 .hero__title {
-  font-size: clamp(3.2rem, 14vw, 9rem);
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 0.98;
+  font-size: clamp(3rem, 12vw, 7.5rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
 }
 
 .hero__title em {
-  font-weight: 400;
-  color: var(--accent);
+  font-weight: 700;
 }
 
-@media (min-width: 768px) {
-  .hero {
-    margin: 12px 16px 0;
-    border-radius: 40px;
-  }
+.step {
+  border: 0;
+  background: var(--surface);
+}
+
+.step:nth-child(3) {
+  background: var(--fill);
+  color: var(--fill-ink);
+}
+
+/* Titulares en negrita (antes eran finos). Las citas bíblicas y los números quedan livianos. */
+.section__title,
+.door__text strong,
+.waitlist__title,
+.thanks__title,
+.dialog h2,
+.intro__word {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.faq__item summary {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.verse blockquote {
+  font-family: var(--font-read);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+mark {
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--text) 12%, transparent) 58%);
+}
+
+/* Cinta: discreta, gris claro, sin itálica. */
+.marquee {
+  border-block: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.marquee__track span {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3.6vw, 2rem);
+  letter-spacing: -0.03em;
 }
