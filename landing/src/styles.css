@@ -1,32 +1,32 @@
 /* =========================================================
-   Bereano — "Cielo vivo": azul noche, oro de lámpara y el cielo de la hora.
+   Bereano — "Cálido y natural": piedra, papel, salvia y oliva.
    ========================================================= */
 
 /* ---------- Tokens ---------- */
 :root {
-  --bg: #f3f5f9;
-  --bg-tint: #e8ecf4;
-  --surface: #ffffff;
-  --text: #141b2e;
-  --muted: #5b6478;
-  --line: #141b2e1f;
-  --accent: #8a5a00;
-  --accent-ink: #141b2e;
-  --fill: #f2b544;
-  --fill-ink: #141b2e;
-  --focus: #8a5a00;
+  --bg: #ecebe6;
+  --bg-tint: #e2dfd6;
+  --surface: #f7f6f2;
+  --text: #262821;
+  --muted: #5f6157;
+  --line: #2628211f;
+  --accent: #56633f;
+  --accent-ink: #262821;
+  --fill: #c7d0b6;
+  --fill-ink: #262821;
+  --focus: #56633f;
 
   /* Bloque invertido (lista de espera): siempre cielo de noche */
-  --inv-bg: #0b1220;
-  --inv-text: #eef1f7;
-  --inv-muted: #9aa3b8;
-  --inv-line: #eef1f72b;
-  --inv-accent: #f2b544;
-  --inv-accent-ink: #141b2e;
-  --inv-surface: #141c2e;
+  --inv-bg: #2e3427;
+  --inv-text: #ecebe6;
+  --inv-muted: #c2c5b6;
+  --inv-line: #ecebe62b;
+  --inv-accent: #c7d0b6;
+  --inv-accent-ink: #262821;
+  --inv-surface: #384030;
 
 
-  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-display: "Newsreader Variable", Georgia, "Times New Roman", serif;
   --font-body: "Manrope Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-read: "Literata Variable", Georgia, "Times New Roman", serif;
   --font-mono: "Manrope Variable", system-ui, sans-serif;
@@ -39,47 +39,47 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0b1220;
-    --bg-tint: #101829;
-    --surface: #141c2e;
-    --text: #eef1f7;
-    --muted: #9aa3b8;
-    --line: #eef1f71f;
-    --accent: #f2b544;
-    --accent-ink: #141b2e;
-    --fill: #f2b544;
-    --fill-ink: #141b2e;
-    --focus: #f2b544;
-    --inv-bg: #050a18;
-    --inv-text: #eef1f7;
-    --inv-muted: #9aa3b8;
-    --inv-line: #eef1f72b;
-    --inv-accent: #f2b544;
-    --inv-accent-ink: #141b2e;
-    --inv-surface: #101829;
+    --bg: #1b1d18;
+    --bg-tint: #20231c;
+    --surface: #24271f;
+    --text: #e9e8e1;
+    --muted: #a4a698;
+    --line: #e9e8e11f;
+    --accent: #b5c29a;
+    --accent-ink: #1b1d18;
+    --fill: #b5c29a;
+    --fill-ink: #1b1d18;
+    --focus: #b5c29a;
+    --inv-bg: #2e3427;
+    --inv-text: #ecebe6;
+    --inv-muted: #c2c5b6;
+    --inv-line: #ecebe62b;
+    --inv-accent: #c7d0b6;
+    --inv-accent-ink: #262821;
+    --inv-surface: #384030;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #0b1220;
-    --bg-tint: #101829;
-    --surface: #141c2e;
-    --text: #eef1f7;
-    --muted: #9aa3b8;
-    --line: #eef1f71f;
-    --accent: #f2b544;
-    --accent-ink: #141b2e;
-    --fill: #f2b544;
-    --fill-ink: #141b2e;
-    --focus: #f2b544;
-    --inv-bg: #050a18;
-    --inv-text: #eef1f7;
-    --inv-muted: #9aa3b8;
-    --inv-line: #eef1f72b;
-    --inv-accent: #f2b544;
-    --inv-accent-ink: #141b2e;
-    --inv-surface: #101829;
+  --bg: #1b1d18;
+    --bg-tint: #20231c;
+    --surface: #24271f;
+    --text: #e9e8e1;
+    --muted: #a4a698;
+    --line: #e9e8e11f;
+    --accent: #b5c29a;
+    --accent-ink: #1b1d18;
+    --fill: #b5c29a;
+    --fill-ink: #1b1d18;
+    --focus: #b5c29a;
+    --inv-bg: #2e3427;
+    --inv-text: #ecebe6;
+    --inv-muted: #c2c5b6;
+    --inv-line: #ecebe62b;
+    --inv-accent: #c7d0b6;
+    --inv-accent-ink: #262821;
+    --inv-surface: #384030;
   color-scheme: dark;
 }
 
@@ -896,22 +896,22 @@ mark {
   aspect-ratio: 9 / 19;
   padding: 10px;
   border-radius: 48px;
-  background: #050a18;
+  background: #262821;
   box-shadow:
-    inset 0 0 0 2px #26314d,
+    inset 0 0 0 2px #3a3d33,
     0 0 0 1px var(--phone-ring, transparent),
-    0 30px 60px -20px rgb(5 10 24 / 45%),
-    0 12px 24px -12px rgb(5 10 24 / 35%);
+    0 30px 60px -20px rgb(38 40 33 / 30%),
+    0 12px 24px -12px rgb(38 40 33 / 22%);
   transform: rotate(-2deg);
 }
 
 /* En modo oscuro el marco se perdería contra el fondo: un borde claro sutil lo recorta. */
 :root[data-theme="dark"] .phone {
-  --phone-ring: #eef1f740;
+  --phone-ring: #e9e8e140;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .phone {
-    --phone-ring: #eef1f740;
+    --phone-ring: #e9e8e140;
   }
 }
 
@@ -921,13 +921,13 @@ mark {
   height: 100%;
   overflow: hidden;
   border-radius: 38px;
-  /* La app con su cielo de noche, en los dos modos: es una "foto" del producto. */
-  background: linear-gradient(180deg, #22356a 0%, #16264d 16%, #0b1220 40%);
-  color: #eef1f7;
-  --muted: #9aa3b8;
-  --accent: #f2b544;
-  --fill: #f2b544;
-  --fill-ink: #141b2e;
+  /* La app en su modo claro, también en modo oscuro: es una "foto" del producto. */
+  background: #ecebe6;
+  color: #262821;
+  --muted: #5f6157;
+  --accent: #56633f;
+  --fill: #c7d0b6;
+  --fill-ink: #262821;
 }
 
 .phone__status {
@@ -943,7 +943,7 @@ mark {
   width: 84px;
   height: 22px;
   border-radius: 999px;
-  background: #050a18;
+  background: #262821;
 }
 
 .phone__head {
@@ -951,7 +951,7 @@ mark {
   gap: 10px;
   align-items: center;
   padding: 10px 18px 12px;
-  border-bottom: 1px solid #eef1f71f;
+  border-bottom: 1px solid #2628211a;
 }
 
 .phone__head .brand__mark {
@@ -959,7 +959,7 @@ mark {
   height: 30px;
   padding: 5px;
   border-radius: 50%;
-  background: #ffffff1a;
+  background: #e2dfd6;
   color: var(--accent);
 }
 
@@ -1004,16 +1004,16 @@ mark {
 
 .bubble--user {
   align-self: flex-end;
-  background: #f2b544;
-  color: #141b2e;
+  background: #c7d0b6;
+  color: #262821;
   font-weight: 600;
   border-bottom-right-radius: 6px;
 }
 
 .bubble--bot {
   align-self: flex-start;
-  background: #141c2e;
-  border: 1px solid #eef1f71a;
+  background: #f7f6f2;
+  border: 1px solid #2628211a;
   border-bottom-left-radius: 6px;
 }
 
@@ -1024,7 +1024,7 @@ mark {
 
 .bubble__apply {
   padding-top: 0.6em;
-  border-top: 1px dashed #eef1f72e;
+  border-top: 1px dashed #2628212e;
   font-weight: 600;
 }
 
@@ -1033,8 +1033,8 @@ mark {
   align-self: flex-start;
   gap: 4px;
   padding: 12px 14px;
-  background: #141c2e;
-  border: 1px solid #eef1f71a;
+  background: #f7f6f2;
+  border: 1px solid #2628211a;
 }
 
 .bubble--typing span {
@@ -1072,8 +1072,8 @@ mark {
 .cites li {
   padding: 4px 8px;
   border-radius: 999px;
-  background: #f2b5441f;
-  color: #f2b544;
+  background: #c7d0b6;
+  color: #2f3622;
   font-size: 0.5625rem;
 }
 
@@ -1084,8 +1084,8 @@ mark {
   margin: 8px 12px 14px;
   padding: 8px 8px 8px 16px;
   border-radius: 999px;
-  background: #141c2e;
-  border: 1px solid #eef1f71f;
+  background: #f7f6f2;
+  border: 1px solid #2628211f;
   color: var(--muted);
   font-size: 0.75rem;
 }
@@ -1285,8 +1285,8 @@ mark {
 }
 
 .field select option {
-  color: #141b2e;
-  background: #ffffff;
+  color: #262821;
+  background: #f7f6f2;
 }
 
 .field input:focus,
@@ -1533,7 +1533,7 @@ mark {
     height: 14px;
     margin: -7px 0 0 -7px;
     border-radius: 50%;
-    background: #f2b544;
+    background: #c7d0b6;
     mix-blend-mode: difference;
     pointer-events: none;
     opacity: 0;
@@ -1623,7 +1623,7 @@ mark {
   text-align: left;
   font: inherit;
   color: var(--card-ink);
-  background: var(--card-sky, var(--card-bg));
+  background: var(--card-bg);
   border: 1px solid var(--card-line, var(--card-bg));
   cursor: pointer;
   transition: transform 0.5s var(--ease);
@@ -1633,12 +1633,12 @@ mark {
   transform: translateY(-6px) rotate(-1deg);
 }
 
-/* Cada plan, un cielo de un momento del día (como la pantalla Hoy de la app). */
-.plans__track > li:nth-child(1) .plan-card { --card-bg: #1b2650; --card-ink: #ffffff; --card-sky: linear-gradient(160deg, #1b2650, #4a4784 45%, #a9637e 80%, #de8f7a); }
-.plans__track > li:nth-child(2) .plan-card { --card-bg: #f2b544; --card-ink: #141b2e; --card-sky: linear-gradient(160deg, #f6c766, #f2b544 50%, #e39a3b); }
-.plans__track > li:nth-child(3) .plan-card { --card-bg: #1c4a92; --card-ink: #ffffff; --card-sky: linear-gradient(160deg, #1c4a92, #2f67b3 50%, #7fa6d6); }
-.plans__track > li:nth-child(4) .plan-card { --card-bg: #1a1844; --card-ink: #ffffff; --card-sky: linear-gradient(160deg, #1a1844, #4e3473 45%, #a9506c 80%, #d9784f); }
-.plans__track > li:nth-child(5) .plan-card { --card-bg: #050a18; --card-ink: #ffffff; --card-sky: linear-gradient(160deg, #050a18, #0b1631 45%, #22356a); }
+/* Cada plan, un tono de tierra apagado. Iguales en modo claro y oscuro. */
+.plans__track > li:nth-child(1) .plan-card { --card-bg: #c7d0b6; --card-ink: #262821; }
+.plans__track > li:nth-child(2) .plan-card { --card-bg: #e2d6c3; --card-ink: #262821; }
+.plans__track > li:nth-child(3) .plan-card { --card-bg: #c9a68c; --card-ink: #262821; }
+.plans__track > li:nth-child(4) .plan-card { --card-bg: #56633f; --card-ink: #f7f6f2; }
+.plans__track > li:nth-child(5) .plan-card { --card-bg: #3a3d33; --card-ink: #f7f6f2; }
 
 .plan-card__meta {
   display: flex;
@@ -1993,122 +1993,7 @@ html.lenis body {
   }
 }
 
-/* =========================================================
-   Cielo vivo: el hero es una ventana al cielo de la hora
-   (alba, día, tarde o noche), como la pantalla Hoy de la app.
-   ========================================================= */
-:root {
-  --sky: linear-gradient(180deg, #050a18 0%, #0b1631 35%, #16264d 70%, #22356a 100%);
-  --sun-x: 78%;
-  --sun-y: 18%;
-  --sun: #f2e8c9;
-  --stars: 1;
-}
-:root[data-moment="alba"] {
-  --sky: linear-gradient(180deg, #1b2650 0%, #4a4784 35%, #a9637e 72%, #de8f7a 100%);
-  --sun-x: 78%;
-  --sun-y: 92%;
-  --sun: #ffd9a8;
-  --stars: 0;
-}
-:root[data-moment="dia"] {
-  --sky: linear-gradient(180deg, #1c4a92 0%, #2f67b3 35%, #4f86c8 70%, #7fa6d6 100%);
-  --sun-x: 82%;
-  --sun-y: 14%;
-  --sun: #fff4d6;
-  --stars: 0;
-}
-:root[data-moment="tarde"] {
-  --sky: linear-gradient(180deg, #1a1844 0%, #4e3473 35%, #a9506c 72%, #d9784f 100%);
-  --sun-x: 22%;
-  --sun-y: 94%;
-  --sun: #ffc27a;
-  --stars: 0;
-}
-
-.hero {
-  margin: 10px 10px 0;
-  padding: 40px 0 96px;
-  border-radius: 32px;
-  background: var(--sky);
-  color: #ffffff;
-  --text: #ffffff;
-  --muted: #ffffffd0;
-  --line: #ffffff38;
-  --accent: #ffd98a;
-  --focus: #f2b544;
-}
-
-/* El sol o la luna: un halo que respira. */
-.hero::before {
-  top: calc(var(--sun-y) - 35%);
-  left: calc(var(--sun-x) - 35%);
-  right: auto;
-  width: min(70%, 760px);
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--sun) 70%, transparent), transparent 72%);
-  filter: blur(18px);
-  opacity: 0.85;
-}
-
-/* Estrellas (solo de noche) y colinas lejanas. */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M0 9 C15 3 28 7 40 4 C55 0 68 6 80 3 C90 1 96 4 100 3 L100 20 L0 20 Z' fill='%23000' fill-opacity='0.28'/%3E%3C/svg%3E")
-      bottom / 100% 90px no-repeat,
-    radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent),
-    radial-gradient(1px 1px at 24% 42%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 37% 12%, #fff, transparent),
-    radial-gradient(1px 1px at 46% 30%, #fff, transparent),
-    radial-gradient(2px 2px at 58% 22%, #fff, transparent),
-    radial-gradient(1px 1px at 66% 48%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 74% 8%, #fff, transparent),
-    radial-gradient(1px 1px at 88% 36%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 93% 62%, #fff, transparent),
-    radial-gradient(1px 1px at 8% 58%, #fff, transparent),
-    radial-gradient(1px 1px at 30% 70%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 52% 64%, #fff, transparent);
-}
-:root:not([data-moment="noche"]) .hero::after {
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M0 9 C15 3 28 7 40 4 C55 0 68 6 80 3 C90 1 96 4 100 3 L100 20 L0 20 Z' fill='%23000' fill-opacity='0.14'/%3E%3C/svg%3E")
-      bottom / 100% 90px no-repeat;
-}
-
-.hero__title {
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  text-shadow: 0 2px 30px rgb(0 0 0 / 18%);
-}
-
-.hero__title em,
-.hero__title em * {
-  color: var(--accent);
-}
-
-.hero .btn--primary {
-  box-shadow: 0 10px 30px -10px rgb(0 0 0 / 45%);
-}
-
-@media (min-width: 768px) {
-  .hero {
-    margin: 12px 16px 0;
-    border-radius: 40px;
-  }
-}
-
-/* Lista de espera: el cielo de noche, con su luna. */
-.inverse {
-  background:
-    radial-gradient(circle at 82% 12%, #f2e8c933, transparent 32%),
-    linear-gradient(180deg, #050a18 0%, #0b1631 50%, #16264d 100%);
-}
-
-/* Títulos en Instrument Serif: un poco más grandes, que respiren. */
+/* Títulos en Newsreader. */
 h2 {
   letter-spacing: -0.02em;
 }
@@ -2122,7 +2007,7 @@ h2 {
 
 .step {
   border-radius: 28px;
-  box-shadow: 0 20px 40px -28px rgb(11 18 32 / 35%);
+  box-shadow: 0 20px 40px -28px rgb(38 40 33 / 25%);
 }
 
 .plan-card {
@@ -2136,4 +2021,62 @@ h2 {
 
 .step:not(:nth-child(3)) {
   border-color: var(--line);
+}
+
+/* =========================================================
+   Natural: el hero es una tarjeta sobre piedra con manchas
+   difusas de salvia, arena y arcilla (como la tarjeta del
+   versículo en la app). Nada de contrastes fuertes.
+   ========================================================= */
+.hero {
+  margin: 10px 10px 0;
+  padding: 40px 0 72px;
+  border-radius: 32px;
+  background:
+    radial-gradient(60% 70% at 12% 18%, #b9c4a3b3, transparent 70%),
+    radial-gradient(50% 60% at 92% 12%, #e3d6c2e6, transparent 70%),
+    radial-gradient(55% 65% at 78% 100%, #d7b9a08c, transparent 70%),
+    radial-gradient(45% 55% at 8% 100%, #cbd3bcb3, transparent 70%),
+    var(--surface);
+}
+
+:root[data-theme="dark"] .hero {
+  background:
+    radial-gradient(60% 70% at 12% 18%, #46503acc, transparent 70%),
+    radial-gradient(50% 60% at 92% 12%, #3e3a30cc, transparent 70%),
+    radial-gradient(55% 65% at 78% 100%, #4a3b3099, transparent 70%),
+    var(--surface);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero {
+    background:
+      radial-gradient(60% 70% at 12% 18%, #46503acc, transparent 70%),
+      radial-gradient(50% 60% at 92% 12%, #3e3a30cc, transparent 70%),
+      radial-gradient(55% 65% at 78% 100%, #4a3b3099, transparent 70%),
+      var(--surface);
+  }
+}
+
+/* Sin halo: la textura ya da la calidez. */
+.hero::before {
+  display: none;
+}
+
+.hero__title {
+  font-size: clamp(3.2rem, 14vw, 9rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.hero__title em {
+  font-weight: 400;
+  color: var(--accent);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    margin: 12px 16px 0;
+    border-radius: 40px;
+  }
 }
