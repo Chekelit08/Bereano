@@ -59,6 +59,7 @@ export default function RootLayout() {
           }}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />
+          <Stack.Screen name="ayuda" options={{ title: 'No estás solo', presentation: 'modal' }} />
         </Stack>
       </SettingsProvider>
     </ThemeProvider>

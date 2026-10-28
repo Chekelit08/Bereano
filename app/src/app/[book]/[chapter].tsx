@@ -78,7 +78,9 @@ export default function Reader() {
               }
               style={[styles.verse, highlighted && { backgroundColor: c.surface, borderColor: c.accent }]}>
               <T style={{ fontSize, lineHeight }} selectable>
-                <T style={[styles.verseNum, { color: c.muted, fontSize: Math.round(fontSize * 0.6) }]}>{n} </T>
+                <T style={[styles.verseNum, { color: c.muted, fontSize: Math.round(fontSize * 0.6) }]}>
+                  {n}{' '}
+                </T>
                 {text}
               </T>
             </View>
@@ -156,7 +158,13 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
-  chapterNum: { fontFamily: Fonts.display, fontSize: 64, lineHeight: 72, marginTop: Space.xs, marginBottom: Space.lg },
+  chapterNum: {
+    fontFamily: Fonts.display,
+    fontSize: 64,
+    lineHeight: 72,
+    marginTop: Space.xs,
+    marginBottom: Space.lg,
+  },
   verse: {
     borderLeftWidth: 2,
     borderColor: 'transparent',
