@@ -108,7 +108,7 @@ npm run build          # genera landing/dist
 
 ```bash
 npx supabase login
-npx supabase link --project-ref <ref-del-proyecto>
+npx supabase link --project-ref annxvazsnzlkeqkrqwfk
 npx supabase db push   # aplica supabase/migrations
 ```
 

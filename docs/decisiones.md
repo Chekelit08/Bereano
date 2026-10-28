@@ -52,7 +52,8 @@ Referencias de Ezequiel: Pear, Dead North, Apocalypse Coffee, Illoca, Santioni, 
 - [x] Banner de consentimiento para visitantes de la UE.
 - [x] Imagen para compartir (og:image) de 1200×630.
 - [x] Límite anti-spam básico (30 altas por IP por hora).
-- [ ] **Completar la política de privacidad** (`landing/privacidad.html`): nombre del responsable, email de contacto, región de Supabase y fecha. Que la revise alguien que sepa de RGPD.
+- [x] Crear el proyecto de Supabase y aplicar las migraciones (bereano, us-east-1). Verificado contra la API real: leer, editar y borrar dan 401; los datos inválidos los rechazan los CHECK.
+- [ ] **Completar la política de privacidad** (`landing/privacidad.html`): nombre del responsable, email de contacto y fecha. Que la revise alguien que sepa de RGPD.
 - [ ] Definir el alcance del 50% (¿el primer año?, ¿cuántos son "los primeros"?).
 - [ ] En PostHog: activar "Discard client IP data" en la configuración del proyecto.
 - [ ] Si igual llega spam: Cloudflare Turnstile (requiere cuenta).

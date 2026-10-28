@@ -1,10 +1,10 @@
 # Deploy de la landing en Cloudflare Pages
 
-> Nada de esto está hecho todavía: hace falta crear cuentas y proyectos (gratis), y eso lo decide Ezequiel.
+> Estado: Supabase listo (proyecto `bereano`, ref `annxvazsnzlkeqkrqwfk`, us-east-1). Faltan PostHog y Cloudflare.
 
 ## Antes de publicar
 
-1. **Supabase**: crear el proyecto (plan gratis) y aplicar la migración (ver "Comandos útiles" en `CLAUDE.md`).
+1. ~~**Supabase**: crear el proyecto y aplicar las migraciones.~~ Hecho. URL: `https://annxvazsnzlkeqkrqwfk.supabase.co`; la clave publishable está en el panel (Project Settings > API Keys).
 2. **PostHog**: crear el proyecto (plan gratis) y copiar la *Project API key* (`phc_...`).
 3. Revisar los pendientes de `docs/decisiones.md`. Sobre todo: **completar los datos entre corchetes de `landing/privacidad.html`**.
 4. En PostHog > Project settings: activar *Discard client IP data*.
