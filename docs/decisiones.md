@@ -45,6 +45,14 @@ Referencias de Ezequiel: Pear, Dead North, Apocalypse Coffee, Illoca, Santioni, 
 - **Encabezado que se esconde al bajar** y vuelve al subir. **Botones magnéticos** solo con mouse.
 - Con "reducir movimiento" todo se ve completo y quieto.
 
+## Más movimiento (2026-10-28, quinta tanda)
+
+- **Intro con contador** ("Bereano" + 000→100 y la cortina sube). Dura ~1,3 s, sale solo la primera vez por visita y nunca con "reducir movimiento". La decide `public/theme.js` antes de pintar; si el JS no llega, el CSS la cierra solo a los 2,6 s.
+- **Scroll suave con Lenis** solo con mouse o trackpad (en el celular el nativo es mejor). Se frena cuando está abierto el aviso de "próximamente".
+- **Galería horizontal de planes por tema** con cinco grabados de Doré (Getsemaní, el hijo pródigo, Rut, Jesús sobre el mar, el sepulcro vacío). En escritorio queda fija y avanza de costado con el scroll; en el celular es un carrusel nativo con scroll-snap. Cada tarjeta abre la puerta falsa de planes, con `origen: galeria` en el evento para distinguirla de la fila. Solo cita capítulos (sin versículos textuales).
+- **Cursor propio** que crece y muestra etiquetas ("Ver plan", "Abrir"); el cursor del sistema sigue visible.
+- **La cinta reacciona al scroll** (acelera y cambia de sentido) y hay una **barra de progreso** arriba.
+
 ## Eventos de PostHog
 
 | Evento | Cuándo |
@@ -57,7 +65,8 @@ Referencias de Ezequiel: Pear, Dead North, Apocalypse Coffee, Illoca, Santioni, 
 | `waitlist_form_enviar_click` | Clic en "Unirme a la lista" |
 | `waitlist_form_error_validacion` | Dato inválido (`campo`) |
 | `waitlist_registro_ok` / `waitlist_registro_error` | Respuesta de Supabase (`pais` / `motivo`) |
-| `puerta_falsa_companero` / `_planes_tema` / `_modo_grupo` | Clic en cada puerta |
+| `puerta_falsa_companero` / `_planes_tema` / `_modo_grupo` | Clic en cada puerta (`origen`: `fila` o `galeria`) |
+| `cta_planes` | Botón "Avisarme" al final de la galería de planes |
 | `puerta_falsa_email_enviado` | Email dejado en el aviso (`puerta`) |
 | `compartir_click` | Botón de compartir (`metodo`) |
 | `consentimiento_cookies` | Respuesta al banner (`eleccion`), solo Europa |

@@ -33,6 +33,14 @@
   <body>
     <a class="skip" href="#lista">Ir a la lista de espera</a>
     <div class="grain" aria-hidden="true"></div>
+    <div class="progress" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+    <!-- Intro: solo la primera vez por visita (ver public/theme.js y src/motion.js) -->
+    <div class="intro" aria-hidden="true">
+      <p class="intro__word"><span>B</span><span>e</span><span>r</span><span>e</span><span>a</span><span>n</span><span>o</span></p>
+      <p class="intro__meta mono"><span>Estudio bíblico con IA</span><span class="intro__count" data-count>000</span></p>
+    </div>
 
     <header class="topbar">
       <div class="wrap topbar__inner">
@@ -213,15 +221,73 @@
         </div>
       </section>
 
+      <!-- Planes por tema: galería horizontal (fijada al scroll en escritorio) -->
+      <section class="plans" aria-labelledby="planes-titulo" data-hscroll>
+        <div class="plans__sticky">
+          <div class="wrap plans__head">
+            <p class="label mono"><span>(04)</span> Planes por tema · Próximamente</p>
+            <h2 class="section__title" id="planes-titulo">Un plan para <em>cada etapa.</em></h2>
+          </div>
+          <div class="plans__viewport">
+            <ul class="plans__track" data-track>
+              <li>
+                <button class="plan-card" type="button" data-door="planes_tema" data-origen="galeria" data-cursor="Ver plan">
+                  <span class="plan-card__img"><img src="/img/getsemani.webp" width="560" height="700" alt="Jesús orando en el huerto de Getsemaní, grabado de Gustave Doré." loading="lazy" decoding="async" /></span>
+                  <span class="plan-card__meta mono"><span>01</span><span>7 días</span></span>
+                  <strong class="plan-card__title">Ansiedad</strong>
+                  <span class="plan-card__ref mono">Getsemaní · Mateo 26</span>
+                </button>
+              </li>
+              <li>
+                <button class="plan-card" type="button" data-door="planes_tema" data-origen="galeria" data-cursor="Ver plan">
+                  <span class="plan-card__img"><img src="/img/prodigo.webp" width="560" height="700" alt="El padre abraza al hijo pródigo, grabado de Gustave Doré." loading="lazy" decoding="async" /></span>
+                  <span class="plan-card__meta mono"><span>02</span><span>7 días</span></span>
+                  <strong class="plan-card__title">Perdón</strong>
+                  <span class="plan-card__ref mono">El hijo pródigo · Lucas 15</span>
+                </button>
+              </li>
+              <li>
+                <button class="plan-card" type="button" data-door="planes_tema" data-origen="galeria" data-cursor="Ver plan">
+                  <span class="plan-card__img"><img src="/img/rut.webp" width="560" height="700" alt="Rut espigando en el campo de Booz, grabado de Gustave Doré." loading="lazy" decoding="async" /></span>
+                  <span class="plan-card__meta mono"><span>03</span><span>7 días</span></span>
+                  <strong class="plan-card__title">Familia</strong>
+                  <span class="plan-card__ref mono">Rut y Booz · Rut 2</span>
+                </button>
+              </li>
+              <li>
+                <button class="plan-card" type="button" data-door="planes_tema" data-origen="galeria" data-cursor="Ver plan">
+                  <span class="plan-card__img"><img src="/img/mar.webp" width="560" height="700" alt="Jesús camina sobre el mar en la tormenta, grabado de Gustave Doré." loading="lazy" decoding="async" /></span>
+                  <span class="plan-card__meta mono"><span>04</span><span>7 días</span></span>
+                  <strong class="plan-card__title">Fe en la tormenta</strong>
+                  <span class="plan-card__ref mono">Jesús sobre el mar · Mateo 14</span>
+                </button>
+              </li>
+              <li>
+                <button class="plan-card" type="button" data-door="planes_tema" data-origen="galeria" data-cursor="Ver plan">
+                  <span class="plan-card__img"><img src="/img/sepulcro.webp" width="560" height="700" alt="El ángel junto al sepulcro vacío, grabado de Gustave Doré." loading="lazy" decoding="async" /></span>
+                  <span class="plan-card__meta mono"><span>05</span><span>7 días</span></span>
+                  <strong class="plan-card__title">Duelo y esperanza</strong>
+                  <span class="plan-card__ref mono">El sepulcro vacío · Mateo 28</span>
+                </button>
+              </li>
+              <li class="plans__end">
+                <p>¿Qué tema te gustaría?</p>
+                <a class="btn btn--primary" href="#lista" data-track="cta_planes" data-magnetic>Avisarme <span aria-hidden="true">→</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <!-- Puertas falsas: funciones que todavía no existen -->
       <section class="section section--rule" aria-labelledby="explora-titulo">
         <div class="wrap">
           <div class="section__head" data-reveal>
-            <p class="label mono"><span>(04)</span> Explora</p>
+            <p class="label mono"><span>(05)</span> Explora</p>
             <h2 class="section__title" id="explora-titulo">Lo que viene.</h2>
           </div>
           <div class="doors">
-            <button class="door" type="button" data-door="companero" data-img="/img/doctores.webp" data-reveal>
+            <button class="door" type="button" data-door="companero" data-cursor="Abrir" data-img="/img/doctores.webp" data-reveal>
               <span class="door__index mono" aria-hidden="true">A</span>
               <span class="door__text">
                 <strong>Pregúntale a tu compañero</strong>
@@ -230,7 +296,7 @@
               <span class="door__tag mono">Probar</span>
               <span class="door__arrow" aria-hidden="true">→</span>
             </button>
-            <button class="door" type="button" data-door="planes_tema" data-img="/img/emaus.webp" data-reveal>
+            <button class="door" type="button" data-door="planes_tema" data-cursor="Abrir" data-img="/img/emaus.webp" data-reveal>
               <span class="door__index mono" aria-hidden="true">B</span>
               <span class="door__text">
                 <strong>Planes por tema</strong>
@@ -239,7 +305,7 @@
               <span class="door__tag mono">Ver planes</span>
               <span class="door__arrow" aria-hidden="true">→</span>
             </button>
-            <button class="door" type="button" data-door="modo_grupo" data-img="/img/sermon.webp" data-reveal>
+            <button class="door" type="button" data-door="modo_grupo" data-cursor="Abrir" data-img="/img/sermon.webp" data-reveal>
               <span class="door__index mono" aria-hidden="true">C</span>
               <span class="door__text">
                 <strong>Modo grupo para tu iglesia</strong>
@@ -258,7 +324,7 @@
       <section class="section section--rule" aria-labelledby="precio-titulo">
         <div class="wrap">
           <div class="section__head" data-reveal>
-            <p class="label mono"><span>(05)</span> Precio previsto</p>
+            <p class="label mono"><span>(06)</span> Precio previsto</p>
             <h2 class="section__title" id="precio-titulo">Claro desde el principio.</h2>
           </div>
           <div class="pricing">
@@ -285,7 +351,7 @@
       <section class="section section--rule" aria-labelledby="faq-titulo">
         <div class="wrap faq-grid">
           <div class="section__head" data-reveal>
-            <p class="label mono"><span>(06)</span> Preguntas</p>
+            <p class="label mono"><span>(07)</span> Preguntas</p>
             <h2 class="section__title" id="faq-titulo">Lo que todos preguntan.</h2>
           </div>
           <div class="faq" data-reveal>
@@ -333,7 +399,7 @@
       <section class="section inverse" id="lista" aria-labelledby="lista-titulo">
         <div class="wrap waitlist">
           <div class="waitlist__head">
-            <p class="label mono"><span>(07)</span> Lista de espera</p>
+            <p class="label mono"><span>(08)</span> Lista de espera</p>
             <h2 class="waitlist__title" id="lista-titulo">Súmate<em>.</em></h2>
             <p class="section__lead">
               Te avisamos cuando Bereano esté listo y te guardamos el 50% de descuento.
@@ -407,7 +473,7 @@
     </aside>
 
     <!-- Aviso de "próximamente" para las puertas falsas -->
-    <dialog id="soon-dialog" class="dialog" aria-labelledby="soon-title">
+    <dialog id="soon-dialog" class="dialog" aria-labelledby="soon-title" data-lenis-prevent>
       <form method="dialog" class="dialog__close-form">
         <button class="dialog__close" value="cancel" aria-label="Cerrar">×</button>
       </form>
