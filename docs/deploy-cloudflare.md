@@ -29,7 +29,7 @@ Variables de build (Settings > Build > **Build variables and secrets**, no las d
 - `VITE_SUPABASE_ANON_KEY` = la clave publishable (`sb_publishable_...`), nunca la `service_role`
 - `VITE_POSTHOG_KEY` = la clave del proyecto de PostHog (`phc_...`), cuando exista
 - `VITE_POSTHOG_HOST` = `https://us.i.posthog.com`
-- `VITE_SITE_URL` = la URL pública (`https://bereano.<subdominio>.workers.dev`, o el dominio cuando exista)
+- `VITE_SITE_URL` = opcional; por defecto `https://bereano.ezeadenett.workers.dev`. Cargarla solo cuando haya dominio propio
 - `NODE_VERSION` = `22`
 
 Las variables `VITE_*` se insertan en el JS durante el build: si las cambiás, hay que volver a desplegar (Deployments > Retry build).
