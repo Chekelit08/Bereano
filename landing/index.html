@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bereano · Tu compañero de estudio bíblico</title>
+    <meta
+      name="description"
+      content="Bereano es un compañero de estudio bíblico con inteligencia artificial que te ayuda a entender y vivir la Biblia cada día. Súmate a la lista de espera."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#efe7d8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f0c0a" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content="Bereano · Entiende la Biblia. Vívela cada día." />
+    <meta
+      property="og:description"
+      content="Un compañero de estudio bíblico con IA, en español. Súmate a la lista de espera."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Bereano: Entiende la Biblia. Vívela cada día." />
+    <meta property="og:locale" content="es_LA" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" as="image" href="/img/emaus.webp" type="image/webp" />
+    <!-- Aplica el tema guardado antes de pintar, para evitar el parpadeo. -->
+    <script src="/theme.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#lista">Ir a la lista de espera</a>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="wrap topbar__inner">
+        <a class="brand" href="/" aria-label="Bereano, inicio">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M16 7c-3-2-7-2.5-11-1.5v19c4-1 8-.5 11 1.5 3-2 7-2.5 11-1.5v-19C23 4.5 19 5 16 7Z" />
+            <path d="M16 7v19" />
+          </svg>
+          <span>Bereano</span>
+        </a>
+        <p class="topbar__status mono"><span class="dot" aria-hidden="true"></span> Lista de espera abierta</p>
+        <div class="topbar__actions">
+          <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Cambiar entre modo claro y oscuro">
+            <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.5" />
+              <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" />
+            </svg>
+            <svg class="icon icon--moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
+            </svg>
+          </button>
+          <a class="btn btn--small" href="#lista" data-track="cta_header">Unirme <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Promesa -->
+      <section class="hero">
+        <div class="wrap hero__grid">
+          <div class="hero__meta mono" aria-hidden="true">
+            <span>N.º 001</span>
+            <span>Estudio bíblico con IA</span>
+            <span>En español</span>
+          </div>
+
+          <h1 class="hero__title">
+            <span class="line"><span>Entiende</span></span>
+            <span class="line"><span>la Biblia.</span></span>
+            <span class="line"><span><em>Vívela</em></span></span>
+            <span class="line"><span>cada día.</span></span>
+          </h1>
+
+          <figure class="hero__figure" data-parallax>
+            <span class="cross cross--tl" aria-hidden="true"></span>
+            <span class="cross cross--br" aria-hidden="true"></span>
+            <img
+              class="engraving"
+              src="/img/emaus.webp"
+              width="747"
+              height="896"
+              alt="Grabado de Gustave Doré: Jesús camina junto a dos discípulos por el camino a Emaús, al atardecer."
+              fetchpriority="high"
+            />
+            <figcaption class="mono">Fig. 1 — El camino a Emaús · Lucas 24 · G. Doré, 1866</figcaption>
+          </figure>
+
+          <div class="hero__copy">
+            <p class="hero__lead">
+              Un compañero de estudio que camina contigo: te ayuda a entender cada pasaje, aplicarlo a
+              tu vida y sostener el hábito de leer, un día a la vez. Siempre con el texto bíblico como base.
+            </p>
+            <div class="hero__actions">
+              <a class="btn btn--primary" href="#lista" data-track="cta_hero">
+                Quiero estar entre los primeros <span aria-hidden="true">→</span>
+              </a>
+              <p class="mono hero__note">Lectura de la Biblia gratis, siempre</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cinta -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>Entiende</span><span>✦</span><span>Pregunta</span><span>✦</span><span>Aplica</span><span>✦</span><span>Persevera</span><span>✦</span>
+          <span>Entiende</span><span>✦</span><span>Pregunta</span><span>✦</span><span>Aplica</span><span>✦</span><span>Persevera</span><span>✦</span>
+        </div>
+      </div>
+
+      <!-- El nombre -->
+      <section class="section verse-section" aria-labelledby="nombre-titulo">
+        <div class="wrap">
+          <p class="label mono" data-reveal><span>(00)</span> <span id="nombre-titulo">Por qué Bereano</span></p>
+          <figure class="verse" data-reveal>
+            <blockquote>
+              “…recibieron la palabra con toda solicitud, <mark>escudriñando cada día las Escrituras,</mark> si
+              estas cosas eran así.”
+            </blockquote>
+            <figcaption class="mono">Hechos 17:11 — Reina-Valera 1909</figcaption>
+          </figure>
+          <p class="verse-section__note" data-reveal>
+            Los creyentes de Berea no se quedaban con lo que oían: lo comprobaban en las Escrituras, cada
+            día. Bereano te ayuda a hacer lo mismo.
+          </p>
+        </div>
+      </section>
+
+      <!-- Cómo funciona -->
+      <section class="section" aria-labelledby="como-titulo">
+        <div class="wrap">
+          <div class="section__head" data-reveal>
+            <p class="label mono"><span>(01)</span> Cómo funciona</p>
+            <h2 class="section__title" id="como-titulo">Tres minutos al día. <em>Toda una vida.</em></h2>
+          </div>
+          <ol class="steps">
+            <li class="step" data-reveal>
+              <span class="step__num" aria-hidden="true">01</span>
+              <h3>Lee el pasaje del día</h3>
+              <p>Un texto breve de la Reina-Valera 1909, con una reflexión corta. Funciona incluso sin conexión.</p>
+            </li>
+            <li class="step" data-reveal>
+              <span class="step__num" aria-hidden="true">02</span>
+              <h3>Pregunta lo que no entiendas</h3>
+              <p>Tu compañero responde con claridad y siempre te muestra libro, capítulo y versículo para que lo compruebes.</p>
+            </li>
+            <li class="step" data-reveal>
+              <span class="step__num" aria-hidden="true">03</span>
+              <h3>Llévalo a tu vida</h3>
+              <p>Una pregunta para aplicar lo leído y una racha diaria que te ayuda a no soltar el hábito.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Puertas falsas: funciones que todavía no existen -->
+      <section class="section section--rule" aria-labelledby="explora-titulo">
+        <div class="wrap">
+          <div class="section__head" data-reveal>
+            <p class="label mono"><span>(02)</span> Explora</p>
+            <h2 class="section__title" id="explora-titulo">Lo que viene.</h2>
+          </div>
+          <div class="doors">
+            <button class="door" type="button" data-door="companero" data-img="/img/doctores.webp" data-reveal>
+              <span class="door__index mono" aria-hidden="true">A</span>
+              <span class="door__text">
+                <strong>Pregúntale a tu compañero</strong>
+                <span>“¿Qué significa ‘bienaventurados los mansos’?”</span>
+              </span>
+              <span class="door__tag mono">Probar</span>
+              <span class="door__arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="door" type="button" data-door="planes_tema" data-img="/img/emaus.webp" data-reveal>
+              <span class="door__index mono" aria-hidden="true">B</span>
+              <span class="door__text">
+                <strong>Planes por tema</strong>
+                <span>Ansiedad, perdón, familia, propósito…</span>
+              </span>
+              <span class="door__tag mono">Ver planes</span>
+              <span class="door__arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="door" type="button" data-door="modo_grupo" data-img="/img/sermon.webp" data-reveal>
+              <span class="door__index mono" aria-hidden="true">C</span>
+              <span class="door__text">
+                <strong>Modo grupo para tu iglesia</strong>
+                <span>Un mismo plan para todo tu grupo o célula.</span>
+              </span>
+              <span class="door__tag mono">Ver más</span>
+              <span class="door__arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+        <!-- Imagen que sigue al cursor sobre las filas (solo con mouse) -->
+        <img class="door-preview" id="door-preview" alt="" aria-hidden="true" width="240" height="300" />
+      </section>
+
+      <!-- Precio -->
+      <section class="section section--rule" aria-labelledby="precio-titulo">
+        <div class="wrap">
+          <div class="section__head" data-reveal>
+            <p class="label mono"><span>(03)</span> Precio previsto</p>
+            <h2 class="section__title" id="precio-titulo">Claro desde el principio.</h2>
+          </div>
+          <div class="pricing">
+            <div class="plan" data-reveal>
+              <p class="plan__name mono">Lectura</p>
+              <p class="plan__price">Gratis</p>
+              <p>La Biblia completa (Reina-Valera 1909), buscador y lectura sin conexión. Siempre.</p>
+            </div>
+            <div class="plan plan--featured" data-reveal>
+              <p class="plan__badge mono">−50% para los primeros de la lista</p>
+              <p class="plan__name mono">Bereano Plus</p>
+              <p class="plan__price">
+                <small>USD</small> <span data-price="monthly"></span><small>/mes</small>
+              </p>
+              <p class="plan__alt">o USD <span data-price="yearly"></span> al año</p>
+              <p>Compañero con IA, devocional diario y planes de lectura. 7 días de prueba gratis.</p>
+            </div>
+          </div>
+          <p class="fine mono">Precios en dólares estadounidenses · Habrá precios locales en Latinoamérica</p>
+        </div>
+      </section>
+
+      <!-- Lista de espera -->
+      <section class="section inverse" id="lista" aria-labelledby="lista-titulo">
+        <div class="wrap waitlist">
+          <div class="waitlist__head">
+            <p class="label mono"><span>(04)</span> Lista de espera</p>
+            <h2 class="waitlist__title" id="lista-titulo">Súmate<em>.</em></h2>
+            <p class="section__lead">
+              Te avisamos cuando Bereano esté listo y te guardamos el 50% de descuento.
+            </p>
+          </div>
+
+          <div class="waitlist__body">
+            <div id="waitlist-form-wrap">
+              <form id="waitlist-form" class="form" novalidate>
+                <div class="field">
+                  <label class="mono" for="wl-name">Nombre</label>
+                  <input id="wl-name" name="name" type="text" autocomplete="given-name" maxlength="80" required />
+                </div>
+                <div class="field">
+                  <label class="mono" for="wl-email">Email</label>
+                  <input id="wl-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required />
+                </div>
+                <div class="field">
+                  <label class="mono" for="wl-country">País</label>
+                  <select id="wl-country" name="country" required>
+                    <option value="" selected disabled>Elige tu país</option>
+                  </select>
+                </div>
+                <!-- Trampa para bots: los humanos no ven este campo. -->
+                <div class="hp" aria-hidden="true">
+                  <label for="wl-website">No completes este campo</label>
+                  <input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+                </div>
+                <p class="form__error" id="waitlist-error" role="alert" hidden></p>
+                <button class="btn btn--primary btn--block" type="submit">Unirme a la lista <span aria-hidden="true">→</span></button>
+                <p class="fine">Solo te escribiremos sobre Bereano. No vendemos tus datos. <a href="/privacidad.html">Política de privacidad</a>.</p>
+              </form>
+            </div>
+
+            <div id="waitlist-thanks" class="thanks" hidden tabindex="-1">
+              <h3 class="thanks__title">¡Gracias, <span id="thanks-name"></span>!</h3>
+              <p class="section__lead">
+                Ya estás en la lista. Te escribiremos apenas Bereano esté listo, con tu descuento del 50%.
+              </p>
+              <p>¿Conoces a alguien a quien le serviría? Compártelo:</p>
+              <button class="btn btn--primary btn--block" type="button" id="share-btn">Compartir con amigos <span aria-hidden="true">→</span></button>
+              <a class="btn btn--ghost btn--block" id="share-whatsapp" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+              <p class="fine" id="share-status" role="status"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer__row mono">
+          <p>Bereano no reemplaza a tu iglesia local ni a tu pastor.</p>
+          <p>© <span id="year"></span> · <a href="/privacidad.html">Privacidad</a> · Grabados: G. Doré, 1866</p>
+        </div>
+        <p class="footer__word" aria-hidden="true">Bereano</p>
+      </div>
+    </footer>
+
+    <!-- Consentimiento de cookies: solo se muestra en Europa (ver src/consent.js) -->
+    <aside id="consent" class="consent" aria-label="Cookies" hidden>
+      <p>
+        ¿Nos dejas usar cookies analíticas para entender qué te interesa? Si dices que no, igual
+        contamos la visita de forma anónima, sin guardar nada en tu dispositivo.
+        <a href="/privacidad.html">Más información</a>
+      </p>
+      <div class="consent__actions">
+        <button class="btn btn--ghost" type="button" data-consent="no">No, gracias</button>
+        <button class="btn btn--primary" type="button" data-consent="yes">Aceptar</button>
+      </div>
+    </aside>
+
+    <!-- Aviso de "próximamente" para las puertas falsas -->
+    <dialog id="soon-dialog" class="dialog" aria-labelledby="soon-title">
+      <form method="dialog" class="dialog__close-form">
+        <button class="dialog__close" value="cancel" aria-label="Cerrar">×</button>
+      </form>
+      <div id="soon-body">
+        <p class="label mono"><span class="dot" aria-hidden="true"></span> Próximamente</p>
+        <h2 id="soon-title">Estamos preparando esto</h2>
+        <p id="soon-text">Déjanos tu email y te avisamos apenas esté disponible.</p>
+        <form id="soon-form" class="form" novalidate>
+          <div class="field">
+            <label class="mono" for="soon-email">Email</label>
+            <input id="soon-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required />
+          </div>
+          <p class="form__error" id="soon-error" role="alert" hidden></p>
+          <button class="btn btn--primary btn--block" type="submit">Avisarme <span aria-hidden="true">→</span></button>
+        </form>
+      </div>
+      <div id="soon-thanks" hidden>
+        <h2>¡Listo!</h2>
+        <p>Te avisaremos apenas esté disponible.</p>
+        <form method="dialog"><button class="btn btn--ghost btn--block">Cerrar</button></form>
+      </div>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

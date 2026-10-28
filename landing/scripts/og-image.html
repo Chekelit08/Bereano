@@ -1,0 +1,37 @@
+<!doctype html>
+<!-- Plantilla de la imagen para compartir (og:image, 1200×630).
+     Para regenerarla: node scripts/og-image.mjs  (necesita Playwright). -->
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<style>
+  @font-face { font-family: Fraunces; src: url(../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2); font-weight: 100 900; }
+  @font-face { font-family: Fraunces; font-style: italic; src: url(../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2); font-weight: 100 900; }
+  @font-face { font-family: Plex; src: url(../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2); }
+  html, body { margin: 0; }
+  body {
+    width: 1200px; height: 630px; box-sizing: border-box; padding: 48px 56px;
+    background: #efe7d8; color: #16110d; position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 380px; gap: 40px;
+  }
+  .mono { font-family: Plex, monospace; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: #5e5146; }
+  .left { display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; border-bottom: 1px solid #16110d33; padding-bottom: 14px; }
+  .top b { color: #b83d18; font-weight: 400; }
+  h1 { font-family: Fraunces, serif; font-weight: 300; font-size: 116px; line-height: .9; letter-spacing: -.045em; margin: 0; font-variation-settings: "opsz" 144; }
+  h1 em { color: #b83d18; }
+  .brand { font-family: Fraunces, serif; font-size: 34px; font-weight: 500; }
+  .fig { mix-blend-mode: multiply; position: relative; }
+  .fig img { width: 100%; height: 534px; object-fit: cover; display: block; }
+  .fig p { margin: 8px 0 0; font-size: 12px; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="top mono"><span><b>●</b> Lista de espera abierta</span><span>Estudio bíblico con IA</span></div>
+    <h1>Entiende<br />la Biblia.<br /><em>Vívela</em> cada día.</h1>
+    <div class="brand">Bereano</div>
+  </div>
+  <div class="fig"><img src="../public/img/emaus.webp" alt="" /><p class="mono">Fig. 1 — El camino a Emaús · G. Doré, 1866</p></div>
+</body>
+</html>
