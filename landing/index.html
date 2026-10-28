@@ -96,7 +96,7 @@
               tu vida y sostener el hábito de leer, un día a la vez. Siempre con el texto bíblico como base.
             </p>
             <div class="hero__actions">
-              <a class="btn btn--primary" href="#lista" data-track="cta_hero">
+              <a class="btn btn--primary" href="#lista" data-track="cta_hero" data-magnetic>
                 Quiero estar entre los primeros <span aria-hidden="true">→</span>
               </a>
               <p class="mono hero__note">Lectura de la Biblia gratis, siempre</p>
@@ -113,12 +113,67 @@
         </div>
       </div>
 
+      <!-- Demo del compañero: vista previa de la app -->
+      <section class="section demo" aria-labelledby="demo-titulo">
+        <div class="wrap demo__grid">
+          <div class="demo__copy" data-reveal>
+            <p class="label mono"><span>(01)</span> Tu compañero</p>
+            <h2 class="section__title" id="demo-titulo">Pregunta lo que sea. <em>Responde con la Biblia abierta.</em></h2>
+            <ul class="demo__points">
+              <li><span class="mono">01</span> Siempre cita libro, capítulo y versículo.</li>
+              <li><span class="mono">02</span> Comprueba cada cita contra el texto bíblico antes de mostrártela.</li>
+              <li><span class="mono">03</span> Te deja una pregunta para llevarlo a tu vida.</li>
+            </ul>
+            <a class="btn btn--primary" href="#lista" data-track="cta_demo" data-magnetic>
+              Quiero probarlo primero <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <figure class="demo__device" data-reveal>
+            <div class="phone" data-demo>
+              <div class="phone__screen">
+                <div class="phone__status mono" aria-hidden="true"><span>9:41</span><span class="phone__island"></span><span>100%</span></div>
+                <div class="phone__head">
+                  <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+                    <path d="M16 7c-3-2-7-2.5-11-1.5v19c4-1 8-.5 11 1.5 3-2 7-2.5 11-1.5v-19C23 4.5 19 5 16 7Z" />
+                    <path d="M16 7v19" />
+                  </svg>
+                  <div>
+                    <strong>Compañero</strong>
+                    <span class="mono">Leyendo Mateo 5</span>
+                  </div>
+                </div>
+                <div class="chat">
+                  <p class="bubble bubble--user">¿Qué significa “bienaventurados los mansos”?</p>
+                  <div class="bubble bubble--typing" aria-hidden="true"><span></span><span></span><span></span></div>
+                  <div class="bubble bubble--bot" data-stream>
+                    <p>Ser <em>manso</em> no es ser débil: es tener fuerza y dejar que Dios la guíe, sin imponerse ni devolver mal por mal.</p>
+                    <p>Jesús promete que los mansos “recibirán la tierra por heredad” (Mateo 5:5), un eco de Salmos 37:11. Y Él mismo se presenta así: “aprended de mí, que soy manso y humilde de corazón” (Mateo 11:29).</p>
+                    <p class="bubble__apply">Para hoy: ¿en qué situación podrías responder con mansedumbre en vez de imponerte?</p>
+                  </div>
+                  <ul class="cites" data-cites aria-label="Citas verificadas">
+                    <li class="mono">✓ Mateo 5:5</li>
+                    <li class="mono">✓ Salmos 37:11</li>
+                    <li class="mono">✓ Mateo 11:29</li>
+                  </ul>
+                </div>
+                <div class="phone__input" aria-hidden="true">
+                  <span>Escribe tu pregunta…</span>
+                  <span class="phone__send">↑</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="mono">Vista previa de la app · Citas de la Reina-Valera 1909</figcaption>
+          </figure>
+        </div>
+      </section>
+
       <!-- El nombre -->
       <section class="section verse-section" aria-labelledby="nombre-titulo">
         <div class="wrap">
-          <p class="label mono" data-reveal><span>(00)</span> <span id="nombre-titulo">Por qué Bereano</span></p>
+          <p class="label mono" data-reveal><span>(02)</span> <span id="nombre-titulo">Por qué Bereano</span></p>
           <figure class="verse" data-reveal>
-            <blockquote>
+            <blockquote data-words>
               “…recibieron la palabra con toda solicitud, <mark>escudriñando cada día las Escrituras,</mark> si
               estas cosas eran así.”
             </blockquote>
@@ -135,21 +190,21 @@
       <section class="section" aria-labelledby="como-titulo">
         <div class="wrap">
           <div class="section__head" data-reveal>
-            <p class="label mono"><span>(01)</span> Cómo funciona</p>
+            <p class="label mono"><span>(03)</span> Cómo funciona</p>
             <h2 class="section__title" id="como-titulo">Tres minutos al día. <em>Toda una vida.</em></h2>
           </div>
           <ol class="steps">
-            <li class="step" data-reveal>
+            <li class="step">
               <span class="step__num" aria-hidden="true">01</span>
               <h3>Lee el pasaje del día</h3>
               <p>Un texto breve de la Reina-Valera 1909, con una reflexión corta. Funciona incluso sin conexión.</p>
             </li>
-            <li class="step" data-reveal>
+            <li class="step">
               <span class="step__num" aria-hidden="true">02</span>
               <h3>Pregunta lo que no entiendas</h3>
               <p>Tu compañero responde con claridad y siempre te muestra libro, capítulo y versículo para que lo compruebes.</p>
             </li>
-            <li class="step" data-reveal>
+            <li class="step">
               <span class="step__num" aria-hidden="true">03</span>
               <h3>Llévalo a tu vida</h3>
               <p>Una pregunta para aplicar lo leído y una racha diaria que te ayuda a no soltar el hábito.</p>
@@ -162,7 +217,7 @@
       <section class="section section--rule" aria-labelledby="explora-titulo">
         <div class="wrap">
           <div class="section__head" data-reveal>
-            <p class="label mono"><span>(02)</span> Explora</p>
+            <p class="label mono"><span>(04)</span> Explora</p>
             <h2 class="section__title" id="explora-titulo">Lo que viene.</h2>
           </div>
           <div class="doors">
@@ -203,7 +258,7 @@
       <section class="section section--rule" aria-labelledby="precio-titulo">
         <div class="wrap">
           <div class="section__head" data-reveal>
-            <p class="label mono"><span>(03)</span> Precio previsto</p>
+            <p class="label mono"><span>(05)</span> Precio previsto</p>
             <h2 class="section__title" id="precio-titulo">Claro desde el principio.</h2>
           </div>
           <div class="pricing">
@@ -226,11 +281,59 @@
         </div>
       </section>
 
+      <!-- Preguntas frecuentes -->
+      <section class="section section--rule" aria-labelledby="faq-titulo">
+        <div class="wrap faq-grid">
+          <div class="section__head" data-reveal>
+            <p class="label mono"><span>(06)</span> Preguntas</p>
+            <h2 class="section__title" id="faq-titulo">Lo que todos preguntan.</h2>
+          </div>
+          <div class="faq" data-reveal>
+            <details class="faq__item" data-faq="precio">
+              <summary>¿Cuánto va a costar?</summary>
+              <div class="faq__body">
+                <p>Leer la Biblia en Bereano es gratis, siempre. El compañero con IA, el devocional y los planes van en Bereano Plus: USD <span data-price="monthly"></span> al mes o USD <span data-price="yearly"></span> al año, con 7 días de prueba gratis. Los primeros de la lista tienen 50% de descuento.</p>
+              </div>
+            </details>
+            <details class="faq__item" data-faq="version">
+              <summary>¿Qué versión de la Biblia usa?</summary>
+              <div class="faq__body">
+                <p>La Reina-Valera 1909, que es de dominio público. Vamos a sumar otras versiones a medida que consigamos sus licencias.</p>
+              </div>
+            </details>
+            <details class="faq__item" data-faq="ia_inventa">
+              <summary>¿La IA puede inventar versículos?</summary>
+              <div class="faq__body">
+                <p>Está diseñada para no hacerlo: cada cita se comprueba contra el texto bíblico antes de mostrártela. Y si una pregunta no tiene base bíblica clara, te lo dice en lugar de improvisar.</p>
+              </div>
+            </details>
+            <details class="faq__item" data-faq="iglesia">
+              <summary>¿Reemplaza a mi iglesia o a mi pastor?</summary>
+              <div class="faq__body">
+                <p>No. Bereano es un compañero para tu lectura diaria. La comunidad de tu iglesia y el consejo de tu pastor no tienen reemplazo.</p>
+              </div>
+            </details>
+            <details class="faq__item" data-faq="datos">
+              <summary>¿Qué pasa con mis datos?</summary>
+              <div class="faq__body">
+                <p>No vendemos tus datos y tus conversaciones son privadas. Lo explicamos en detalle en la <a href="/privacidad.html">política de privacidad</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item" data-faq="cuando">
+              <summary>¿Cuándo sale?</summary>
+              <div class="faq__body">
+                <p>Estamos construyéndola ahora. La lista de espera se entera primero, y con su descuento.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
       <!-- Lista de espera -->
       <section class="section inverse" id="lista" aria-labelledby="lista-titulo">
         <div class="wrap waitlist">
           <div class="waitlist__head">
-            <p class="label mono"><span>(04)</span> Lista de espera</p>
+            <p class="label mono"><span>(07)</span> Lista de espera</p>
             <h2 class="waitlist__title" id="lista-titulo">Súmate<em>.</em></h2>
             <p class="section__lead">
               Te avisamos cuando Bereano esté listo y te guardamos el 50% de descuento.
