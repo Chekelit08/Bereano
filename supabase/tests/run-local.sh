@@ -41,5 +41,10 @@ for f in "$ROOT"/supabase/migrations/*.sql; do
   "${PSQL[@]}" -f "$f"
 done
 
-echo "== Tests"
-"${PSQL[@]}" -f "$ROOT/supabase/tests/waitlist_security.sql" 2>&1 | sed "s/^psql:[^ ]* NOTICE:  /   /" | grep -v "^ *$"
+echo "== Datos: Reina-Valera 1909"
+python3 "$ROOT/supabase/data/load_bible.py" "$DATABASE_URL"
+
+for t in waitlist_security bible; do
+  echo "== Tests: $t"
+  "${PSQL[@]}" -f "$ROOT/supabase/tests/$t.sql" 2>&1 | sed "s/^psql:[^ ]* NOTICE:  /   /" | grep -v "^ *$"
+done
