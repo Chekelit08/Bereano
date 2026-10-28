@@ -55,7 +55,7 @@ Bereano`,
         {d.title}
       </T>
 
-      <View style={[styles.passage, { backgroundColor: c.surface, borderColor: c.line }]}>
+      <View style={[styles.passage, { backgroundColor: c.surface }]}>
         <T style={[styles.ref, { color: c.accent }]}>{formatRef(book, d.chapter, d.from, d.to)}</T>
         {verses.map((v) => (
           <T key={v.n} style={[body, styles.verse]}>

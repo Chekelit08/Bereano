@@ -5,16 +5,10 @@ import { Fonts, usePalette } from '@/constants/theme';
 type Variant = 'title' | 'heading' | 'body' | 'label' | 'muted' | 'read';
 
 const styles = {
-  title: { fontFamily: Fonts.display, fontSize: 34, lineHeight: 40, letterSpacing: -0.4 },
-  heading: { fontFamily: Fonts.uiBold, fontSize: 18, lineHeight: 24, letterSpacing: -0.2 },
-  body: { fontFamily: Fonts.ui, fontSize: 16, lineHeight: 24 },
-  label: {
-    fontFamily: Fonts.uiBold,
-    fontSize: 11,
-    lineHeight: 16,
-    letterSpacing: 1.6,
-    textTransform: 'uppercase',
-  },
+  title: { fontFamily: Fonts.display, fontSize: 32, lineHeight: 38, letterSpacing: -0.8 },
+  heading: { fontFamily: Fonts.display, fontSize: 20, lineHeight: 26, letterSpacing: -0.4 },
+  body: { fontFamily: Fonts.ui, fontSize: 16, lineHeight: 24, letterSpacing: -0.2 },
+  label: { fontFamily: Fonts.uiBold, fontSize: 12, lineHeight: 16, letterSpacing: 0.2 },
   muted: { fontFamily: Fonts.ui, fontSize: 14, lineHeight: 21 },
   read: { fontFamily: Fonts.read, fontSize: 18, lineHeight: 30 },
 } as const;

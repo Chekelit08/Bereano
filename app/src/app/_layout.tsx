@@ -2,11 +2,11 @@ import { Archivo_700Bold, Archivo_800ExtraBold } from '@expo-google-fonts/archiv
 import { Caveat_700Bold } from '@expo-google-fonts/caveat';
 import { Newsreader_400Regular_Italic, Newsreader_500Medium } from '@expo-google-fonts/newsreader';
 import {
-  Manrope_500Medium,
-  Manrope_600SemiBold,
-  Manrope_700Bold,
-  Manrope_800ExtraBold,
-} from '@expo-google-fonts/manrope';
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
 import {
   Literata_400Regular,
   Literata_400Regular_Italic,
@@ -36,10 +36,10 @@ export default function RootLayout() {
   const [loaded, error] = useFonts({
     Newsreader_500Medium,
     Newsreader_400Regular_Italic,
-    Manrope_500Medium,
-    Manrope_600SemiBold,
-    Manrope_700Bold,
-    Manrope_800ExtraBold,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
     Literata_400Regular,
     Literata_400Regular_Italic,
     Literata_500Medium,

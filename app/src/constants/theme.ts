@@ -1,29 +1,28 @@
-// "Cálido y natural": piedra, papel y salvia, con un oliva apagado de acento. Títulos en
-// Newsreader, interfaz en Manrope, lectura en Literata. Sin contrastes fuertes.
+// Estilo Apple: blanco, negro y grises neutros. Inter para títulos e interfaz, Literata para leer.
 import { useColorScheme } from 'react-native';
 
 export const Colors = {
   light: {
-    bg: '#ECEBE6', // piedra
-    surface: '#F7F6F2', // papel
-    surface2: '#E2DFD6', // arena
-    text: '#262821', // carbón
-    muted: '#686A60',
-    line: '#2628211A',
-    accent: '#56633F', // oliva (texto e íconos: 5,4:1)
-    fill: '#C7D0B6', // salvia (botones y selección)
-    fillInk: '#262821',
+    bg: '#FFFFFF',
+    surface: '#F5F5F7',
+    surface2: '#E8E8ED',
+    text: '#1D1D1F',
+    muted: '#6E6E73',
+    line: '#0000001A',
+    accent: '#1D1D1F',
+    fill: '#1D1D1F', // botones y selección: negro
+    fillInk: '#FFFFFF',
   },
   dark: {
-    bg: '#1B1D18',
-    surface: '#24271F',
-    surface2: '#2E3127',
-    text: '#E9E8E1',
-    muted: '#A4A698',
-    line: '#E9E8E11F',
-    accent: '#B5C29A',
-    fill: '#3A4130',
-    fillInk: '#E9E8E1',
+    bg: '#000000',
+    surface: '#1C1C1E',
+    surface2: '#2C2C2E',
+    text: '#F5F5F7',
+    muted: '#98989D',
+    line: '#FFFFFF24',
+    accent: '#F5F5F7',
+    fill: '#F5F5F7',
+    fillInk: '#000000',
   },
 } as const;
 
@@ -35,12 +34,12 @@ export function usePalette(): Palette {
 
 // Nombres con los que se cargan en _layout.tsx.
 export const Fonts = {
-  display: 'Newsreader_500Medium',
-  displayItalic: 'Newsreader_400Regular_Italic',
-  ui: 'Manrope_500Medium',
-  uiSemi: 'Manrope_600SemiBold',
-  uiBold: 'Manrope_700Bold',
-  uiHeavy: 'Manrope_800ExtraBold',
+  display: 'Inter_700Bold',
+  displayItalic: 'Inter_700Bold',
+  ui: 'Inter_400Regular',
+  uiSemi: 'Inter_500Medium',
+  uiBold: 'Inter_600SemiBold',
+  uiHeavy: 'Inter_700Bold',
   read: 'Literata_400Regular',
   readItalic: 'Literata_400Regular_Italic',
   readMedium: 'Literata_500Medium',

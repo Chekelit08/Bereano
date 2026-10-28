@@ -1,12 +1,12 @@
 import { useRouter, type Href } from 'expo-router';
 import { useState, type ComponentType } from 'react';
-import { ScrollView, StyleSheet, useColorScheme, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { IconBook, IconChat, IconCheck, IconChevron, IconFlame, IconSun } from '@/components/icons';
 import { PressLink, Touchable } from '@/components/press-link';
-import { GREETING, momentOf, Textura } from '@/components/textura';
+import { GREETING, momentOf } from '@/components/momento';
 import { T } from '@/components/text';
 import { VersiculoDelDia } from '@/components/versiculo-del-dia';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
@@ -26,7 +26,6 @@ type Step = {
 export default function Hoy() {
   const c = usePalette();
   const insets = useSafeAreaInsets();
-  const dark = useColorScheme() === 'dark';
   const router = useRouter();
   const { saved, days, lastRead } = useSettings();
   const [now] = useState(() => new Date());
@@ -93,11 +92,8 @@ export default function Hoy() {
         {/* Versículo del día sobre una textura suave */}
         <Animated.View
           entering={FadeInDown.delay(120).duration(600)}
-          style={[styles.verseCard, { borderColor: c.line }]}>
-          <Textura dark={dark} base={c.surface} />
-          <T variant="label" style={{ color: c.accent }}>
-            Versículo del día
-          </T>
+          style={[styles.verseCard, { backgroundColor: c.surface }]}>
+          <T variant="label">Versículo del día</T>
           <T style={[styles.verse, { color: c.text }]}>{verse}</T>
           <T style={[styles.verseRef, { color: c.muted }]}>{verseRef}</T>
         </Animated.View>
@@ -208,10 +204,9 @@ const styles = StyleSheet.create({
     marginTop: Space.lg,
     padding: Space.lg,
     borderRadius: Radius.lg,
-    borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
   },
-  verse: { fontFamily: Fonts.readItalic, fontSize: 21, lineHeight: 32, marginTop: Space.sm },
+  verse: { fontFamily: Fonts.read, fontSize: 20, lineHeight: 31, marginTop: Space.sm },
   verseRef: { fontFamily: Fonts.uiBold, fontSize: 13, marginTop: Space.md },
   sheet: { paddingHorizontal: Space.lg, paddingTop: Space.xl },
   rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
@@ -223,7 +218,6 @@ const styles = StyleSheet.create({
     gap: Space.md,
     padding: Space.md,
     borderRadius: Radius.md,
-    borderWidth: StyleSheet.hairlineWidth,
     marginBottom: Space.sm,
   },
   stepIcon: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },

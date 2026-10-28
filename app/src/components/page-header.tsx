@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { T } from '@/components/text';
-import { Fonts, Space, usePalette } from '@/constants/theme';
+import { Space, usePalette } from '@/constants/theme';
 
 /** Encabezado de pestaña: etiqueta chica, título en Newsreader y una acción opcional. */
 export function PageHeader({
@@ -29,7 +29,7 @@ export function PageHeader({
           <T variant="title" style={{ marginTop: 4 }}>
             {title}
             {accent ? (
-              <T variant="title" style={{ fontFamily: Fonts.displayItalic, color: c.accent }}>
+              <T variant="title" style={{ color: c.muted }}>
                 {' '}
                 {accent}
               </T>

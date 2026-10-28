@@ -88,7 +88,7 @@ export default function Biblia() {
                   accessibilityLabel={`${b.name}, ${b.chapters} capítulos`}
                   style={({ pressed }) => [
                     styles.card,
-                    { borderColor: c.line, backgroundColor: pressed ? c.surface : 'transparent' },
+                    { backgroundColor: pressed ? c.surface2 : c.surface },
                   ]}>
                   <T style={styles.bookName} numberOfLines={1} adjustsFontSizeToFit>
                     {b.name}
@@ -147,10 +147,9 @@ const styles = StyleSheet.create({
   card: {
     flexBasis: '47%',
     flexGrow: 1,
-    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     paddingHorizontal: Space.md,
     paddingVertical: 14,
   },
-  bookName: { fontFamily: Fonts.display, fontSize: 20, lineHeight: 26 },
+  bookName: { fontFamily: Fonts.uiBold, fontSize: 17, lineHeight: 22, letterSpacing: -0.3 },
 });
