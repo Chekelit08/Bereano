@@ -189,7 +189,7 @@ document.querySelectorAll('[data-door]').forEach((btn) => {
     const door = DOORS[id];
     currentDoor = id;
     // Un evento distinto por puerta: se comparan directo en PostHog.
-    track(door.event);
+    track(door.event, { origen: btn.dataset.origen || 'fila' });
 
     $('#soon-title').textContent = door.title;
     $('#soon-text').textContent = door.text;
