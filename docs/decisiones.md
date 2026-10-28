@@ -49,9 +49,19 @@ Referencias de Ezequiel: Pear, Dead North, Apocalypse Coffee, Illoca, Santioni, 
 
 - **Intro con contador** ("Bereano" + 000→100 y la cortina sube). Dura ~1,3 s, sale solo la primera vez por visita y nunca con "reducir movimiento". La decide `public/theme.js` antes de pintar; si el JS no llega, el CSS la cierra solo a los 2,6 s.
 - **Scroll suave con Lenis** solo con mouse o trackpad (en el celular el nativo es mejor). Se frena cuando está abierto el aviso de "próximamente".
-- **Galería horizontal de planes por tema** con cinco grabados de Doré (Getsemaní, el hijo pródigo, Rut, Jesús sobre el mar, el sepulcro vacío). En escritorio queda fija y avanza de costado con el scroll; en el celular es un carrusel nativo con scroll-snap. Cada tarjeta abre la puerta falsa de planes, con `origen: galeria` en el evento para distinguirla de la fila. Solo cita capítulos (sin versículos textuales).
+- **Galería horizontal de planes por tema** (Ansiedad, Perdón, Familia, Fe en la tormenta, Duelo y esperanza). En escritorio queda fija y avanza de costado con el scroll; en el celular es un carrusel nativo con scroll-snap. Cada tarjeta abre la puerta falsa de planes, con `origen: galeria` en el evento para distinguirla de la fila. Solo cita capítulos (sin versículos textuales).
 - **Cursor propio** que crece y muestra etiquetas ("Ver plan", "Abrir"); el cursor del sistema sigue visible.
 - **La cinta reacciona al scroll** (acelera y cambia de sentido) y hay una **barra de progreso** arriba.
+
+## Sin imágenes: landing 100% tipográfica (2026-10-28)
+
+A Ezequiel no le gustaron los grabados de Doré, así que se sacaron todos (hero, puertas falsas y galería) y se borraron del repo. Todo el impacto visual sale ahora de la tipografía y de formas hechas en código:
+
+- **Hero**: el título ocupa todo el ancho. En lugar del grabado hay un **sello circular** que gira con "Escudriñando cada día las Escrituras · Hechos 17:11" y un **halo de color cálido** que respira detrás (CSS, sin imagen).
+- **Planes por tema**: tarjetas de **colores sólidos** (bermellón, ocre, oliva, azul tinta, papel) con un número gigante en contorno que se rellena al pasar el mouse. Iguales en modo claro y oscuro.
+- **Puertas falsas**: sin imagen que sigue al cursor; queda el cursor con la etiqueta "Abrir".
+- **Imagen para compartir**: rehecha solo con tipografía.
+- Beneficio extra: la página pesa ~1 MB menos y carga más rápido.
 
 ## Eventos de PostHog
 

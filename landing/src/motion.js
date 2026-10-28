@@ -1,6 +1,6 @@
-// Movimiento de la landing: aparición al hacer scroll, parallax del grabado del hero,
-// la imagen que sigue al cursor sobre las puertas falsas, la demo del compañero que
-// "escribe" su respuesta, el versículo que se ilumina y los botones magnéticos.
+// Movimiento de la landing: aparición al hacer scroll, la demo del compañero que
+// "escribe" su respuesta, el versículo que se ilumina, los botones magnéticos, la intro,
+// el scroll suave, el cursor, la galería horizontal y la cinta.
 // Todo se desactiva si el usuario pidió reducir el movimiento: el contenido se ve
 // completo y estático.
 
@@ -33,8 +33,6 @@ export function initMotion(options = {}) {
   );
   document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
 
-  initParallax();
-  initDoorPreview();
   initVerseWords();
   initDemo(options.onDemoStart);
   initMagnetic();
@@ -104,37 +102,6 @@ function initHeader() {
     const hide = goingDown && y > 240 && !bar.contains(document.activeElement);
     bar.classList.toggle('is-hidden', hide);
     lastY = y;
-  });
-}
-
-function initParallax() {
-  const el = document.querySelector('[data-parallax]');
-  if (!el) return;
-  onScroll(() => {
-    const y = Math.min(window.scrollY, 900);
-    el.style.translate = `0 ${y * -0.08}px`;
-  });
-}
-
-function initDoorPreview() {
-  const preview = document.getElementById('door-preview');
-  if (!preview || !finePointer) return;
-
-  // Precarga las imágenes para que no aparezcan en blanco.
-  document.querySelectorAll('[data-img]').forEach((el) => {
-    new Image().src = el.dataset.img;
-  });
-
-  document.querySelectorAll('.door').forEach((door) => {
-    door.addEventListener('pointerenter', () => {
-      preview.src = door.dataset.img;
-      preview.classList.add('is-visible');
-    });
-    door.addEventListener('pointerleave', () => preview.classList.remove('is-visible'));
-    door.addEventListener('pointermove', (event) => {
-      preview.style.setProperty('--x', `${event.clientX + 160}px`);
-      preview.style.setProperty('--y', `${event.clientY}px`);
-    });
   });
 }
 

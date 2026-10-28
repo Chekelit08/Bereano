@@ -23,8 +23,6 @@
   --inv-accent-ink: #16110d;
   --inv-surface: #221b16;
 
-  --engraving-filter: none;
-  --engraving-blend: multiply;
 
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
   --font-body: "Literata Variable", Georgia, "Times New Roman", serif;
@@ -54,8 +52,6 @@
     --inv-accent: #b83d18;
     --inv-accent-ink: #fbf5ea;
     --inv-surface: #f6f0e4;
-    --engraving-filter: invert(1) sepia(0.25);
-    --engraving-blend: screen;
     color-scheme: dark;
   }
 }
@@ -77,8 +73,6 @@
   --inv-accent: #b83d18;
   --inv-accent-ink: #fbf5ea;
   --inv-surface: #f6f0e4;
-  --engraving-filter: invert(1) sepia(0.25);
-  --engraving-blend: screen;
   color-scheme: dark;
 }
 
@@ -232,45 +226,6 @@ mark {
     mix-blend-mode: screen;
     opacity: 0.05;
   }
-}
-
-/* Marcas de grilla "+" */
-.cross {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  pointer-events: none;
-}
-
-.cross::before,
-.cross::after {
-  content: "";
-  position: absolute;
-  background: var(--text);
-}
-
-.cross::before {
-  left: 7px;
-  top: 0;
-  width: 1px;
-  height: 15px;
-}
-
-.cross::after {
-  top: 7px;
-  left: 0;
-  width: 15px;
-  height: 1px;
-}
-
-.cross--tl {
-  top: -8px;
-  left: -8px;
-}
-
-.cross--br {
-  bottom: -8px;
-  right: -8px;
 }
 
 /* ---------- Top bar ---------- */
@@ -445,7 +400,33 @@ mark {
 
 /* ---------- Hero ---------- */
 .hero {
+  position: relative;
   padding: 24px 0 48px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Halo cálido que respira detrás del título: la única "imagen" del hero, hecha con CSS. */
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 8%;
+  right: -20%;
+  width: min(80vw, 900px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%),
+    radial-gradient(closest-side at 30% 70%, color-mix(in srgb, #d9a441 35%, transparent), transparent 70%);
+  filter: blur(30px);
+  animation: breathe 9s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  to {
+    transform: translate(-6%, 4%) scale(1.12);
+  }
 }
 
 .hero__grid {
@@ -486,26 +467,54 @@ mark {
   font-weight: 300;
 }
 
-.hero__figure {
+/* Sello circular con Hechos 17:11 que gira */
+.seal {
   position: relative;
-  margin: 0;
-  max-width: 520px;
-  /* La mezcla va en la figura (no en la imagen): la animación y el parallax la
-     aíslan en su propia capa, y así se funde igual con el papel de fondo. */
-  mix-blend-mode: var(--engraving-blend);
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  flex: none;
+  margin-left: auto;
+  color: var(--text);
+  text-decoration: none;
 }
 
-.engraving {
-  display: block;
+.seal__ring {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  filter: var(--engraving-filter);
+  height: 100%;
+  animation: spin 18s linear infinite;
 }
 
-.hero__figure figcaption {
-  margin-top: 10px;
-  color: var(--muted);
-  font-size: 0.6875rem;
+.seal__ring text {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  letter-spacing: 0.12em;
+  fill: currentColor;
+}
+
+.seal__center {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 1.375rem;
+  transition: transform 0.4s var(--ease);
+}
+
+.seal:hover .seal__center {
+  transform: scale(1.12) rotate(-12deg);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .hero__lead {
@@ -754,35 +763,6 @@ mark {
 
   .door:hover .door__arrow {
     transform: translateX(-8px) rotate(-45deg);
-  }
-}
-
-.door-preview {
-  display: none;
-}
-
-@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-  .door-preview {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 25;
-    width: 240px;
-    height: 300px;
-    object-fit: cover;
-    pointer-events: none;
-    opacity: 0;
-    transform: translate3d(var(--x, 0), var(--y, 0), 0) translate(-50%, -50%) scale(0.85) rotate(-3deg);
-    transition: opacity 0.25s ease, transform 0.35s var(--ease);
-    background: var(--bg);
-    border: 1px solid var(--text);
-    box-shadow: 12px 12px 0 var(--text);
-  }
-
-  .door-preview.is-visible {
-    opacity: 1;
-    transform: translate3d(var(--x, 0), var(--y, 0), 0) translate(-50%, -50%) scale(1) rotate(-3deg);
   }
 }
 
@@ -1622,56 +1602,67 @@ mark {
 }
 
 .plan-card {
-  display: grid;
-  gap: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: min(72vw, 320px);
-  padding: 0;
+  aspect-ratio: 4 / 5;
+  padding: 18px 18px 20px;
+  overflow: hidden;
   text-align: left;
   font: inherit;
-  color: var(--text);
-  background: transparent;
-  border: 0;
+  color: var(--card-ink);
+  background: var(--card-bg);
+  border: 1px solid var(--card-line, var(--card-bg));
   cursor: pointer;
+  transition: transform 0.5s var(--ease);
 }
 
-.plan-card__img {
-  display: block;
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-  border: 1px solid var(--text);
-  /* Láminas impresas: papel claro en los dos temas (invertidas parecían negativos). */
-  background: #f3ecdf;
+.plan-card:hover {
+  transform: translateY(-6px) rotate(-1deg);
 }
 
-.plan-card__img img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  mix-blend-mode: multiply;
-  transition: transform 0.9s var(--ease);
-}
-
-.plan-card:hover .plan-card__img img {
-  transform: scale(1.06);
-}
+/* Una paleta cálida, una tarjeta por tema. Iguales en modo claro y oscuro. */
+.plans__track > li:nth-child(1) .plan-card { --card-bg: #b83d18; --card-ink: #fbf5ea; }
+.plans__track > li:nth-child(2) .plan-card { --card-bg: #d9a441; --card-ink: #16110d; }
+.plans__track > li:nth-child(3) .plan-card { --card-bg: #4d5a37; --card-ink: #f3ecdf; }
+.plans__track > li:nth-child(4) .plan-card { --card-bg: #1f3550; --card-ink: #efe7d8; }
+.plans__track > li:nth-child(5) .plan-card { --card-bg: #efe7d8; --card-ink: #16110d; --card-line: #16110d; }
 
 .plan-card__meta {
   display: flex;
   justify-content: space-between;
-  color: var(--accent);
+}
+
+/* Número gigante en contorno: el "dibujo" de la tarjeta */
+.plan-card__num {
+  margin: auto 0 0 -0.04em;
+  font-family: var(--font-display);
+  font-size: clamp(7rem, 34vw, 11rem);
+  font-weight: 200;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--card-ink);
+  transition: color 0.5s var(--ease);
+  font-variation-settings: "opsz" 144;
+}
+
+.plan-card:hover .plan-card__num {
+  color: var(--card-ink);
 }
 
 .plan-card__title {
+  margin-top: 14px;
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
 }
 
 .plan-card__ref {
-  color: var(--muted);
+  margin-top: 8px;
 }
 
 .plans__end {
@@ -1790,7 +1781,6 @@ html.lenis body {
     animation-delay: calc(var(--hero-delay, 0s) + 0.24s);
   }
 
-  .hero__figure,
   .hero__copy,
   .hero__meta {
     opacity: 0;
@@ -1820,7 +1810,9 @@ html.lenis body {
 
   .marquee__track,
   .dot,
-  .bubble--typing span {
+  .bubble--typing span,
+  .seal__ring,
+  .hero::before {
     animation: none;
   }
 }
@@ -1920,43 +1912,30 @@ html.lenis body {
     padding: 28px 0 80px;
   }
 
-  .hero__grid {
-    grid-template-columns: 1.55fr 1fr;
-    grid-template-areas:
-      "meta meta"
-      "title figure"
-      "copy figure";
-    column-gap: 48px;
-    row-gap: 32px;
-    align-items: end;
-  }
-
   .hero__meta {
-    grid-area: meta;
     justify-content: space-between;
   }
 
   .hero__title {
-    grid-area: title;
-    font-size: clamp(6rem, 11.5vw, 13.5rem);
-  }
-
-  .hero__figure {
-    grid-area: figure;
-    justify-self: end;
-    align-self: end;
+    /* "Entiende la Biblia." ocupa todo el ancho */
+    font-size: clamp(6rem, 14.4vw, 17.5rem);
   }
 
   .hero__copy {
-    grid-area: copy;
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 32px;
+    grid-template-columns: minmax(0, 30em) auto 1fr;
+    gap: 40px;
     align-items: end;
   }
 
   .hero__lead {
     margin: 0;
+  }
+
+  .seal {
+    justify-self: end;
+    width: 156px;
+    height: 156px;
   }
 
   .demo__grid {
