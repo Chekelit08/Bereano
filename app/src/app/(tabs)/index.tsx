@@ -1,12 +1,12 @@
 import { useRouter, type Href } from 'expo-router';
 import { useState, type ComponentType } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, useColorScheme, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { IconBook, IconChat, IconCheck, IconChevron, IconFlame, IconSun } from '@/components/icons';
 import { PressLink, Touchable } from '@/components/press-link';
-import { GREETING, momentOf, Sky } from '@/components/sky';
+import { GREETING, momentOf, Textura } from '@/components/textura';
 import { T } from '@/components/text';
 import { VersiculoDelDia } from '@/components/versiculo-del-dia';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
@@ -26,6 +26,7 @@ type Step = {
 export default function Hoy() {
   const c = usePalette();
   const insets = useSafeAreaInsets();
+  const dark = useColorScheme() === 'dark';
   const router = useRouter();
   const { saved, days, lastRead } = useSettings();
   const [now] = useState(() => new Date());
@@ -69,32 +70,39 @@ export default function Hoy() {
 
   return (
     <ScrollView style={{ backgroundColor: c.bg }} contentContainerStyle={{ paddingBottom: Space.xl }}>
-      {/* Cielo de la hora */}
-      <View style={[styles.hero, { paddingTop: insets.top + Space.md }]}>
-        <Sky moment={moment} />
-        <View style={styles.heroTop}>
-          <T style={[styles.heroLabel, { color: '#FFFFFFD9' }]}>
+      <View style={[styles.header, { paddingTop: insets.top + Space.lg }]}>
+        <View style={styles.headerTop}>
+          <T variant="label">
             {now.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' })}
           </T>
           {racha > 0 && (
-            <View style={[styles.streak, { backgroundColor: '#FFFFFF24' }]}>
-              <IconFlame color="#F2B544" />
-              <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: '#FFFFFF' }}>
+            <View style={[styles.streak, { backgroundColor: c.fill }]}>
+              <IconFlame color={c.accent} />
+              <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: c.fillInk }}>
                 {racha} {racha === 1 ? 'día' : 'días'}
               </T>
             </View>
           )}
         </View>
-        <Animated.View entering={FadeInDown.duration(600)}>
-          <T style={[styles.greeting, { color: '#FFFFFF' }]}>{GREETING[moment]}</T>
+        <Animated.View entering={FadeInDown.duration(500)}>
+          <T variant="title" style={{ marginTop: Space.sm }}>
+            {GREETING[moment]}
+          </T>
         </Animated.View>
-        <Animated.View entering={FadeInDown.delay(150).duration(700)} style={styles.verseWrap}>
-          <T style={[styles.verse, { color: '#FFFFFF' }]}>{verse}</T>
-          <T style={[styles.verseRef, { color: '#FFFFFF' }]}>{verseRef.toUpperCase()}</T>
+
+        {/* Versículo del día sobre una textura suave */}
+        <Animated.View
+          entering={FadeInDown.delay(120).duration(600)}
+          style={[styles.verseCard, { borderColor: c.line }]}>
+          <Textura dark={dark} base={c.surface} />
+          <T variant="label" style={{ color: c.accent }}>
+            Versículo del día
+          </T>
+          <T style={[styles.verse, { color: c.text }]}>{verse}</T>
+          <T style={[styles.verseRef, { color: c.muted }]}>{verseRef}</T>
         </Animated.View>
       </View>
 
-      {/* Hoja que sube sobre el cielo */}
       <View style={[styles.sheet, { backgroundColor: c.bg }]}>
         <View style={styles.rowBetween}>
           <T variant="heading" style={{ fontSize: 20 }}>
@@ -186,9 +194,8 @@ export default function Hoy() {
 }
 
 const styles = StyleSheet.create({
-  hero: { minHeight: 520, paddingHorizontal: Space.lg, paddingBottom: 64, overflow: 'hidden' },
-  heroTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  heroLabel: { fontFamily: Fonts.uiBold, fontSize: 12, letterSpacing: 1.4, textTransform: 'uppercase' },
+  header: { paddingHorizontal: Space.lg },
+  headerTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', minHeight: 30 },
   streak: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -197,35 +204,16 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: Radius.pill,
   },
-  greeting: {
-    fontFamily: Fonts.display,
-    fontSize: 54,
-    lineHeight: 58,
-    marginTop: Space.xl,
-    letterSpacing: -0.5,
+  verseCard: {
+    marginTop: Space.lg,
+    padding: Space.lg,
+    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
   },
-  verseWrap: { marginTop: Space.lg, maxWidth: 520 },
-  verse: {
-    fontFamily: Fonts.displayItalic,
-    fontSize: 28,
-    lineHeight: 35,
-    textShadowColor: '#00000040',
-    textShadowRadius: 12,
-  },
-  verseRef: {
-    fontFamily: Fonts.uiBold,
-    fontSize: 12,
-    letterSpacing: 1.8,
-    marginTop: Space.md,
-    opacity: 0.85,
-  },
-  sheet: {
-    marginTop: -32,
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    paddingHorizontal: Space.lg,
-    paddingTop: Space.lg,
-  },
+  verse: { fontFamily: Fonts.readItalic, fontSize: 21, lineHeight: 32, marginTop: Space.sm },
+  verseRef: { fontFamily: Fonts.uiBold, fontSize: 13, marginTop: Space.md },
+  sheet: { paddingHorizontal: Space.lg, paddingTop: Space.xl },
   rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   progress: { height: 6, borderRadius: 3, marginTop: Space.sm, marginBottom: Space.md, overflow: 'hidden' },
   progressFill: { height: 6, borderRadius: 3 },

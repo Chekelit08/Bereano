@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { PressLink, Touchable } from '@/components/press-link';
-import { SkyHeader } from '@/components/sky-header';
+import { PageHeader } from '@/components/page-header';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { useSettings } from '@/lib/settings';
@@ -73,7 +73,7 @@ export default function Companero() {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <SkyHeader
+      <PageHeader
         kicker="Preguntá con la Biblia"
         title="Compañero"
         right={
@@ -85,12 +85,12 @@ export default function Companero() {
                 clearChat();
               }}
               style={({ pressed }) => [styles.clear, { opacity: pressed ? 0.6 : 1 }]}>
-              <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: '#FFFFFF' }}>Borrar</T>
+              <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: c.accent }}>Borrar</T>
             </Touchable>
           )
         }
       />
-      <View style={[styles.sheet, { backgroundColor: c.bg }]}>
+      <View style={[styles.sheet, { backgroundColor: c.bg, borderColor: c.line }]}>
         <FlatList
           ref={list}
           data={messages}
@@ -210,14 +210,8 @@ export default function Companero() {
 }
 
 const styles = StyleSheet.create({
-  sheet: { flex: 1, marginTop: -28, borderTopLeftRadius: 28, borderTopRightRadius: 28, overflow: 'hidden' },
-  clear: {
-    backgroundColor: '#FFFFFF24',
-    borderRadius: 999,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    marginBottom: 8,
-  },
+  sheet: { flex: 1, borderTopWidth: StyleSheet.hairlineWidth },
+  clear: { borderRadius: 999, paddingHorizontal: 14, paddingVertical: 8, marginBottom: 6 },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',

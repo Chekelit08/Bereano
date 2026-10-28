@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { IconChevron, IconSearch } from '@/components/icons';
 import { PressLink, Touchable } from '@/components/press-link';
-import { SkyHeader } from '@/components/sky-header';
+import { PageHeader } from '@/components/page-header';
 import { T } from '@/components/text';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { books, getBook, SECTIONS, VERSION } from '@/lib/bible';
@@ -19,17 +19,20 @@ export default function Biblia() {
 
   return (
     <ScrollView style={{ backgroundColor: c.bg }}>
-      <SkyHeader kicker={VERSION} title="La" accent="Biblia">
+      <PageHeader kicker={VERSION} title="La" accent="Biblia">
         <PressLink
           href="/buscar"
           accessibilityRole="search"
-          style={({ pressed }) => [styles.search, { opacity: pressed ? 0.8 : 1 }]}>
-          <IconSearch color="#FFFFFF" />
-          <T style={{ fontFamily: Fonts.ui, fontSize: 15, color: '#FFFFFFD9' }}>
+          style={({ pressed }) => [
+            styles.search,
+            { backgroundColor: c.surface, borderColor: c.line, opacity: pressed ? 0.8 : 1 },
+          ]}>
+          <IconSearch color={c.muted} />
+          <T style={{ fontFamily: Fonts.ui, fontSize: 15, color: c.muted }}>
             Juan 3 16, amor, “buen pastor”…
           </T>
         </PressLink>
-      </SkyHeader>
+      </PageHeader>
       <View style={[styles.page, styles.sheet, { backgroundColor: c.bg }]}>
         {last && lastRead.chapter <= last.chapters && (
           <PressLink
@@ -42,7 +45,7 @@ export default function Biblia() {
               <T variant="label" style={{ color: c.fillInk, opacity: 0.7 }}>
                 Seguir leyendo
               </T>
-              <T style={{ fontFamily: Fonts.display, fontSize: 30, color: c.fillInk, marginTop: 2 }}>
+              <T style={{ fontFamily: Fonts.display, fontSize: 24, color: c.fillInk, marginTop: 2 }}>
                 {last.name} {lastRead.chapter}
               </T>
             </View>
@@ -111,14 +114,12 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
-  sheet: { marginTop: -28, borderTopLeftRadius: 28, borderTopRightRadius: 28, paddingTop: Space.lg },
+  sheet: { paddingTop: Space.sm },
   search: {
     marginTop: Space.lg,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    backgroundColor: '#FFFFFF24',
-    borderColor: '#FFFFFF40',
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.pill,
     paddingHorizontal: Space.md,
@@ -151,5 +152,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: Space.md,
     paddingVertical: 14,
   },
-  bookName: { fontFamily: Fonts.display, fontSize: 25, lineHeight: 30 },
+  bookName: { fontFamily: Fonts.display, fontSize: 20, lineHeight: 26 },
 });

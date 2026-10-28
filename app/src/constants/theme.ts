@@ -1,29 +1,29 @@
-// "Cielo vivo": azules profundos, luz de lámpara dorada (Salmo 119:105) y un cielo que cambia
-// con la hora del día. Títulos en Instrument Serif, interfaz en Manrope, lectura en Literata.
+// "Cálido y natural": piedra, papel y salvia, con un oliva apagado de acento. Títulos en
+// Newsreader, interfaz en Manrope, lectura en Literata. Sin contrastes fuertes.
 import { useColorScheme } from 'react-native';
 
 export const Colors = {
   light: {
-    bg: '#F3F5F9', // neblina
-    surface: '#FFFFFF',
-    surface2: '#E8ECF4',
-    text: '#141B2E', // tinta azul
-    muted: '#5B6478',
-    line: '#141B2E1A',
-    accent: '#8A5A00', // oro viejo (texto sobre claro: 5,4:1)
-    fill: '#F2B544', // oro de lámpara (botones)
-    fillInk: '#141B2E',
+    bg: '#ECEBE6', // piedra
+    surface: '#F7F6F2', // papel
+    surface2: '#E2DFD6', // arena
+    text: '#262821', // carbón
+    muted: '#686A60',
+    line: '#2628211A',
+    accent: '#56633F', // oliva (texto e íconos: 5,4:1)
+    fill: '#C7D0B6', // salvia (botones y selección)
+    fillInk: '#262821',
   },
   dark: {
-    bg: '#0B1220', // noche profunda
-    surface: '#141C2E',
-    surface2: '#1C2640',
-    text: '#EEF1F7',
-    muted: '#9AA3B8',
-    line: '#EEF1F71F',
-    accent: '#F2B544',
-    fill: '#F2B544',
-    fillInk: '#141B2E',
+    bg: '#1B1D18',
+    surface: '#24271F',
+    surface2: '#2E3127',
+    text: '#E9E8E1',
+    muted: '#A4A698',
+    line: '#E9E8E11F',
+    accent: '#B5C29A',
+    fill: '#3A4130',
+    fillInk: '#E9E8E1',
   },
 } as const;
 
@@ -35,8 +35,8 @@ export function usePalette(): Palette {
 
 // Nombres con los que se cargan en _layout.tsx.
 export const Fonts = {
-  display: 'InstrumentSerif_400Regular',
-  displayItalic: 'InstrumentSerif_400Regular_Italic',
+  display: 'Newsreader_500Medium',
+  displayItalic: 'Newsreader_400Regular_Italic',
   ui: 'Manrope_500Medium',
   uiSemi: 'Manrope_600SemiBold',
   uiBold: 'Manrope_700Bold',

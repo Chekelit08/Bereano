@@ -5,7 +5,7 @@ import { Fonts, usePalette } from '@/constants/theme';
 type Variant = 'title' | 'heading' | 'body' | 'label' | 'muted' | 'read';
 
 const styles = {
-  title: { fontFamily: Fonts.display, fontSize: 44, lineHeight: 48, letterSpacing: -0.5 },
+  title: { fontFamily: Fonts.display, fontSize: 34, lineHeight: 40, letterSpacing: -0.4 },
   heading: { fontFamily: Fonts.uiBold, fontSize: 18, lineHeight: 24, letterSpacing: -0.2 },
   body: { fontFamily: Fonts.ui, fontSize: 16, lineHeight: 24 },
   label: {

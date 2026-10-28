@@ -1,9 +1,6 @@
 import { Archivo_700Bold, Archivo_800ExtraBold } from '@expo-google-fonts/archivo';
 import { Caveat_700Bold } from '@expo-google-fonts/caveat';
-import {
-  InstrumentSerif_400Regular,
-  InstrumentSerif_400Regular_Italic,
-} from '@expo-google-fonts/instrument-serif';
+import { Newsreader_400Regular_Italic, Newsreader_500Medium } from '@expo-google-fonts/newsreader';
 import {
   Manrope_500Medium,
   Manrope_600SemiBold,
@@ -37,8 +34,8 @@ export default function RootLayout() {
     colors: { ...base.colors, background: c.bg, card: c.bg, text: c.text, border: c.line, primary: c.accent },
   };
   const [loaded, error] = useFonts({
-    InstrumentSerif_400Regular,
-    InstrumentSerif_400Regular_Italic,
+    Newsreader_500Medium,
+    Newsreader_400Regular_Italic,
     Manrope_500Medium,
     Manrope_600SemiBold,
     Manrope_700Bold,

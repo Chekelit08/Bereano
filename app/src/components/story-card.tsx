@@ -30,7 +30,7 @@ const size = (text: string, big: number) => (text.length > 200 ? big - 7 : text.
 // ---------- Editorial: tierra y bosque, tipografías mezcladas, marcas a mano ----------
 
 function Editorial({ text, reference, marks = {}, ref }: Omit<Props, 'variant'>) {
-  const fs = size(text, 33);
+  const fs = size(text, 29);
   const words = text.split(' ');
   const underline = marks.underline?.split(' ') ?? [];
   const uStart = underline.length ? findSequence(words, underline) : -1;
@@ -66,7 +66,7 @@ function Editorial({ text, reference, marks = {}, ref }: Omit<Props, 'variant'>)
           {words.map((w, i) => {
             const style: TextStyle[] = [
               {
-                fontFamily: 'InstrumentSerif_400Regular',
+                fontFamily: 'Newsreader_500Medium',
                 fontSize: fs,
                 lineHeight: fs * 1.3,
                 color: '#f4ecdf',
@@ -74,7 +74,7 @@ function Editorial({ text, reference, marks = {}, ref }: Omit<Props, 'variant'>)
             ];
             if (marks.bold?.includes(w))
               style.push({ fontFamily: 'Archivo_800ExtraBold', fontSize: fs * 0.9, letterSpacing: -0.3 });
-            if (marks.italic?.includes(w)) style.push({ fontFamily: 'InstrumentSerif_400Regular_Italic' });
+            if (marks.italic?.includes(w)) style.push({ fontFamily: 'Newsreader_400Regular_Italic' });
             const circled = w === marks.circle;
             const underlined = uStart >= 0 && i >= uStart && i < uStart + underline.length;
             return (
@@ -238,7 +238,7 @@ function torn(edge: number, y: number, seed: number) {
 // ---------- Neón: letras de luz sobre negro ----------
 
 function Neon({ text, reference, ref }: Omit<Props, 'variant' | 'marks'>) {
-  const fs = size(text, 33);
+  const fs = size(text, 29);
   const glow = {
     textShadowColor: '#ff2d7a',
     textShadowRadius: 10,
@@ -317,9 +317,7 @@ function Neon({ text, reference, ref }: Omit<Props, 'variant' | 'marks'>) {
 function Brand({ color, bottom = 34 }: { color: string; bottom?: number }) {
   return (
     <View style={[styles.brand, { bottom }]}>
-      <Text style={{ fontFamily: 'InstrumentSerif_400Regular', fontSize: 20, color, opacity: 0.9 }}>
-        Bereano
-      </Text>
+      <Text style={{ fontFamily: 'Newsreader_500Medium', fontSize: 20, color, opacity: 0.9 }}>Bereano</Text>
       <Text style={{ fontFamily: 'Literata_400Regular', fontSize: 10, color, opacity: 0.6 }}>
         Reina-Valera 1909
       </Text>
