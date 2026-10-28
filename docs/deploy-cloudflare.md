@@ -21,6 +21,7 @@ Configuración (Worker `bereano` > Settings > Build):
 | Root directory | `landing` |
 | Build command | `npm run build` |
 | Deploy command | `npx wrangler@4 deploy` |
+| Non-production branch deploy command | `npx wrangler@4 preview` (vistas previas por rama; necesita el bloque `[previews]` de `wrangler.toml`) |
 
 Variables de build (Settings > Build > **Build variables and secrets**, no las de runtime):
 
