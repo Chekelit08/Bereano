@@ -1,0 +1,5 @@
+# Config para Cloudflare Pages (solo se usa si deployás con `wrangler pages deploy`).
+# Todavía no existe el proyecto en Cloudflare: crearlo es un paso manual (ver docs/deploy-cloudflare.md).
+name = "bereano-landing"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-10-01"
