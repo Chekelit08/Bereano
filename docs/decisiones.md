@@ -36,12 +36,23 @@ Referencias de Ezequiel: Pear, Dead North, Apocalypse Coffee, Illoca, Santioni, 
 - El panel de Cloudflare ofrece primero Workers y el proyecto quedó creado así. En vez de borrarlo y rehacerlo como Pages, nos quedamos con Workers con static assets: es lo que Cloudflare recomienda hoy para sitios estáticos, es gratis con uso comercial y respeta el mismo `_headers` de seguridad. Solo cambia `landing/wrangler.toml`.
 - El comando de deploy fija `wrangler@4` para que una versión mayor nueva no rompa el deploy sin aviso.
 
+## Landing más moderna (2026-10-28, cuarta tanda)
+
+- **Demo del compañero en un celular.** Las landings actuales muestran el producto funcionando. Primero aparece "escribiendo…", después la respuesta palabra por palabra y al final las citas verificadas. Usa solo versículos comprobados en la RV1909 (Mateo 5:5, Salmos 37:11, Mateo 11:29) y está rotulada como "vista previa de la app". Las palabras están en el HTML desde el principio, así que los lectores de pantalla leen la respuesta completa.
+- **El versículo se ilumina con el scroll**, y el resaltado pasa como un marcador cuando la frase clave ya se encendió.
+- **"Cómo funciona" con tarjetas que se apilan**, hechas con `position: sticky`, sin JS.
+- **Preguntas frecuentes** con `<details>` nativo: funciona con teclado y sin JS, y registra en PostHog qué pregunta se abre. Los precios salen de `config.js`, igual que en la tarjeta de precio.
+- **Encabezado que se esconde al bajar** y vuelve al subir. **Botones magnéticos** solo con mouse.
+- Con "reducir movimiento" todo se ve completo y quieto.
+
 ## Eventos de PostHog
 
 | Evento | Cuándo |
 | --- | --- |
 | `$pageview` / `$pageleave` | Automáticos |
-| `cta_hero` / `cta_header` | Botón principal del hero / botón "Unirme" del encabezado |
+| `cta_hero` / `cta_header` / `cta_demo` | Botón del hero / "Unirme" del encabezado / botón de la demo |
+| `demo_visto` | La demo del compañero empezó a escribir (llegó a verse) |
+| `faq_abierta` | Se abrió una pregunta frecuente (`pregunta`) |
 | `waitlist_form_iniciado` | Primer foco en el formulario |
 | `waitlist_form_enviar_click` | Clic en "Unirme a la lista" |
 | `waitlist_form_error_validacion` | Dato inválido (`campo`) |

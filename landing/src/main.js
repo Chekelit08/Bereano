@@ -15,7 +15,7 @@ import {
 } from './waitlist.js';
 
 initAnalytics();
-initMotion();
+initMotion({ onDemoStart: () => track('demo_visto') });
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -155,6 +155,14 @@ $('#share-btn').addEventListener('click', async () => {
   } catch {
     status.textContent = shareUrl;
   }
+});
+
+// ---------- Preguntas frecuentes ----------
+// Qué dudas pesan más antes de anotarse.
+document.querySelectorAll('[data-faq]').forEach((item) => {
+  item.addEventListener('toggle', () => {
+    if (item.open) track('faq_abierta', { pregunta: item.dataset.faq });
+  });
 });
 
 // ---------- Consentimiento de cookies (solo Europa) ----------
