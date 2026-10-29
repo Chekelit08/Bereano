@@ -102,3 +102,10 @@ A Ezequiel no le gustaron los grabados de Doré, así que se sacaron todos (hero
 - **Límite:** `COMPANION_DAILY_LIMIT` preguntas por usuario y por día (20 por defecto), contado en `companion_usage` con una función atómica. Si falla por un error nuestro, se devuelve el uso.
 - **Sesión:** login anónimo de Supabase (sin pedir email). Las tablas del compañero no tienen políticas para `authenticated`: solo las toca la Edge Function.
 - **Privacidad:** las conversaciones quedan solo en el teléfono. El servidor no guarda preguntas (la caché guarda un hash de la pregunta y la respuesta, sin usuario) y no las escribe en los logs.
+
+## Paywall (Bereano Plus)
+
+- **RevenueCat** maneja las suscripciones de App Store y Google Play. En Expo Go corre en modo simulado; para cobrar hace falta un build de desarrollo. Sin claves, la app muestra el paywall en modo demostración.
+- **Gratis siempre:** Biblia, buscador, devocional, versículo del día y el plan de Juan. **Plus:** compañero (30 preguntas por día) y planes por tema. Sin Plus, el compañero da 3 preguntas de regalo en total y los planes por tema dejan leer el día 1.
+- **El servidor decide:** RevenueCat avisa por webhook y guardamos la suscripción en `subscriptions` (el id de RevenueCat es el mismo que el de Supabase). El compañero consulta `is_plus` antes de contar la pregunta. Así nadie se da Plus tocando la app.
+- La pantalla de Plus muestra precio, período, prueba gratis, renovación automática y cómo cancelar, como piden Apple y Google.

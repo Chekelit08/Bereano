@@ -20,6 +20,7 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
 import { Fonts, usePalette } from '@/constants/theme';
+import { PlusProvider } from '@/lib/plus';
 import { SettingsProvider } from '@/lib/settings';
 
 SplashScreen.preventAutoHideAsync();
@@ -57,20 +58,23 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={navTheme}>
       <SettingsProvider>
-        <StatusBar style="auto" />
-        <Stack
-          screenOptions={{
-            headerStyle: { backgroundColor: c.bg },
-            headerTintColor: c.accent,
-            headerTitleStyle: { fontFamily: Fonts.uiBold, color: c.text },
-            headerShadowVisible: false,
-            headerBackButtonDisplayMode: 'minimal',
-            contentStyle: { backgroundColor: c.bg },
-          }}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />
-          <Stack.Screen name="ayuda" options={{ title: 'No estás solo', presentation: 'modal' }} />
-        </Stack>
+        <PlusProvider>
+          <StatusBar style="auto" />
+          <Stack
+            screenOptions={{
+              headerStyle: { backgroundColor: c.bg },
+              headerTintColor: c.accent,
+              headerTitleStyle: { fontFamily: Fonts.uiBold, color: c.text },
+              headerShadowVisible: false,
+              headerBackButtonDisplayMode: 'minimal',
+              contentStyle: { backgroundColor: c.bg },
+            }}>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />
+            <Stack.Screen name="ayuda" options={{ title: 'No estás solo', presentation: 'modal' }} />
+            <Stack.Screen name="plus" options={{ title: '', presentation: 'modal' }} />
+          </Stack>
+        </PlusProvider>
       </SettingsProvider>
     </ThemeProvider>
   );

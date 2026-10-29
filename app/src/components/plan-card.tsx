@@ -6,12 +6,14 @@ import { T } from '@/components/text';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import type { Plan } from '@/data/planes';
 import { planProgress } from '@/lib/planes';
+import { usePlus } from '@/lib/plus';
 import { useSettings } from '@/lib/settings';
 
 /** Tarjeta de un plan de lectura, con su avance si ya empezó. */
 export function PlanCard({ plan }: { plan: Plan }) {
   const c = usePalette();
   const { plans } = useSettings();
+  const { isPlus } = usePlus();
   const prog = planProgress(plan, plans[plan.id]);
   return (
     <PressLink
@@ -20,7 +22,7 @@ export function PlanCard({ plan }: { plan: Plan }) {
       style={({ pressed }) => [styles.card, { backgroundColor: pressed ? c.surface2 : c.surface }]}>
       <View style={{ flex: 1 }}>
         <T variant="label">
-          {plan.days.length} días{!plan.premium ? ' · Gratis' : ''}
+          {plan.days.length} días{!plan.premium ? ' · Gratis' : isPlus ? '' : ' · Plus'}
           {prog.finished ? ' · Terminado' : ''}
         </T>
         <T style={styles.title}>{plan.title}</T>

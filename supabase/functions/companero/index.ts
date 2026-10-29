@@ -25,7 +25,8 @@ import {
 } from "./core.ts";
 
 const MODEL = "claude-haiku-5-5";
-const DAILY_LIMIT = Number(Deno.env.get("COMPANION_DAILY_LIMIT") ?? "20");
+const DAILY_LIMIT = Number(Deno.env.get("COMPANION_DAILY_LIMIT") ?? "30");
+const FREE_QUESTIONS = Number(Deno.env.get("COMPANION_FREE_QUESTIONS") ?? "3");
 const VERSION = "rv1909";
 
 const anthropic = new Anthropic({ apiKey: Deno.env.get("ANTHROPIC_API_KEY") });
@@ -73,9 +74,10 @@ export type CompanionResponse =
       citations: VerifiedCitation[];
       noBiblicalBasis: boolean;
       remaining: number | null;
+      plan?: "plus" | "free";
     }
   | { type: "crisis" }
-  | { type: "limit" }
+  | { type: "limit"; reason: "daily" | "free" }
   | { type: "error"; message: string };
 
 const CORS = {
@@ -232,7 +234,21 @@ Deno.serve(async (req) => {
   // 3. Crisis: respuesta inmediata, sin IA y sin gastar usos.
   if (detectCrisis(input.question)) return json({ type: "crisis" });
 
-  // 4. Caché (solo primeras preguntas: con historial la respuesta depende de la charla).
+  // 4. Límite: con Plus, COMPANION_DAILY_LIMIT por día; sin Plus, FREE_QUESTIONS de regalo en total.
+  //    Se cuenta antes de la caché: una respuesta en caché también es una pregunta.
+  const { data: plus, error: plusError } = await db.rpc("is_plus", { p_user: userId });
+  if (plusError)
+    return json({ type: "error", message: "No pude revisar tu suscripción" }, 500);
+  const { data: remaining, error: quotaError } = plus
+    ? await db.rpc("companion_consume", { p_user: userId, p_limit: DAILY_LIMIT })
+    : await db.rpc("companion_consume_free", { p_user: userId, p_total: FREE_QUESTIONS });
+  if (quotaError)
+    return json({ type: "error", message: "No pude revisar tu límite" }, 500);
+  if (remaining === -1)
+    return json({ type: "limit", reason: plus ? "daily" : "free" }, 429);
+  const plan = plus ? "plus" : "free";
+
+  // 5. Caché (solo primeras preguntas: con historial la respuesta depende de la charla).
   const cacheKey =
     input.history.length === 0
       ? await sha256(`${MODEL}|${cacheText(input.question)}`)
@@ -250,25 +266,11 @@ Deno.serve(async (req) => {
         .eq("key", cacheKey);
       return json({
         ...(hit.response as CompanionResponse & { type: "answer" }),
-        remaining: null,
+        remaining,
+        plan,
       });
     }
   }
-
-  // 5. Límite diario.
-  const { data: remaining, error: quotaError } = await db.rpc(
-    "companion_consume",
-    {
-      p_user: userId,
-      p_limit: DAILY_LIMIT,
-    },
-  );
-  if (quotaError)
-    return json(
-      { type: "error", message: "No pude revisar tu límite diario" },
-      500,
-    );
-  if (remaining === -1) return json({ type: "limit" }, 429);
 
   try {
     const books = await getBooks();
@@ -305,6 +307,7 @@ Deno.serve(async (req) => {
         citations: [],
         noBiblicalBasis: true,
         remaining: remaining + 1,
+        plan,
       });
     }
 
@@ -314,11 +317,13 @@ Deno.serve(async (req) => {
       citations: verified,
       noBiblicalBasis: answer.no_biblical_basis,
       remaining,
+      plan,
     };
+    // En la caché no se guarda cuántas le quedan a esta persona.
     if (cacheKey)
       await db
         .from("companion_cache")
-        .upsert({ key: cacheKey, response: result });
+        .upsert({ key: cacheKey, response: { ...result, remaining: null, plan: undefined } });
     return json(result);
   } catch (e) {
     await db.rpc("companion_refund", { p_user: userId });
