@@ -11,7 +11,14 @@ export default function DevocionalGuardado() {
   const d = getDevocional(id);
   if (!d) return <NotFound />;
   return (
-    <ScrollView contentContainerStyle={{ padding: Space.lg, paddingBottom: Space.xxl }}>
+    <ScrollView
+      contentContainerStyle={{
+        padding: Space.lg,
+        paddingBottom: Space.xxl,
+        maxWidth: 720,
+        width: '100%',
+        alignSelf: 'center',
+      }}>
       <Stack.Screen options={{ title: '' }} />
       <DevocionalView devocional={d} kicker="Devocional guardado" />
     </ScrollView>

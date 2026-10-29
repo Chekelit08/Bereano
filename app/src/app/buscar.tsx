@@ -92,7 +92,7 @@ export default function Search() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: Space.lg },
+  container: { padding: Space.lg, maxWidth: 720, width: '100%', alignSelf: 'center' },
   input: {
     fontFamily: Fonts.ui,
     fontSize: 17,

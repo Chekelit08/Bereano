@@ -87,7 +87,9 @@ export default function Hoy() {
   const savedList = saved.map(getDevocional).filter((d) => d && d.id !== today.id);
 
   return (
-    <ScrollView style={{ backgroundColor: c.bg }} contentContainerStyle={{ paddingBottom: Space.xl }}>
+    <ScrollView
+      style={{ backgroundColor: c.bg }}
+      contentContainerStyle={{ paddingBottom: Space.xl, maxWidth: 720, width: '100%', alignSelf: 'center' }}>
       <View style={[styles.header, { paddingTop: insets.top + Space.lg }]}>
         <View style={styles.headerTop}>
           <T variant="label">
