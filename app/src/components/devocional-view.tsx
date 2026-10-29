@@ -1,19 +1,22 @@
-import * as Sharing from 'expo-sharing';
 import { useRef, useState } from 'react';
-import { Platform, Share, StyleSheet, View, type ViewInstance } from 'react-native';
-import { captureRef } from 'react-native-view-shot';
+import { StyleSheet, View, type ViewInstance } from 'react-native';
 
 import { PressLink, Touchable } from '@/components/press-link';
-import { CARD_HEIGHT, CARD_WIDTH, ShareCard } from '@/components/share-card';
+import { CARD_WIDTH, StoryCard } from '@/components/story-card';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { shareRange, shareText, type Devocional } from '@/data/devocionales';
+import { MARKS } from '@/data/marcas';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
+import { dayKey } from '@/lib/dias';
+import { success } from '@/lib/haptics';
 import { useSettings } from '@/lib/settings';
+import { shareCard } from '@/lib/share';
 
 export function DevocionalView({ devocional: d, kicker }: { devocional: Devocional; kicker: string }) {
   const c = usePalette();
-  const { saved, toggleSaved, fontSize } = useSettings();
+  const { saved, toggleSaved, fontSize, cardStyle, days, markDay } = useSettings();
+  const read = !!days[dayKey()]?.devo;
   const card = useRef<ViewInstance>(null);
   const [sharing, setSharing] = useState(false);
 
@@ -28,27 +31,22 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
 
   async function share() {
     setSharing(true);
-    try {
-      if (Platform.OS !== 'web' && (await Sharing.isAvailableAsync())) {
-        const uri = await captureRef(card, {
-          format: 'png',
-          quality: 1,
-          width: CARD_WIDTH * 3,
-          height: CARD_HEIGHT * 3,
-          result: 'tmpfile',
-        });
-        await Sharing.shareAsync(uri, { mimeType: 'image/png', UTI: 'public.png', dialogTitle: d.title });
-      } else {
-        await Share.share({ message: `“${cardText}”\n— ${shareRef} (RV1909)\n\nBereano` });
-      }
-    } catch {
-      // El usuario canceló o el sistema no pudo compartir: no hay nada que hacer.
-    } finally {
-      setSharing(false);
-    }
+    await shareCard(
+      card,
+      `“${cardText}”
+— ${shareRef} (RV1909)
+
+Bereano`,
+      d.title,
+    );
+    setSharing(false);
   }
 
-  const body = { fontSize: fontSize - 1, lineHeight: Math.round((fontSize - 1) * 1.7) };
+  const body = {
+    fontFamily: Fonts.read,
+    fontSize: fontSize - 1,
+    lineHeight: Math.round((fontSize - 1) * 1.75),
+  };
 
   return (
     <View>
@@ -57,7 +55,7 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
         {d.title}
       </T>
 
-      <View style={[styles.passage, { backgroundColor: c.surface, borderColor: c.line }]}>
+      <View style={[styles.passage, { backgroundColor: c.surface }]}>
         <T style={[styles.ref, { color: c.accent }]}>{formatRef(book, d.chapter, d.from, d.to)}</T>
         {verses.map((v) => (
           <T key={v.n} style={[body, styles.verse]}>
@@ -87,6 +85,22 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
         <T style={styles.questionText}>{d.question}</T>
       </View>
 
+      <Touchable
+        accessibilityRole="button"
+        accessibilityState={{ checked: read }}
+        onPress={() => {
+          if (!read) success();
+          markDay('devo');
+        }}
+        style={({ pressed }) => [
+          styles.done,
+          { backgroundColor: read ? c.surface2 : c.fill, opacity: pressed ? 0.85 : 1 },
+        ]}>
+        <T style={[styles.buttonText, { color: read ? c.text : c.fillInk }]}>
+          {read ? 'Leído hoy ✓' : 'Marcar como leído'}
+        </T>
+      </Touchable>
+
       <View style={styles.actions}>
         <Touchable
           onPress={() => toggleSaved(d.id)}
@@ -110,15 +124,15 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
           accessibilityRole="button"
           style={({ pressed }) => [
             styles.button,
-            { borderColor: c.accent, backgroundColor: c.accent, opacity: pressed || sharing ? 0.7 : 1 },
+            { borderColor: c.text, backgroundColor: 'transparent', opacity: pressed || sharing ? 0.7 : 1 },
           ]}>
-          <T style={[styles.buttonText, { color: c.accentInk }]}>Compartir imagen</T>
+          <T style={[styles.buttonText, { color: c.text }]}>Compartir imagen</T>
         </Touchable>
       </View>
 
       {/* Fuera de pantalla: solo existe para sacarle la foto. */}
       <View style={styles.offscreen} pointerEvents="none" aria-hidden>
-        <ShareCard ref={card} text={cardText} reference={shareRef} title={d.title} />
+        <StoryCard ref={card} variant={cardStyle} text={cardText} reference={shareRef} marks={MARKS[d.id]} />
       </View>
     </View>
   );
@@ -129,14 +143,14 @@ const styles = StyleSheet.create({
     marginTop: Space.lg,
     padding: Space.lg,
     borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
   },
-  ref: { fontFamily: Fonts.displayItalic, fontSize: 17, marginBottom: Space.sm },
+  ref: { fontFamily: Fonts.displayItalic, fontSize: 22, marginBottom: Space.sm },
   verse: { marginTop: 6 },
-  verseNum: { fontFamily: Fonts.body, fontSize: 12 },
+  verseNum: { fontFamily: Fonts.ui, fontSize: 12 },
   question: { marginTop: Space.xl, paddingLeft: Space.md, borderLeftWidth: 2 },
-  questionText: { fontFamily: Fonts.displayItalic, fontSize: 22, lineHeight: 30, marginTop: Space.sm },
-  actions: { flexDirection: 'row', gap: Space.sm, marginTop: Space.xl },
+  questionText: { fontFamily: Fonts.displayItalic, fontSize: 28, lineHeight: 34, marginTop: Space.sm },
+  done: { marginTop: Space.xl, borderRadius: 999, paddingVertical: 16, alignItems: 'center' },
+  actions: { flexDirection: 'row', gap: Space.sm, marginTop: Space.sm },
   button: {
     flex: 1,
     borderWidth: 1,
@@ -144,6 +158,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
   },
-  buttonText: { fontFamily: Fonts.displayMedium, fontSize: 16 },
+  buttonText: { fontFamily: Fonts.uiBold, fontSize: 16 },
   offscreen: { position: 'absolute', left: -CARD_WIDTH * 3, top: 0 },
 });

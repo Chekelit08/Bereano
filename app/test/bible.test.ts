@@ -52,3 +52,21 @@ test('búsqueda sin acentos, frase exacta primero', () => {
   assert.equal(`${hits[0].book.code} ${hits[0].chapter}:${hits[0].verse}`, 'jhn 10:11');
   assert.ok(searchText('jehova es mi pastor').some((h) => h.book.code === 'psa' && h.chapter === 23));
 });
+
+test('racha de días', async () => {
+  const { streak, dayKey, parseDays } = await import('../src/lib/dias');
+  const hoy = new Date(2026, 9, 28, 10);
+  const d = (n: number) => dayKey(new Date(2026, 9, 28 - n));
+  assert.equal(streak({}, hoy), 0);
+  assert.equal(streak({ [d(0)]: { devo: 1 } }, hoy), 1);
+  assert.equal(
+    streak({ [d(1)]: { read: 1 }, [d(2)]: { chat: 1 } }, hoy),
+    2,
+    'hoy todavía no cuenta en contra',
+  );
+  assert.equal(streak({ [d(0)]: { devo: 1 }, [d(1)]: { read: 1 }, [d(3)]: { chat: 1 } }, hoy), 2);
+  assert.equal(streak({ [d(0)]: {} }, hoy), 0);
+  assert.deepEqual(parseDays({ '2026-10-28': { devo: 1, hack: 1 }, malo: { devo: 1 } }), {
+    '2026-10-28': { devo: 1 },
+  });
+});

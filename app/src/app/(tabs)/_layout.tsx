@@ -2,57 +2,78 @@ import { Tabs } from 'expo-router';
 import type { ComponentProps } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { IconBook, IconChat, IconSun } from '@/components/icons';
 import { T } from '@/components/text';
-import { Fonts, Space, usePalette } from '@/constants/theme';
+import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
+import { tap } from '@/lib/haptics';
+
+const ICONS = { index: IconSun, companero: IconChat, biblia: IconBook } as const;
 
 export default function TabsLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false }} tabBar={(props) => <TabBar {...props} />}>
       <Tabs.Screen name="index" options={{ title: 'Hoy' }} />
+      <Tabs.Screen name="companero" options={{ title: 'Compañero' }} />
       <Tabs.Screen name="biblia" options={{ title: 'Biblia' }} />
     </Tabs>
   );
 }
 
-/** Barra de pestañas tipográfica, sin íconos: igual que la landing. */
 type TabBarProps = Parameters<NonNullable<ComponentProps<typeof Tabs>['tabBar']>>[0];
 
+/** Barra flotante: una píldora con íconos propios; la pestaña activa se enciende en dorado. */
 function TabBar({ state, descriptors, navigateToTab, insets }: TabBarProps) {
   const c = usePalette();
   return (
-    <View
-      style={[
-        styles.bar,
-        { backgroundColor: c.bg, borderColor: c.line, paddingBottom: Math.max(insets.bottom, Space.sm) },
-      ]}>
-      {state.routes.map((route, i) => {
-        const focused = state.index === i;
-        const label = descriptors[route.key].options.title ?? route.name;
-        return (
-          <Pressable
-            key={route.key}
-            accessibilityRole="tab"
-            accessibilityState={{ selected: focused }}
-            onPress={() => !focused && navigateToTab(route.key)}
-            style={styles.tab}>
-            <T
-              style={{
-                fontFamily: focused ? Fonts.displayItalic : Fonts.display,
-                fontSize: 19,
-                color: focused ? c.accent : c.muted,
-              }}>
-              {label}
-            </T>
-            <View style={[styles.dot, { backgroundColor: focused ? c.accent : 'transparent' }]} />
-          </Pressable>
-        );
-      })}
+    <View style={[styles.wrap, { backgroundColor: c.bg, paddingBottom: Math.max(insets.bottom, Space.sm) }]}>
+      <View style={[styles.bar, { backgroundColor: c.surface, borderColor: c.line, shadowColor: '#0B1220' }]}>
+        {state.routes.map((route, i) => {
+          const focused = state.index === i;
+          const label = descriptors[route.key].options.title ?? route.name;
+          const Icon = ICONS[route.name as keyof typeof ICONS] ?? IconSun;
+          return (
+            <Pressable
+              key={route.key}
+              accessibilityRole="tab"
+              accessibilityLabel={label}
+              accessibilityState={{ selected: focused }}
+              onPress={() => {
+                if (focused) return;
+                tap();
+                navigateToTab(route.key);
+              }}
+              style={[styles.tab, focused && { backgroundColor: c.fill }]}>
+              <Icon size={21} color={focused ? c.fillInk : c.muted} />
+              <T style={{ fontFamily: Fonts.uiBold, fontSize: 12, color: focused ? c.fillInk : c.muted }}>
+                {label}
+              </T>
+            </Pressable>
+          );
+        })}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  bar: { flexDirection: 'row', borderTopWidth: StyleSheet.hairlineWidth, paddingTop: Space.sm },
-  tab: { flex: 1, alignItems: 'center', paddingVertical: 6, gap: 4 },
-  dot: { width: 5, height: 5, borderRadius: 3 },
+  wrap: { paddingHorizontal: Space.md, paddingTop: Space.xs },
+  bar: {
+    flexDirection: 'row',
+    borderRadius: Radius.pill,
+    padding: 6,
+    borderWidth: StyleSheet.hairlineWidth,
+    shadowOpacity: 0.12,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
+  },
+  tab: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 11,
+    borderRadius: Radius.pill,
+  },
 });

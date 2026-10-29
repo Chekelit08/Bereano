@@ -53,9 +53,9 @@ export default function Search() {
               }}
               style={({ pressed }) => [
                 styles.goTo,
-                { backgroundColor: c.accent, opacity: pressed ? 0.85 : 1 },
+                { backgroundColor: c.fill, opacity: pressed ? 0.85 : 1 },
               ]}>
-              <T style={{ color: c.accentInk, fontFamily: Fonts.displayMedium, fontSize: 18 }}>
+              <T style={{ color: c.fillInk, fontFamily: Fonts.uiBold, fontSize: 18 }}>
                 Ir a {ref.book.name} {ref.chapter}
                 {ref.verse ? `:${ref.verse}` : ''} →
               </T>
@@ -79,7 +79,7 @@ export default function Search() {
             params: { book: item.book.code, chapter: item.chapter, v: item.verse },
           }}
           style={({ pressed }) => [styles.hit, { borderColor: c.line, opacity: pressed ? 0.6 : 1 }]}>
-          <T style={{ fontFamily: Fonts.displayMedium, color: c.accent, fontSize: 15 }}>
+          <T style={{ fontFamily: Fonts.uiBold, color: c.accent, fontSize: 15 }}>
             {item.book.name} {item.chapter}:{item.verse}
           </T>
           <T style={{ marginTop: 2 }} numberOfLines={3}>
@@ -94,7 +94,7 @@ export default function Search() {
 const styles = StyleSheet.create({
   container: { padding: Space.lg },
   input: {
-    fontFamily: Fonts.body,
+    fontFamily: Fonts.ui,
     fontSize: 17,
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 14,

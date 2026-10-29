@@ -19,12 +19,13 @@ export default function Reader() {
   const verses = book && Number.isInteger(chapter) ? getChapter(book.code, chapter) : undefined;
   const target = Number(params.v) || 0;
 
-  const { fontSize, fontStep, changeFont, setLastRead } = useSettings();
+  const { fontSize, fontStep, changeFont, setLastRead, markDay } = useSettings();
   const scroll = useRef<ScrollViewInstance>(null);
 
   useEffect(() => {
     if (book && verses) setLastRead({ book: book.code, chapter });
-  }, [book, chapter, verses, setLastRead]);
+    if (book && verses) markDay('read');
+  }, [book, chapter, verses, setLastRead, markDay]);
 
   if (!book || !verses) return <NotFound />;
 
@@ -59,7 +60,7 @@ export default function Reader() {
         ref={scroll}
         contentContainerStyle={[styles.page, { paddingBottom: insets.bottom + Space.xl }]}>
         <T variant="label">{book.name}</T>
-        <T style={[styles.chapterNum, { color: c.accent }]}>{chapter}</T>
+        <T style={[styles.chapterNum, { color: c.text }]}>{chapter}</T>
 
         {verses.map((text, i) => {
           const n = i + 1;
@@ -77,8 +78,10 @@ export default function Reader() {
                   : undefined
               }
               style={[styles.verse, highlighted && { backgroundColor: c.surface, borderColor: c.accent }]}>
-              <T style={{ fontSize, lineHeight }} selectable>
-                <T style={[styles.verseNum, { color: c.muted, fontSize: Math.round(fontSize * 0.6) }]}>{n} </T>
+              <T style={{ fontFamily: Fonts.read, fontSize, lineHeight }} selectable>
+                <T style={[styles.verseNum, { color: c.muted, fontSize: Math.round(fontSize * 0.6) }]}>
+                  {n}{' '}
+                </T>
                 {text}
               </T>
             </View>
@@ -116,7 +119,7 @@ function FontButton({
       accessibilityLabel={hint}
       hitSlop={8}
       style={({ pressed }) => ({ opacity: disabled ? 0.3 : pressed ? 0.6 : 1, paddingHorizontal: 6 })}>
-      <T style={{ fontFamily: Fonts.displayMedium, fontSize: small ? 15 : 19, color: c.accent }}>{label}</T>
+      <T style={{ fontFamily: Fonts.uiBold, fontSize: small ? 15 : 19, color: c.accent }}>{label}</T>
     </Touchable>
   );
 }
@@ -156,7 +159,13 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
-  chapterNum: { fontFamily: Fonts.display, fontSize: 64, lineHeight: 72, marginTop: Space.xs, marginBottom: Space.lg },
+  chapterNum: {
+    fontFamily: Fonts.display,
+    fontSize: 96,
+    lineHeight: 100,
+    marginTop: Space.xs,
+    marginBottom: Space.lg,
+  },
   verse: {
     borderLeftWidth: 2,
     borderColor: 'transparent',
@@ -166,7 +175,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 4,
   },
-  verseNum: { fontFamily: Fonts.body, letterSpacing: 0.5 },
+  verseNum: { fontFamily: Fonts.uiBold, letterSpacing: 0.5 },
   fontButtons: { flexDirection: 'row', alignItems: 'baseline', gap: 4 },
   nav: {
     flexDirection: 'row',

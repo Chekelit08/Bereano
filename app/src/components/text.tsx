@@ -2,20 +2,15 @@ import { Text, type TextProps } from 'react-native';
 
 import { Fonts, usePalette } from '@/constants/theme';
 
-type Variant = 'title' | 'heading' | 'body' | 'label' | 'muted';
+type Variant = 'title' | 'heading' | 'body' | 'label' | 'muted' | 'read';
 
 const styles = {
-  title: { fontFamily: Fonts.display, fontSize: 40, lineHeight: 44, letterSpacing: -0.8 },
-  heading: { fontFamily: Fonts.displayMedium, fontSize: 20, lineHeight: 26 },
-  body: { fontFamily: Fonts.body, fontSize: 17, lineHeight: 26 },
-  label: {
-    fontFamily: Fonts.bodyMedium,
-    fontSize: 12,
-    lineHeight: 16,
-    letterSpacing: 1.4,
-    textTransform: 'uppercase',
-  },
-  muted: { fontFamily: Fonts.body, fontSize: 15, lineHeight: 22 },
+  title: { fontFamily: Fonts.display, fontSize: 32, lineHeight: 38, letterSpacing: -0.8 },
+  heading: { fontFamily: Fonts.display, fontSize: 20, lineHeight: 26, letterSpacing: -0.4 },
+  body: { fontFamily: Fonts.ui, fontSize: 16, lineHeight: 24, letterSpacing: -0.2 },
+  label: { fontFamily: Fonts.uiBold, fontSize: 12, lineHeight: 16, letterSpacing: 0.2 },
+  muted: { fontFamily: Fonts.ui, fontSize: 14, lineHeight: 21 },
+  read: { fontFamily: Fonts.read, fontSize: 18, lineHeight: 30 },
 } as const;
 
 /** Texto con la tipografía y el color del tema. */

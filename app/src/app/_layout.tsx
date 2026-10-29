@@ -1,8 +1,12 @@
+import { Archivo_700Bold, Archivo_800ExtraBold } from '@expo-google-fonts/archivo';
+import { Caveat_700Bold } from '@expo-google-fonts/caveat';
+import { Newsreader_400Regular_Italic, Newsreader_500Medium } from '@expo-google-fonts/newsreader';
 import {
-  Fraunces_400Regular,
-  Fraunces_400Regular_Italic,
-  Fraunces_500Medium,
-} from '@expo-google-fonts/fraunces';
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
 import {
   Literata_400Regular,
   Literata_400Regular_Italic,
@@ -30,12 +34,18 @@ export default function RootLayout() {
     colors: { ...base.colors, background: c.bg, card: c.bg, text: c.text, border: c.line, primary: c.accent },
   };
   const [loaded, error] = useFonts({
-    Fraunces_400Regular,
-    Fraunces_400Regular_Italic,
-    Fraunces_500Medium,
+    Newsreader_500Medium,
+    Newsreader_400Regular_Italic,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
     Literata_400Regular,
     Literata_400Regular_Italic,
     Literata_500Medium,
+    Archivo_700Bold,
+    Archivo_800ExtraBold,
+    Caveat_700Bold,
   });
 
   useEffect(() => {
@@ -52,13 +62,14 @@ export default function RootLayout() {
           screenOptions={{
             headerStyle: { backgroundColor: c.bg },
             headerTintColor: c.accent,
-            headerTitleStyle: { fontFamily: Fonts.displayMedium, color: c.text },
+            headerTitleStyle: { fontFamily: Fonts.uiBold, color: c.text },
             headerShadowVisible: false,
             headerBackButtonDisplayMode: 'minimal',
             contentStyle: { backgroundColor: c.bg },
           }}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />
+          <Stack.Screen name="ayuda" options={{ title: 'No estás solo', presentation: 'modal' }} />
         </Stack>
       </SettingsProvider>
     </ThemeProvider>

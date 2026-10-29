@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import { DEVOCIONALES, devocionalDelDia, shareRange, shareText } from '../src/data/devocionales';
+import { findSequence, MARKS } from '../src/data/marcas';
 import { getBook, getChapter } from '../src/lib/bible';
 
 test('cada devocional apunta a un pasaje que existe', () => {
@@ -43,9 +44,26 @@ test('la imagen para compartir usa versículos del pasaje y entra en la historia
   for (const d of DEVOCIONALES) {
     const [a, b] = shareRange(d);
     assert.ok(a >= d.from && b <= d.to && a <= b, `${d.id}: share fuera del pasaje`);
-    const text = getChapter(d.book, d.chapter)!
-      .slice(a - 1, b)
-      .join(' ');
-    assert.ok(text.length <= 360, `${d.id}: ${text.length} caracteres para la imagen`);
+    const text = shareText(getChapter(d.book, d.chapter)!.slice(a - 1, b));
+    assert.ok(
+      !/^(Salmo|Al Músico|Cántico|Masquil|Oración|Mictam)/.test(text),
+      `${d.id}: empieza con un título`,
+    );
+    assert.ok(!text.includes('Selah'), `${d.id}: incluye Selah`);
+    assert.ok(text.length <= 260, `${d.id}: ${text.length} caracteres para la imagen`);
+  }
+});
+
+test('las marcas del diseño Editorial existen en el texto', () => {
+  for (const d of DEVOCIONALES) {
+    const m = MARKS[d.id];
+    assert.ok(m, `${d.id}: sin marcas`);
+    const [a, b] = shareRange(d);
+    const words = shareText(getChapter(d.book, d.chapter)!.slice(a - 1, b)).split(' ');
+    for (const w of [...(m.bold ?? []), ...(m.italic ?? []), ...(m.circle ? [m.circle] : [])]) {
+      assert.ok(words.includes(w), `${d.id}: "${w}" no está en el texto`);
+    }
+    if (m.underline)
+      assert.ok(findSequence(words, m.underline.split(' ')) >= 0, `${d.id}: "${m.underline}" no está`);
   }
 });

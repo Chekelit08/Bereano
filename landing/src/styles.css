@@ -1,32 +1,35 @@
 /* =========================================================
-   Bereano — estilo editorial: papel, tinta y grabados.
+   Bereano — estilo Apple: blanco, negro y grises neutros, con el azul de Apple de acento.
    ========================================================= */
 
 /* ---------- Tokens ---------- */
 :root {
-  --bg: #efe7d8;
-  --bg-tint: #e6dcc9;
-  --surface: #f6f0e4;
-  --text: #16110d;
-  --muted: #5e5146;
-  --line: #16110d2e;
-  --accent: #b83d18;
-  --accent-ink: #fbf5ea;
-  --focus: #b83d18;
+  --bg: #ffffff;
+  --bg-tint: #f5f5f7;
+  --surface: #f5f5f7;
+  --text: #1d1d1f;
+  --muted: #6e6e73;
+  --line: #0000001f;
+  --accent: #0066cc;
+  --accent-ink: #ffffff;
+  --fill: #0071e3;
+  --fill-ink: #ffffff;
+  --focus: #0071e3;
 
-  /* Bloque invertido (lista de espera) */
-  --inv-bg: #16110d;
-  --inv-text: #efe7d8;
-  --inv-muted: #b3a593;
-  --inv-line: #efe7d833;
-  --inv-accent: #f06a3f;
-  --inv-accent-ink: #16110d;
-  --inv-surface: #221b16;
+  /* Bloque invertido (lista de espera): negro */
+  --inv-bg: #000000;
+  --inv-text: #f5f5f7;
+  --inv-muted: #a1a1a6;
+  --inv-line: #ffffff2b;
+  --inv-accent: #0071e3;
+  --inv-accent-ink: #ffffff;
+  --inv-surface: #1c1c1e;
 
 
-  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
-  --font-body: "Literata Variable", Georgia, "Times New Roman", serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Inter Variable", -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  --font-body: "Inter Variable", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --font-read: "Literata Variable", Georgia, "Times New Roman", serif;
+  --font-mono: "Inter Variable", -apple-system, system-ui, sans-serif;
 
   --gutter: 16px;
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
@@ -36,43 +39,47 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0f0c0a;
-    --bg-tint: #17120f;
-    --surface: #1a1511;
-    --text: #efe7d8;
-    --muted: #b3a593;
-    --line: #efe7d82b;
-    --accent: #f06a3f;
-    --accent-ink: #0f0c0a;
-    --focus: #f06a3f;
-    --inv-bg: #efe7d8;
-    --inv-text: #16110d;
-    --inv-muted: #5e5146;
-    --inv-line: #16110d2e;
-    --inv-accent: #b83d18;
-    --inv-accent-ink: #fbf5ea;
-    --inv-surface: #f6f0e4;
+    --bg: #000000;
+    --bg-tint: #111111;
+    --surface: #1c1c1e;
+    --text: #f5f5f7;
+    --muted: #a1a1a6;
+    --line: #ffffff24;
+    --accent: #2997ff;
+    --accent-ink: #ffffff;
+    --fill: #0071e3;
+    --fill-ink: #ffffff;
+    --focus: #2997ff;
+    --inv-bg: #1c1c1e;
+    --inv-text: #f5f5f7;
+    --inv-muted: #a1a1a6;
+    --inv-line: #ffffff2b;
+    --inv-accent: #0071e3;
+    --inv-accent-ink: #ffffff;
+    --inv-surface: #2c2c2e;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #0f0c0a;
-  --bg-tint: #17120f;
-  --surface: #1a1511;
-  --text: #efe7d8;
-  --muted: #b3a593;
-  --line: #efe7d82b;
-  --accent: #f06a3f;
-  --accent-ink: #0f0c0a;
-  --focus: #f06a3f;
-  --inv-bg: #efe7d8;
-  --inv-text: #16110d;
-  --inv-muted: #5e5146;
-  --inv-line: #16110d2e;
-  --inv-accent: #b83d18;
-  --inv-accent-ink: #fbf5ea;
-  --inv-surface: #f6f0e4;
+  --bg: #000000;
+    --bg-tint: #111111;
+    --surface: #1c1c1e;
+    --text: #f5f5f7;
+    --muted: #a1a1a6;
+    --line: #ffffff24;
+    --accent: #2997ff;
+    --accent-ink: #ffffff;
+    --fill: #0071e3;
+    --fill-ink: #ffffff;
+    --focus: #2997ff;
+    --inv-bg: #1c1c1e;
+    --inv-text: #f5f5f7;
+    --inv-muted: #a1a1a6;
+    --inv-line: #ffffff2b;
+    --inv-accent: #0071e3;
+    --inv-accent-ink: #ffffff;
+    --inv-surface: #2c2c2e;
   color-scheme: dark;
 }
 
@@ -108,7 +115,7 @@ h3 {
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 0 0 0.5em;
-  font-variation-settings: "opsz" 144;
+  
 }
 
 h1 em,
@@ -129,7 +136,7 @@ a {
 }
 
 mark {
-  background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent) 28%, transparent) 62%);
+  background: linear-gradient(transparent 60%, color-mix(in srgb, var(--fill) 55%, transparent) 60%);
   color: inherit;
 }
 
@@ -187,7 +194,7 @@ mark {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--fill);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -363,9 +370,9 @@ mark {
 }
 
 .btn--primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  border-color: var(--fill);
+  color: var(--fill-ink);
 }
 
 .btn--primary:hover {
@@ -418,7 +425,7 @@ mark {
   border-radius: 50%;
   background:
     radial-gradient(closest-side, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%),
-    radial-gradient(closest-side at 30% 70%, color-mix(in srgb, #d9a441 35%, transparent), transparent 70%);
+    radial-gradient(closest-side at 30% 70%, color-mix(in srgb, #ffd9a8 35%, transparent), transparent 70%);
   filter: blur(30px);
   animation: breathe 9s ease-in-out infinite alternate;
 }
@@ -501,8 +508,8 @@ mark {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  color: var(--fill-ink);
   font-size: 1.375rem;
   transition: transform 0.4s var(--ease);
 }
@@ -537,8 +544,8 @@ mark {
 .marquee {
   overflow: hidden;
   border-block: 1px solid var(--text);
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  color: var(--fill-ink);
 }
 
 .marquee__track {
@@ -641,9 +648,9 @@ mark {
 
 .step:nth-child(3) {
   --stack: 2;
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  border-color: var(--fill);
+  color: var(--fill-ink);
 }
 
 .step:nth-child(3) p {
@@ -651,7 +658,7 @@ mark {
 }
 
 .step:nth-child(3) .step__num {
-  -webkit-text-stroke-color: var(--accent-ink);
+  -webkit-text-stroke-color: var(--fill-ink);
 }
 
 .step__num {
@@ -706,7 +713,7 @@ mark {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--accent);
+  background: var(--fill);
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 0.45s var(--ease);
@@ -754,7 +761,7 @@ mark {
   .door:hover .door__text > span,
   .door:hover .door__index,
   .door:hover .door__arrow {
-    color: var(--accent-ink);
+    color: var(--fill-ink);
   }
 
   .door:hover .door__text strong {
@@ -821,8 +828,8 @@ mark {
   display: inline-block;
   padding: 6px 10px;
   margin-bottom: 18px;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  color: var(--fill-ink);
   transform: rotate(-2deg);
 }
 
@@ -889,22 +896,22 @@ mark {
   aspect-ratio: 9 / 19;
   padding: 10px;
   border-radius: 48px;
-  background: #16110d;
+  background: #1d1d1f;
   box-shadow:
-    inset 0 0 0 2px #3a2f27,
+    inset 0 0 0 2px #3a3a3c,
     0 0 0 1px var(--phone-ring, transparent),
-    0 30px 60px -20px rgb(22 17 13 / 45%),
-    0 12px 24px -12px rgb(22 17 13 / 35%);
+    0 30px 60px -20px rgb(0 0 0 / 30%),
+    0 12px 24px -12px rgb(0 0 0 / 22%);
   transform: rotate(-2deg);
 }
 
 /* En modo oscuro el marco se perdería contra el fondo: un borde claro sutil lo recorta. */
 :root[data-theme="dark"] .phone {
-  --phone-ring: #efe7d840;
+  --phone-ring: #ffffff40;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .phone {
-    --phone-ring: #efe7d840;
+    --phone-ring: #ffffff40;
   }
 }
 
@@ -914,12 +921,13 @@ mark {
   height: 100%;
   overflow: hidden;
   border-radius: 38px;
-  /* La app siempre en papel claro, también en modo oscuro: es una "foto" del producto. */
-  background: #f6f0e4;
-  color: #16110d;
-  --muted: #5e5146;
-  --accent: #b83d18;
-  --accent-ink: #fbf5ea;
+  /* La app en su modo claro, también en modo oscuro: es una "foto" del producto. */
+  background: #ffffff;
+  color: #1d1d1f;
+  --muted: #6e6e73;
+  --accent: #0066cc;
+  --fill: #0071e3;
+  --fill-ink: #ffffff;
 }
 
 .phone__status {
@@ -935,7 +943,7 @@ mark {
   width: 84px;
   height: 22px;
   border-radius: 999px;
-  background: #16110d;
+  background: #1d1d1f;
 }
 
 .phone__head {
@@ -943,7 +951,7 @@ mark {
   gap: 10px;
   align-items: center;
   padding: 10px 18px 12px;
-  border-bottom: 1px solid #16110d1f;
+  border-bottom: 1px solid #1d1d1f1a;
 }
 
 .phone__head .brand__mark {
@@ -951,7 +959,7 @@ mark {
   height: 30px;
   padding: 5px;
   border-radius: 50%;
-  background: #efe7d8;
+  background: #f5f5f7;
   color: var(--accent);
 }
 
@@ -996,15 +1004,16 @@ mark {
 
 .bubble--user {
   align-self: flex-end;
-  background: #16110d;
-  color: #efe7d8;
+  background: #0071e3;
+  color: #ffffff;
+  font-weight: 500;
   border-bottom-right-radius: 6px;
 }
 
 .bubble--bot {
   align-self: flex-start;
-  background: #fff;
-  border: 1px solid #16110d1a;
+  background: #f5f5f7;
+  border: 1px solid #1d1d1f1a;
   border-bottom-left-radius: 6px;
 }
 
@@ -1015,7 +1024,7 @@ mark {
 
 .bubble__apply {
   padding-top: 0.6em;
-  border-top: 1px dashed #16110d2e;
+  border-top: 1px dashed #1d1d1f2e;
   font-weight: 600;
 }
 
@@ -1024,8 +1033,8 @@ mark {
   align-self: flex-start;
   gap: 4px;
   padding: 12px 14px;
-  background: #fff;
-  border: 1px solid #16110d1a;
+  background: #f5f5f7;
+  border: 1px solid #1d1d1f1a;
 }
 
 .bubble--typing span {
@@ -1063,8 +1072,8 @@ mark {
 .cites li {
   padding: 4px 8px;
   border-radius: 999px;
-  background: #e8f0e3;
-  color: #2f5a2a;
+  background: #1d1d1f;
+  color: #ffffff;
   font-size: 0.5625rem;
 }
 
@@ -1075,8 +1084,8 @@ mark {
   margin: 8px 12px 14px;
   padding: 8px 8px 8px 16px;
   border-radius: 999px;
-  background: #fff;
-  border: 1px solid #16110d1f;
+  background: #f5f5f7;
+  border: 1px solid #1d1d1f1f;
   color: var(--muted);
   font-size: 0.75rem;
 }
@@ -1087,8 +1096,8 @@ mark {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  color: var(--fill-ink);
 }
 
 /* Estados de la animación (solo si motion.js la activa) */
@@ -1187,9 +1196,9 @@ mark {
 
 .faq__item[open] summary::after {
   transform: rotate(45deg);
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fill);
+  border-color: var(--fill);
+  color: var(--fill-ink);
 }
 
 .faq__body {
@@ -1212,8 +1221,10 @@ mark {
   --text: var(--inv-text);
   --muted: var(--inv-muted);
   --line: var(--inv-line);
-  --accent: var(--inv-accent);
+  --accent: #2997ff;
   --accent-ink: var(--inv-accent-ink);
+  --fill: var(--inv-accent);
+  --fill-ink: var(--inv-accent-ink);
   --surface: var(--inv-surface);
   --focus: var(--inv-accent);
   background: var(--bg);
@@ -1274,8 +1285,8 @@ mark {
 }
 
 .field select option {
-  color: #16110d;
-  background: #f6f0e4;
+  color: #1d1d1f;
+  background: #ffffff;
 }
 
 .field input:focus,
@@ -1451,7 +1462,7 @@ mark {
   font-weight: 300;
   line-height: 0.9;
   letter-spacing: -0.05em;
-  font-variation-settings: "opsz" 144;
+  
 }
 
 .intro__word span {
@@ -1500,7 +1511,7 @@ mark {
   right: 0;
   z-index: 45;
   height: 2px;
-  background: var(--accent);
+  background: var(--fill);
   transform: scaleX(var(--p, 0));
   transform-origin: left;
   pointer-events: none;
@@ -1522,7 +1533,7 @@ mark {
     height: 14px;
     margin: -7px 0 0 -7px;
     border-radius: 50%;
-    background: #efe7d8;
+    background: #ffffff;
     mix-blend-mode: difference;
     pointer-events: none;
     opacity: 0;
@@ -1546,7 +1557,7 @@ mark {
     height: 92px;
     margin: -46px 0 0 -46px;
     mix-blend-mode: normal;
-    background: var(--accent);
+    background: var(--fill);
   }
 
   .cursor__label {
@@ -1554,7 +1565,7 @@ mark {
     font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-ink);
+    color: var(--fill-ink);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -1622,12 +1633,12 @@ mark {
   transform: translateY(-6px) rotate(-1deg);
 }
 
-/* Una paleta cálida, una tarjeta por tema. Iguales en modo claro y oscuro. */
-.plans__track > li:nth-child(1) .plan-card { --card-bg: #b83d18; --card-ink: #fbf5ea; }
-.plans__track > li:nth-child(2) .plan-card { --card-bg: #d9a441; --card-ink: #16110d; }
-.plans__track > li:nth-child(3) .plan-card { --card-bg: #4d5a37; --card-ink: #f3ecdf; }
-.plans__track > li:nth-child(4) .plan-card { --card-bg: #1f3550; --card-ink: #efe7d8; }
-.plans__track > li:nth-child(5) .plan-card { --card-bg: #efe7d8; --card-ink: #16110d; --card-line: #16110d; }
+/* Planes: grises de Apple y uno en negro. */
+.plans__track > li:nth-child(1) .plan-card { --card-bg: #f5f5f7; --card-ink: #1d1d1f; }
+.plans__track > li:nth-child(2) .plan-card { --card-bg: #1d1d1f; --card-ink: #f5f5f7; }
+.plans__track > li:nth-child(3) .plan-card { --card-bg: #e8e8ed; --card-ink: #1d1d1f; }
+.plans__track > li:nth-child(4) .plan-card { --card-bg: #f5f5f7; --card-ink: #1d1d1f; }
+.plans__track > li:nth-child(5) .plan-card { --card-bg: #2c2c2e; --card-ink: #f5f5f7; }
 
 .plan-card__meta {
   display: flex;
@@ -1645,7 +1656,7 @@ mark {
   color: transparent;
   -webkit-text-stroke: 1px var(--card-ink);
   transition: color 0.5s var(--ease);
-  font-variation-settings: "opsz" 144;
+  
 }
 
 .plan-card:hover .plan-card__num {
@@ -1758,7 +1769,7 @@ html.lenis body {
   line-height: 0.85;
   letter-spacing: -0.06em;
   white-space: nowrap;
-  font-variation-settings: "opsz" 144;
+  
 }
 
 /* ---------- Movimiento ----------
@@ -1886,7 +1897,7 @@ html.lenis body {
   }
 
   .door:hover .door__tag {
-    color: var(--accent-ink);
+    color: var(--fill-ink);
   }
 
   .pricing {
@@ -1980,4 +1991,118 @@ html.lenis body {
   .verse-section__note {
     grid-column: 2;
   }
+}
+
+/* Titulares. */
+h2 {
+  letter-spacing: -0.02em;
+}
+
+/* Esquinas redondeadas y botones en píldora, como en la app. */
+.btn {
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.step {
+  border-radius: 28px;
+  box-shadow: none;
+}
+
+.plan-card {
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.phone__input {
+  border-radius: 999px;
+}
+
+.step:not(:nth-child(3)) {
+  border-color: var(--line);
+}
+
+/* =========================================================
+   Estilo Apple: titulares en negrita con tracking ajustado,
+   la segunda parte en gris, mucho blanco y cero decoración.
+   ========================================================= */
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+h1 em,
+h2 em,
+h3 em {
+  font-style: normal;
+  color: var(--muted);
+}
+
+.hero::before {
+  display: none;
+}
+
+.hero__title {
+  font-size: clamp(3rem, 12vw, 7.5rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.hero__title em {
+  font-weight: 700;
+}
+
+.step {
+  border: 0;
+  background: var(--surface);
+}
+
+.step:nth-child(3) {
+  background: var(--fill);
+  color: var(--fill-ink);
+}
+
+/* Titulares en negrita (antes eran finos). Las citas bíblicas y los números quedan livianos. */
+.section__title,
+.door__text strong,
+.waitlist__title,
+.thanks__title,
+.dialog h2,
+.intro__word {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.faq__item summary {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.verse blockquote {
+  font-family: var(--font-read);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+mark {
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--text) 12%, transparent) 58%);
+}
+
+/* Cinta: discreta, gris claro, sin itálica. */
+.marquee {
+  border-block: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.marquee__track span {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3.6vw, 2rem);
+  letter-spacing: -0.03em;
 }
