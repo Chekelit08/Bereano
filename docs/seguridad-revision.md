@@ -31,8 +31,7 @@ datos (migraciones y producción), Edge Functions, app, landing, secretos y CI.
 
 ## Producción (Supabase)
 
-- **Migraciones aplicadas:** lista de espera, límite por IP y Biblia.
-- **Pendientes:** `companion`, `subscriptions` y `security_hardening`.
+- **Migraciones aplicadas (29/10):** todas, incluidas `companion`, `subscriptions` y `security_hardening`. Verificado en producción: la función nueva del límite está activa, las tablas nuevas tienen RLS y el cliente no puede ejecutar las funciones del compañero ni de suscripciones.
 - **Advisors de seguridad y rendimiento:** solo avisos informativos, todos esperados:
   - `private.waitlist_attempts` tiene RLS sin políticas, que es lo que queremos (nadie del cliente entra);
   - esa misma tabla no tiene clave primaria;
@@ -40,13 +39,13 @@ datos (migraciones y producción), Edge Functions, app, landing, secretos y CI.
 
 ## Pendientes para Ezequiel (antes de lanzar)
 
-1. **Aplicar las migraciones pendientes** en producción. Te aviso y lo hago yo cuando quieras.
-2. **Activar los logins anónimos** en Supabase (Authentication → Sign In / Providers → Anonymous). En Authentication → Rate Limits, poner **10** en "anonymous sign-ins".
-3. **Captcha (Cloudflare Turnstile, gratis):** recomendado antes del lanzamiento para frenar la creación masiva de cuentas anónimas. Requiere crear el sitio en Cloudflare.
-4. **Secretos de las Edge Functions:** `ANTHROPIC_API_KEY` y `REVENUECAT_WEBHOOK_AUTH` (32 caracteres o más).
-5. **Verificar los números de ayuda en crisis** de cada país (`app/src/data/ayuda.ts`).
-6. **Cloudflare:** carpeta raíz `landing` también para las ramas que no son `main`.
-7. Borrar la fila de prueba `ana@mail.com` de la lista de espera en producción.
+1. **Activar los logins anónimos** en Supabase (Authentication → Sign In / Providers → Anonymous). En Authentication → Rate Limits, poner **10** en "anonymous sign-ins".
+2. **Captcha (Cloudflare Turnstile, gratis):** recomendado antes del lanzamiento para frenar la creación masiva de cuentas anónimas. Requiere crear el sitio en Cloudflare.
+3. **Secretos de las Edge Functions:** `ANTHROPIC_API_KEY` y `REVENUECAT_WEBHOOK_AUTH` (32 caracteres o más).
+4. **Verificar los números de ayuda en crisis** de cada país (`app/src/data/ayuda.ts`).
+5. **Cloudflare:** carpeta raíz `landing` también para las ramas que no son `main`.
+6. Borrar la fila de prueba `ana@mail.com` de la lista de espera en producción.
+7. Registrar `security_hardening` en el historial de migraciones (ya está aplicada, pero no figura): `npx supabase migration repair --status applied 20261029140000`.
 
 ## Cómo repetir esta revisión
 
