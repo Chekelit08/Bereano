@@ -3,6 +3,7 @@ import { createContext, use, useEffect, useState, type ReactNode } from 'react';
 
 import { CARD_STYLES, type CardStyle } from '@/components/story-card';
 import { dayKey, parseDays, type Activity, type Days } from '@/lib/dias';
+import { parsePlans, type PlanState } from '@/lib/planes';
 
 export const FONT_SIZES = [16, 18, 20, 22, 25, 28] as const;
 
@@ -13,10 +14,18 @@ type Settings = {
   saved: string[];
   cardStyle: CardStyle;
   days: Days;
+  plans: Record<string, PlanState>;
 };
 
 const KEY = 'bereano.settings.v1';
-const DEFAULTS: Settings = { fontStep: 2, lastRead: null, saved: [], cardStyle: 'editorial', days: {} };
+const DEFAULTS: Settings = {
+  fontStep: 2,
+  lastRead: null,
+  saved: [],
+  cardStyle: 'editorial',
+  days: {},
+  plans: {},
+};
 
 type Ctx = Settings & {
   fontSize: number;
@@ -27,6 +36,10 @@ type Ctx = Settings & {
   setCardStyle: (s: CardStyle) => void;
   /** Registra que hoy hizo algo (para la racha y el momento de hoy). */
   markDay: (a: Activity) => void;
+  /** Planes de lectura: empezar, marcar un día como leído (o desmarcarlo) y dejar. */
+  startPlan: (id: string) => void;
+  togglePlanDay: (id: string, day: number) => void;
+  leavePlan: (id: string) => void;
 };
 
 const SettingsContext = createContext<Ctx | null>(null);
@@ -53,7 +66,7 @@ function parse(raw: string | null): Settings {
     const cardStyle = CARD_STYLES.some((c) => c.id === v.cardStyle)
       ? (v.cardStyle as CardStyle)
       : DEFAULTS.cardStyle;
-    return { fontStep, lastRead, saved, cardStyle, days: parseDays(v.days) };
+    return { fontStep, lastRead, saved, cardStyle, days: parseDays(v.days), plans: parsePlans(v.plans) };
   } catch {
     return DEFAULTS;
   }
@@ -89,6 +102,24 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           ? s
           : { ...s, lastRead },
       ),
+    startPlan: (id) =>
+      setSettings((s) =>
+        s.plans[id] ? s : { ...s, plans: { ...s.plans, [id]: { start: dayKey(), done: [] } } },
+      ),
+    togglePlanDay: (id, day) =>
+      setSettings((s) => {
+        const st = s.plans[id] ?? { start: dayKey(), done: [] };
+        const done = st.done.includes(day)
+          ? st.done.filter((d) => d !== day)
+          : [...st.done, day].sort((a, b) => a - b);
+        return { ...s, plans: { ...s.plans, [id]: { ...st, done } } };
+      }),
+    leavePlan: (id) =>
+      setSettings((s) => {
+        const plans = { ...s.plans };
+        delete plans[id];
+        return { ...s, plans };
+      }),
     markDay: (a) =>
       setSettings((s) => {
         const k = dayKey();

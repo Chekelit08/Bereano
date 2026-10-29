@@ -4,14 +4,17 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { PlanCard } from '@/components/plan-card';
 import { IconBook, IconChat, IconCheck, IconChevron, IconFlame, IconSun } from '@/components/icons';
 import { PressLink, Touchable } from '@/components/press-link';
 import { GREETING, momentOf } from '@/components/momento';
 import { T } from '@/components/text';
 import { VersiculoDelDia } from '@/components/versiculo-del-dia';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
+import { PLANES } from '@/data/planes';
 import { devocionalDelDia, getDevocional, shareRange, shareText } from '@/data/devocionales';
 import { dayKey, streak } from '@/lib/dias';
+import { planProgress } from '@/lib/planes';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
 import { useSettings } from '@/lib/settings';
 
@@ -27,7 +30,7 @@ export default function Hoy() {
   const c = usePalette();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { saved, days, lastRead } = useSettings();
+  const { saved, days, lastRead, plans } = useSettings();
   const [now] = useState(() => new Date());
   const moment = momentOf(now);
   const today = devocionalDelDia(now);
@@ -38,6 +41,11 @@ export default function Hoy() {
   const verse = shareText(getChapter(today.book, today.chapter)!.slice(a - 1, b));
   const verseRef = formatRef(getBook(today.book)!, today.chapter, a, b);
   const last = lastRead && getBook(lastRead.book);
+
+  // El primer plan en curso (sin terminar), si hay.
+  const activePlan = PLANES.map((plan) => ({ plan, ...planProgress(plan, plans[plan.id]) })).find(
+    (p) => p.started && !p.finished,
+  );
 
   const steps: Step[] = [
     {
@@ -54,15 +62,26 @@ export default function Hoy() {
       href: '/companero',
       Icon: IconChat,
     },
-    {
-      key: 'read',
-      title: last ? 'Seguir leyendo' : 'Leer un capítulo',
-      detail: last ? `${last.name} ${lastRead.chapter}` : 'Empezá por el Evangelio de Juan',
-      href: last
-        ? { pathname: '/[book]/[chapter]', params: { book: last.code, chapter: lastRead.chapter } }
-        : { pathname: '/[book]/[chapter]', params: { book: 'jhn', chapter: 1 } },
-      Icon: IconBook,
-    },
+    activePlan
+      ? {
+          key: 'read',
+          title: `Plan: ${activePlan.plan.title}`,
+          detail: `Día ${activePlan.next + 1} de ${activePlan.total} · ${activePlan.plan.days[activePlan.next].title}`,
+          href: {
+            pathname: '/planes/[id]/[dia]',
+            params: { id: activePlan.plan.id, dia: activePlan.next + 1 },
+          },
+          Icon: IconBook,
+        }
+      : {
+          key: 'read',
+          title: last ? 'Seguir leyendo' : 'Leer un capítulo',
+          detail: last ? `${last.name} ${lastRead.chapter}` : 'Empezá por el Evangelio de Juan',
+          href: last
+            ? { pathname: '/[book]/[chapter]', params: { book: last.code, chapter: lastRead.chapter } }
+            : { pathname: '/[book]/[chapter]', params: { book: 'jhn', chapter: 1 } },
+          Icon: IconBook,
+        },
   ];
   const completed = steps.filter((s) => done[s.key]).length;
   const savedList = saved.map(getDevocional).filter((d) => d && d.id !== today.id);
@@ -151,6 +170,20 @@ export default function Hoy() {
             </Animated.View>
           );
         })}
+
+        <View style={styles.section}>
+          <View style={styles.rowBetween}>
+            <T variant="heading" style={{ fontSize: 20 }}>
+              Planes de lectura
+            </T>
+            <PressLink href="/planes" style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}>
+              <T style={{ fontFamily: Fonts.uiBold, fontSize: 15, color: c.accent }}>Ver todos</T>
+            </PressLink>
+          </View>
+          <View style={{ marginTop: Space.sm }}>
+            <PlanCard plan={activePlan?.plan ?? PLANES.find((p) => p.id === 'juan')!} />
+          </View>
+        </View>
 
         <View style={styles.section}>
           <T variant="heading" style={{ fontSize: 20 }}>
