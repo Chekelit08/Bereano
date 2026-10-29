@@ -21,6 +21,10 @@ const BENEFITS = [
     detail: 'Ansiedad, perdón, familia, fe en la tormenta, duelo y los que vienen.',
   },
   {
+    title: 'Diseños para historias',
+    detail: 'Los 3 diseños de cada día y 36 más para compartir cualquier versículo.',
+  },
+  {
     title: 'Lo esencial, gratis siempre',
     detail: 'La Biblia, el buscador, el devocional y el plan de Juan no se cobran.',
   },

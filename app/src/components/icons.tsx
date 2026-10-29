@@ -121,3 +121,11 @@ export function IconShare({ size = 18, color }: P) {
     </Svg>
   );
 }
+
+export function IconLock({ size = 14, color }: P) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <Path d="M7 10V7.5a5 5 0 0 1 10 0V10h.5A1.5 1.5 0 0 1 19 11.5v8a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-8A1.5 1.5 0 0 1 6.5 10H7Zm2.2 0h5.6V7.5a2.8 2.8 0 0 0-5.6 0V10Z" />
+    </Svg>
+  );
+}
