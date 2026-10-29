@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/build-app.mjs",
     "preview": "vite preview",
-    "test": "node --test 'test/**/*.test.js'"
+    "test": "node --test 'test/**/*.test.js'",
+    "build:landing": "vite build"
   },
   "devDependencies": {
     "vite": "^7.3.7"

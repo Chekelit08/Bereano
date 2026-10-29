@@ -58,3 +58,10 @@ Cuando se compre `bereano.app`: Worker `bereano` > Settings > Domains & Routes >
 
 - Si cambiás PostHog a la región EU o sumás otro servicio, actualizá la CSP en `landing/public/_headers`.
 - Revisá que lleguen los headers: `curl -I https://<tu-url>`.
+
+## La app en la web (`/app`)
+
+`npm run build` de la landing también compila la versión web de la app (`landing/scripts/build-app.mjs`) y la deja en `dist/app`, así que queda publicada en `/app` del mismo sitio. Es la misma app que la del teléfono: lo que guarda queda en el navegador y las compras están en modo demostración. Cualquier ruta `/app/...` devuelve la app (`dist/app/404.html`).
+
+- Para compilar solo la landing: `npm run build:landing` o `SKIP_APP_BUILD=1 npm run build` (lo usa la CI).
+- La app no está enlazada desde la landing. Para sacarla de la web, quitar `&& node scripts/build-app.mjs` del script `build`.
