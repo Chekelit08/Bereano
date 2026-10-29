@@ -8,3 +8,8 @@ grant usage on schema public to anon, authenticated, service_role;
 -- reproducirlo es clave para comprobar que nuestros REVOKE funcionan.
 alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
 alter default privileges in schema public grant all on functions to anon, authenticated, service_role;
+-- auth.uid() como en Supabase: el usuario sale del JWT (acá, de un setting).
+create schema if not exists auth;
+grant usage on schema auth to anon, authenticated, service_role;
+create function auth.uid() returns uuid language sql stable as
+  $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;

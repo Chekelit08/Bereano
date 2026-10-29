@@ -9,6 +9,7 @@ import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { getPlan, readingLabel } from '@/data/planes';
 import { getBook } from '@/lib/bible';
 import { planProgress } from '@/lib/planes';
+import { usePlus } from '@/lib/plus';
 import { useSettings } from '@/lib/settings';
 
 export default function PlanDetalle() {
@@ -17,10 +18,13 @@ export default function PlanDetalle() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const plan = getPlan(id);
   const { plans, startPlan, togglePlanDay, leavePlan } = useSettings();
+  const { isPlus } = usePlus();
   if (!plan) return <NotFound />;
 
   const state = plans[plan.id];
   const prog = planProgress(plan, state);
+  // Planes por tema: el día 1 es gratis para probar; el resto, con Plus.
+  const locked = plan.premium && !isPlus;
   const goTo = (day: number) =>
     router.push({ pathname: '/planes/[id]/[dia]', params: { id: plan.id, dia: day + 1 } });
 
@@ -54,16 +58,21 @@ export default function PlanDetalle() {
       <Touchable
         accessibilityRole="button"
         onPress={() => {
+          if (locked && prog.next > 0) return router.push('/plus');
           if (!prog.started) startPlan(plan.id);
           goTo(prog.next);
         }}
         style={({ pressed }) => [styles.cta, { backgroundColor: c.fill, opacity: pressed ? 0.85 : 1 }]}>
         <T style={{ fontFamily: Fonts.uiBold, fontSize: 16, color: c.fillInk }}>
-          {!prog.started
-            ? 'Empezar el plan'
-            : prog.finished
-              ? 'Volver a leer'
-              : `Seguir con el día ${prog.next + 1}`}
+          {locked && prog.next > 0
+            ? 'Seguir con Bereano Plus'
+            : !prog.started
+              ? locked
+                ? 'Leer el día 1 gratis'
+                : 'Empezar el plan'
+              : prog.finished
+                ? 'Volver a leer'
+                : `Seguir con el día ${prog.next + 1}`}
         </T>
       </Touchable>
 

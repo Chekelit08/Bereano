@@ -44,7 +44,7 @@ done
 echo "== Datos: Reina-Valera 1909"
 python3 "$ROOT/supabase/data/load_bible.py" "$DATABASE_URL"
 
-for t in waitlist_security bible companion; do
+for t in waitlist_security bible companion subscriptions; do
   echo "== Tests: $t"
   "${PSQL[@]}" -f "$ROOT/supabase/tests/$t.sql" 2>&1 | sed "s/^psql:[^ ]* NOTICE:  /   /" | grep -v "^ *$"
 done

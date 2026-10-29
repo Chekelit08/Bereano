@@ -23,9 +23,9 @@ export type ChatMessage =
     };
 
 export type AskResult =
-  | { type: 'answer'; message: ChatMessage; remaining: number | null }
+  | { type: 'answer'; message: ChatMessage; remaining: number | null; plan: 'plus' | 'free' | null }
   | { type: 'crisis' }
-  | { type: 'limit' }
+  | { type: 'limit'; reason: 'daily' | 'free' }
   | { type: 'error'; message: string };
 
 const KEY = 'bereano.chat.v1';
@@ -84,11 +84,13 @@ export async function ask(question: string, previous: ChatMessage[]): Promise<As
     return { type: 'error', message: 'No pude conectarme. Revisá tu conexión.' };
   }
   if (!res || typeof res !== 'object') return { type: 'error', message: 'Algo salió mal.' };
-  if (res.type === 'crisis' || res.type === 'limit') return { type: res.type };
+  if (res.type === 'crisis') return { type: 'crisis' };
+  if (res.type === 'limit') return { type: 'limit', reason: res.reason === 'free' ? 'free' : 'daily' };
   if (res.type === 'answer') {
     return {
       type: 'answer',
       remaining: typeof res.remaining === 'number' ? res.remaining : null,
+      plan: res.plan === 'plus' || res.plan === 'free' ? res.plan : null,
       message: {
         id: newId(),
         role: 'assistant',

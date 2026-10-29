@@ -8,6 +8,7 @@ import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { getPlan, readingLabel } from '@/data/planes';
 import { getBook, getChapter } from '@/lib/bible';
 import { success } from '@/lib/haptics';
+import { usePlus } from '@/lib/plus';
 import { useSettings } from '@/lib/settings';
 
 export default function PlanDia() {
@@ -18,7 +19,9 @@ export default function PlanDia() {
   const index = Number(params.dia) - 1;
   const day = plan && Number.isInteger(index) ? plan.days[index] : undefined;
   const { plans, startPlan, togglePlanDay, markDay, fontSize } = useSettings();
+  const { isPlus } = usePlus();
   if (!plan || !day) return <NotFound />;
+  if (plan.premium && !isPlus && index > 0) return <Bloqueado plan={plan.title} />;
 
   const done = !!plans[plan.id]?.done.includes(index);
   const isLast = index === plan.days.length - 1;
@@ -110,6 +113,29 @@ export default function PlanDia() {
         </Touchable>
       )}
     </ScrollView>
+  );
+}
+
+/** Días 2 en adelante de un plan por tema, sin Plus. */
+function Bloqueado({ plan }: { plan: string }) {
+  const c = usePalette();
+  return (
+    <View style={styles.page}>
+      <Stack.Screen options={{ title: plan }} />
+      <T variant="label">Bereano Plus</T>
+      <T variant="title" style={{ marginTop: 4 }}>
+        Seguí con el plan
+      </T>
+      <T variant="muted" style={{ fontSize: 16, marginTop: Space.sm }}>
+        El primer día es gratis. Para leer el resto de los planes por tema, probá Bereano Plus: los primeros 7
+        días no se cobran.
+      </T>
+      <PressLink
+        href="/plus"
+        style={({ pressed }) => [styles.cta, { backgroundColor: c.fill, opacity: pressed ? 0.85 : 1 }]}>
+        <T style={{ fontFamily: Fonts.uiBold, fontSize: 16, color: c.fillInk }}>Probar Plus gratis</T>
+      </PressLink>
+    </View>
   );
 }
 

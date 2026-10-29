@@ -14,6 +14,7 @@ import {
 import { PressLink, Touchable } from '@/components/press-link';
 import { PageHeader } from '@/components/page-header';
 import { T } from '@/components/text';
+import { FREE_QUESTIONS, PLUS_DAILY_QUESTIONS } from '@/constants/config';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { useSettings } from '@/lib/settings';
 import { ask, clearChat, loadChat, newId, saveChat, type ChatMessage } from '@/lib/companero';
@@ -36,6 +37,8 @@ export default function Companero() {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [remaining, setRemaining] = useState<number | null>(null);
+  const [plan, setPlan] = useState<'plus' | 'free' | null>(null);
+  const [paywall, setPaywall] = useState(false);
 
   useEffect(() => {
     loadChat().then(setMessages);
@@ -58,11 +61,13 @@ export default function Companero() {
       saveChat(next);
       markDay('chat');
       if (res.remaining !== null) setRemaining(res.remaining);
+      setPlan(res.plan);
     } else {
       // La pregunta no se guarda si no hubo respuesta.
       setMessages(previous);
       if (res.type !== 'crisis') setInput(question);
       if (res.type === 'crisis') router.push('/ayuda');
+      else if (res.type === 'limit' && res.reason === 'free') setPaywall(true);
       else if (res.type === 'limit')
         setNotice('Llegaste al límite de preguntas de hoy. Mañana podés seguir.');
       else setNotice(res.message);
@@ -172,6 +177,25 @@ export default function Companero() {
           }
         />
 
+        {paywall && (
+          <View style={[styles.upsell, { backgroundColor: c.surface }]}>
+            <T style={{ fontFamily: Fonts.uiBold, fontSize: 16 }}>
+              Usaste tus {FREE_QUESTIONS} preguntas de regalo
+            </T>
+            <T variant="muted" style={{ marginTop: 4 }}>
+              Con Bereano Plus seguís estudiando con el compañero, hasta {PLUS_DAILY_QUESTIONS} preguntas por
+              día. Los primeros 7 días son gratis.
+            </T>
+            <PressLink
+              href="/plus"
+              style={({ pressed }) => [
+                styles.upsellBtn,
+                { backgroundColor: c.fill, opacity: pressed ? 0.85 : 1 },
+              ]}>
+              <T style={{ fontFamily: Fonts.uiBold, fontSize: 15, color: c.fillInk }}>Probar Plus gratis</T>
+            </PressLink>
+          </View>
+        )}
         {notice && (
           <T variant="muted" style={styles.notice}>
             {notice}
@@ -199,9 +223,13 @@ export default function Companero() {
             <T style={{ color: c.fillInk, fontSize: 20 }}>↑</T>
           </Touchable>
         </View>
-        {remaining !== null && remaining <= 5 && (
+        {remaining !== null && (plan === 'free' || remaining <= 5) && (
           <T variant="muted" style={[styles.notice, { fontSize: 12 }]}>
-            Te quedan {remaining} {remaining === 1 ? 'pregunta' : 'preguntas'} hoy
+            {plan === 'free'
+              ? remaining === 0
+                ? 'Esta fue tu última pregunta de regalo'
+                : `Te ${remaining === 1 ? 'queda' : 'quedan'} ${remaining} ${remaining === 1 ? 'pregunta' : 'preguntas'} de regalo`
+              : `Te quedan ${remaining} ${remaining === 1 ? 'pregunta' : 'preguntas'} hoy`}
           </T>
         )}
       </View>
@@ -210,6 +238,8 @@ export default function Companero() {
 }
 
 const styles = StyleSheet.create({
+  upsell: { marginHorizontal: Space.md, marginBottom: Space.sm, padding: Space.lg, borderRadius: 18 },
+  upsellBtn: { marginTop: Space.md, borderRadius: 999, paddingVertical: 13, alignItems: 'center' },
   sheet: { flex: 1, borderTopWidth: StyleSheet.hairlineWidth },
   clear: { borderRadius: 999, paddingHorizontal: 14, paddingVertical: 8, marginBottom: 6 },
   header: {
