@@ -1,4 +1,4 @@
-// Estilo Apple: blanco, negro y grises neutros. Inter para títulos e interfaz, Literata para leer.
+// Estilo Apple: blanco, negro y grises neutros, con el azul de Apple como único acento. Inter para títulos e interfaz, Literata para leer.
 import { useColorScheme } from 'react-native';
 
 export const Colors = {
@@ -9,8 +9,8 @@ export const Colors = {
     text: '#1D1D1F',
     muted: '#6E6E73',
     line: '#0000001A',
-    accent: '#1D1D1F',
-    fill: '#1D1D1F', // botones y selección: negro
+    accent: '#0066CC', // azul Apple para texto y links (5,1:1 sobre gris)
+    fill: '#0071E3', // botones y selección
     fillInk: '#FFFFFF',
   },
   dark: {
@@ -20,9 +20,9 @@ export const Colors = {
     text: '#F5F5F7',
     muted: '#98989D',
     line: '#FFFFFF24',
-    accent: '#F5F5F7',
-    fill: '#F5F5F7',
-    fillInk: '#000000',
+    accent: '#2997FF',
+    fill: '#0071E3',
+    fillInk: '#FFFFFF',
   },
 } as const;
 

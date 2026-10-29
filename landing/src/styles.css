@@ -1,5 +1,5 @@
 /* =========================================================
-   Bereano — estilo Apple: blanco, negro y grises neutros.
+   Bereano — estilo Apple: blanco, negro y grises neutros, con el azul de Apple de acento.
    ========================================================= */
 
 /* ---------- Tokens ---------- */
@@ -10,19 +10,19 @@
   --text: #1d1d1f;
   --muted: #6e6e73;
   --line: #0000001f;
-  --accent: #1d1d1f;
+  --accent: #0066cc;
   --accent-ink: #ffffff;
-  --fill: #1d1d1f;
+  --fill: #0071e3;
   --fill-ink: #ffffff;
   --focus: #0071e3;
 
-  /* Bloque invertido (lista de espera): siempre cielo de noche */
+  /* Bloque invertido (lista de espera): negro */
   --inv-bg: #000000;
   --inv-text: #f5f5f7;
   --inv-muted: #a1a1a6;
   --inv-line: #ffffff2b;
-  --inv-accent: #f5f5f7;
-  --inv-accent-ink: #000000;
+  --inv-accent: #0071e3;
+  --inv-accent-ink: #ffffff;
   --inv-surface: #1c1c1e;
 
 
@@ -45,17 +45,17 @@
     --text: #f5f5f7;
     --muted: #a1a1a6;
     --line: #ffffff24;
-    --accent: #f5f5f7;
-    --accent-ink: #000000;
-    --fill: #f5f5f7;
-    --fill-ink: #000000;
+    --accent: #2997ff;
+    --accent-ink: #ffffff;
+    --fill: #0071e3;
+    --fill-ink: #ffffff;
     --focus: #2997ff;
     --inv-bg: #1c1c1e;
     --inv-text: #f5f5f7;
     --inv-muted: #a1a1a6;
     --inv-line: #ffffff2b;
-    --inv-accent: #f5f5f7;
-    --inv-accent-ink: #000000;
+    --inv-accent: #0071e3;
+    --inv-accent-ink: #ffffff;
     --inv-surface: #2c2c2e;
     color-scheme: dark;
   }
@@ -68,17 +68,17 @@
     --text: #f5f5f7;
     --muted: #a1a1a6;
     --line: #ffffff24;
-    --accent: #f5f5f7;
-    --accent-ink: #000000;
-    --fill: #f5f5f7;
-    --fill-ink: #000000;
+    --accent: #2997ff;
+    --accent-ink: #ffffff;
+    --fill: #0071e3;
+    --fill-ink: #ffffff;
     --focus: #2997ff;
     --inv-bg: #1c1c1e;
     --inv-text: #f5f5f7;
     --inv-muted: #a1a1a6;
     --inv-line: #ffffff2b;
-    --inv-accent: #f5f5f7;
-    --inv-accent-ink: #000000;
+    --inv-accent: #0071e3;
+    --inv-accent-ink: #ffffff;
     --inv-surface: #2c2c2e;
   color-scheme: dark;
 }
@@ -925,8 +925,8 @@ mark {
   background: #ffffff;
   color: #1d1d1f;
   --muted: #6e6e73;
-  --accent: #1d1d1f;
-  --fill: #1d1d1f;
+  --accent: #0066cc;
+  --fill: #0071e3;
   --fill-ink: #ffffff;
 }
 
@@ -1004,7 +1004,7 @@ mark {
 
 .bubble--user {
   align-self: flex-end;
-  background: #1d1d1f;
+  background: #0071e3;
   color: #ffffff;
   font-weight: 500;
   border-bottom-right-radius: 6px;
@@ -1221,7 +1221,7 @@ mark {
   --text: var(--inv-text);
   --muted: var(--inv-muted);
   --line: var(--inv-line);
-  --accent: var(--inv-accent);
+  --accent: #2997ff;
   --accent-ink: var(--inv-accent-ink);
   --fill: var(--inv-accent);
   --fill-ink: var(--inv-accent-ink);

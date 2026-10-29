@@ -76,7 +76,7 @@ export default function Hoy() {
           </T>
           {racha > 0 && (
             <View style={[styles.streak, { backgroundColor: c.fill }]}>
-              <IconFlame color={c.accent} />
+              <IconFlame color={c.fillInk} />
               <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: c.fillInk }}>
                 {racha} {racha === 1 ? 'día' : 'días'}
               </T>

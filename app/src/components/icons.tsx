@@ -57,7 +57,7 @@ export function IconCheck({ size = 24, color, filled }: P) {
       {filled && (
         <Path
           d="m7.5 12.2 3 3 6-6.4"
-          stroke="#141B2E"
+          stroke="#FFFFFF"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"

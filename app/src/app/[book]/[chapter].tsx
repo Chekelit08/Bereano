@@ -60,7 +60,7 @@ export default function Reader() {
         ref={scroll}
         contentContainerStyle={[styles.page, { paddingBottom: insets.bottom + Space.xl }]}>
         <T variant="label">{book.name}</T>
-        <T style={[styles.chapterNum, { color: c.accent }]}>{chapter}</T>
+        <T style={[styles.chapterNum, { color: c.text }]}>{chapter}</T>
 
         {verses.map((text, i) => {
           const n = i + 1;

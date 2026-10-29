@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
     marginTop: Space.lg,
     padding: Space.lg,
     borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
   },
   ref: { fontFamily: Fonts.displayItalic, fontSize: 22, marginBottom: Space.sm },
   verse: { marginTop: 6 },
