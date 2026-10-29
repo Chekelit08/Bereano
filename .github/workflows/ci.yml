@@ -32,6 +32,8 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+        env:
+          SKIP_APP_BUILD: '1' # la app tiene su propio job
       - name: El build no contiene claves secretas
         run: |
           if grep -rEl 'service_role|sb_secret_|sk-ant-' dist; then

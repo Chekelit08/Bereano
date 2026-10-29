@@ -14,3 +14,6 @@ export const PLUS_ENTITLEMENT = 'plus';
 export const FALLBACK_PRICES = { annual: 'USD 39,99', monthly: 'USD 6,99', annualPerMonth: 'USD 3,33' };
 export const FREE_QUESTIONS = 3;
 export const PLUS_DAILY_QUESTIONS = 30;
+
+// Sitio público (landing): privacidad y términos. Cambiar a https://bereano.app cuando esté el dominio.
+export const SITE_URL = 'https://bereano.ezeadenett.workers.dev';

@@ -9,3 +9,6 @@
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+/app/_expo/static/*
+  Cache-Control: public, max-age=31536000, immutable

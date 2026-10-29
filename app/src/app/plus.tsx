@@ -6,7 +6,7 @@ import type { PurchasesPackage } from 'react-native-purchases';
 import { IconCheck } from '@/components/icons';
 import { Touchable } from '@/components/press-link';
 import { T } from '@/components/text';
-import { FALLBACK_PRICES, PLUS_DAILY_QUESTIONS } from '@/constants/config';
+import { FALLBACK_PRICES, PLUS_DAILY_QUESTIONS, SITE_URL } from '@/constants/config';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { success } from '@/lib/haptics';
 import { usePlus } from '@/lib/plus';
@@ -156,9 +156,10 @@ export default function Plus() {
         <Touchable onPress={onRestore} disabled={busy} accessibilityRole="button">
           <T style={[styles.link, { color: c.accent }]}>Restaurar compras</T>
         </Touchable>
-        <Touchable
-          onPress={() => Linking.openURL('https://bereano.ezeadenett.workers.dev/privacidad')}
-          accessibilityRole="link">
+        <Touchable onPress={() => Linking.openURL(`${SITE_URL}/terminos`)} accessibilityRole="link">
+          <T style={[styles.link, { color: c.accent }]}>Términos</T>
+        </Touchable>
+        <Touchable onPress={() => Linking.openURL(`${SITE_URL}/privacidad`)} accessibilityRole="link">
           <T style={[styles.link, { color: c.accent }]}>Privacidad</T>
         </Touchable>
       </View>
