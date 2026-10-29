@@ -21,7 +21,7 @@ El código está listo y funciona en **modo demostración** (no cobra). Para cob
 4. **Webhook** (para que el servidor sepa quién es Plus):
    - Inventar un secreto largo (32+ caracteres) y guardarlo en Supabase → Edge Functions → Secrets como `REVENUECAT_WEBHOOK_AUTH` (con el formato exacto que se ponga en RevenueCat, por ejemplo `Bearer xxxxx`).
    - En RevenueCat → Integrations → Webhooks: URL `https://annxvazsnzlkeqkrqwfk.supabase.co/functions/v1/revenuecat-webhook` y en *Authorization header* el mismo valor.
-   - Aplicar la migración `20261029120000_subscriptions.sql` y desplegar `revenuecat-webhook` y `companero` (lo hago yo cuando me digas).
+   - La migración `20261029132114_subscriptions.sql` ya está aplicada. Falta desplegar `revenuecat-webhook` y `companero` (lo hago yo cuando me digas).
 5. **Build de desarrollo**: las compras reales no funcionan en Expo Go. Con EAS (cuenta gratis de Expo): `npx eas build --profile development`.
 
 ## Seguridad
