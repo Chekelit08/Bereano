@@ -53,6 +53,16 @@ export default function Biblia() {
           </PressLink>
         )}
 
+        <PressLink
+          href="/planes"
+          style={({ pressed }) => [styles.plans, { backgroundColor: pressed ? c.surface2 : c.surface }]}>
+          <View style={{ flex: 1 }}>
+            <T style={{ fontFamily: Fonts.uiBold, fontSize: 16 }}>Planes de lectura</T>
+            <T variant="muted">Ansiedad, perdón, familia, Juan en 21 días…</T>
+          </View>
+          <IconChevron color={c.muted} />
+        </PressLink>
+
         {/* Antiguo / Nuevo Testamento */}
         <View
           style={[styles.segment, { backgroundColor: c.surface, borderColor: c.line }]}
@@ -131,6 +141,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  plans: {
+    marginTop: Space.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Space.md,
+    padding: Space.lg,
+    borderRadius: Radius.md,
   },
   segment: {
     flexDirection: 'row',
