@@ -25,7 +25,9 @@ export function parseEvent(body: unknown): Apply | { skip: string } {
   if (type === 'TRANSFER') return { skip: 'transferencia (se resuelve en el próximo evento)' };
 
   const entitlements = Array.isArray(e.entitlement_ids) ? e.entitlement_ids.map(String) : [];
-  if (!entitlements.includes(ENTITLEMENT) && type !== 'EXPIRATION') return { skip: 'no es de Plus' };
+  // Un vencimiento puede venir sin entitlements (se aplica); si trae otros que no son Plus, no.
+  const expiresUnknown = type === 'EXPIRATION' && entitlements.length === 0;
+  if (!entitlements.includes(ENTITLEMENT) && !expiresUnknown) return { skip: 'no es de Plus' };
 
   // La app inicia sesión en RevenueCat con el id de usuario de Supabase (un UUID).
   const candidates = [e.app_user_id, e.original_app_user_id, ...(Array.isArray(e.aliases) ? e.aliases : [])];

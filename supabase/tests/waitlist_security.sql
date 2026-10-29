@@ -54,7 +54,7 @@ select pg_temp.debe_fallar('authenticated: SELECT', 'select * from public.waitli
 reset role;
 
 -- Límite por IP: 30 altas por hora desde la misma IP; la 31 falla.
-set local request.headers = '{"x-forwarded-for": "203.0.113.7, 10.0.0.1"}';
+set local request.headers = '{"cf-connecting-ip": "203.0.113.7"}';
 set local role anon;
 insert into public.waitlist (email, source)
   select format('limite%s@test.com', i), 'landing' from generate_series(1, 30) as i;
@@ -63,10 +63,21 @@ select pg_temp.debe_fallar('alta 31 desde la misma IP', $q$insert into public.wa
 reset role;
 
 -- Otra IP no se ve afectada
-set local request.headers = '{"x-forwarded-for": "198.51.100.9"}';
+set local request.headers = '{"cf-connecting-ip": "198.51.100.9"}';
 set local role anon;
 insert into public.waitlist (email) values ('otra-ip@test.com');
 \echo 'ok   otra IP sigue pudiendo anotarse'
+reset role;
+
+-- x-forwarded-for se puede inventar: no da un cupo nuevo (sin cf-connecting-ip, cupo compartido)
+set local request.headers = '{"x-forwarded-for": "192.0.2.1"}';
+set local role anon;
+insert into public.waitlist (email, source)
+  select format('xff%s@test.com', i), 'landing' from generate_series(1, 30) as i;
+reset role;
+set local request.headers = '{"x-forwarded-for": "192.0.2.99"}';
+set local role anon;
+select pg_temp.debe_fallar('cambiar x-forwarded-for no saltea el límite', $q$insert into public.waitlist (email) values ('xff31@test.com')$q$);
 reset role;
 
 -- No guardamos la IP en claro

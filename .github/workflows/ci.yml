@@ -9,6 +9,13 @@ permissions:
   contents: read
 
 jobs:
+  secretos:
+    name: Sin claves secretas en el repo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/check-secrets.sh
+
   landing:
     name: Landing (tests y build)
     runs-on: ubuntu-latest

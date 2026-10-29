@@ -99,7 +99,7 @@ A Ezequiel no le gustaron los grabados de Doré, así que se sacaron todos (hero
 - **Modelo:** Claude Haiku 5.5 (`claude-haiku-5-5`), el más barato: USD 0,10 por millón de tokens de entrada y 0,50 de salida. El prompt de sistema queda en caché (más barato todavía) y las primeras preguntas repetidas se responden desde `companion_cache` sin llamar a la IA.
 - **Nunca inventar versículos:** la IA devuelve JSON con la respuesta y la lista de citas. Cada cita se busca en `bible_verses`; el texto que ve el usuario sale de la base, no de la IA. Si la respuesta menciona un pasaje que no está verificado o copia entre comillas algo que no coincide, se le pide que corrija una vez; si sigue mal, no se muestra.
 - **Crisis:** si la pregunta tiene señales de autolesión, suicidio o violencia, no se llama a la IA: la app abre la pantalla de ayuda con líneas por país (`app/src/data/ayuda.ts`, **verificar los números antes de publicar**). La IA también puede marcar crisis.
-- **Límite:** `COMPANION_DAILY_LIMIT` preguntas por usuario y por día (20 por defecto), contado en `companion_usage` con una función atómica. Si falla por un error nuestro, se devuelve el uso.
+- **Límite:** `COMPANION_DAILY_LIMIT` preguntas por usuario y por día (30 por defecto), contado en `companion_usage` con una función atómica. Si falla por un error nuestro, se devuelve el uso.
 - **Sesión:** login anónimo de Supabase (sin pedir email). Las tablas del compañero no tienen políticas para `authenticated`: solo las toca la Edge Function.
 - **Privacidad:** las conversaciones quedan solo en el teléfono. El servidor no guarda preguntas (la caché guarda un hash de la pregunta y la respuesta, sin usuario) y no las escribe en los logs.
 
