@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -31,6 +31,8 @@ export default function Companero() {
   const c = usePalette();
   const { markDay } = useSettings();
   const router = useRouter();
+  // Pregunta sugerida (por ejemplo, desde la bienvenida): se deja escrita para que la mande.
+  const { q } = useLocalSearchParams<{ q?: string }>();
   const list = useRef<FlatListInstance>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
@@ -39,6 +41,11 @@ export default function Companero() {
   const [remaining, setRemaining] = useState<number | null>(null);
   const [plan, setPlan] = useState<'plus' | 'free' | null>(null);
   const [paywall, setPaywall] = useState(false);
+  const [seenQ, setSeenQ] = useState<string | undefined>(undefined);
+  if (typeof q === 'string' && q !== seenQ) {
+    setSeenQ(q);
+    setInput(q.replace(/\s+/g, ' ').trim().slice(0, MAX));
+  }
 
   useEffect(() => {
     loadChat().then(setMessages);

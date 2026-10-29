@@ -1,24 +1,21 @@
-import { useRef, useState } from 'react';
-import { StyleSheet, View, type ViewInstance } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { PressLink, Touchable } from '@/components/press-link';
-import { CARD_WIDTH, StoryCard } from '@/components/story-card';
+import { ShareCardButton } from '@/components/share-card-button';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { shareRange, shareText, type Devocional } from '@/data/devocionales';
+import { designsForDay } from '@/data/disenos';
 import { MARKS } from '@/data/marcas';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
 import { dayKey } from '@/lib/dias';
 import { success } from '@/lib/haptics';
 import { useSettings } from '@/lib/settings';
-import { shareCard } from '@/lib/share';
 
 export function DevocionalView({ devocional: d, kicker }: { devocional: Devocional; kicker: string }) {
   const c = usePalette();
-  const { saved, toggleSaved, fontSize, cardStyle, days, markDay } = useSettings();
+  const { saved, toggleSaved, fontSize, days, markDay } = useSettings();
   const read = !!days[dayKey()]?.devo;
-  const card = useRef<ViewInstance>(null);
-  const [sharing, setSharing] = useState(false);
 
   // El pasaje sale siempre de la Biblia de la app: nunca se escribe a mano.
   const book = getBook(d.book)!;
@@ -28,19 +25,6 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
   const cardText = shareText(chapter.slice(sa - 1, sb));
   const shareRef = formatRef(book, d.chapter, sa, sb);
   const isSaved = saved.includes(d.id);
-
-  async function share() {
-    setSharing(true);
-    await shareCard(
-      card,
-      `“${cardText}”
-— ${shareRef} (RV1909)
-
-Bereano`,
-      d.title,
-    );
-    setSharing(false);
-  }
 
   const body = {
     fontFamily: Fonts.read,
@@ -118,21 +102,16 @@ Bereano`,
             {isSaved ? 'Guardado ✓' : 'Guardar'}
           </T>
         </Touchable>
-        <Touchable
-          onPress={share}
-          disabled={sharing}
-          accessibilityRole="button"
-          style={({ pressed }) => [
-            styles.button,
-            { borderColor: c.text, backgroundColor: 'transparent', opacity: pressed || sharing ? 0.7 : 1 },
-          ]}>
-          <T style={[styles.buttonText, { color: c.text }]}>Compartir imagen</T>
-        </Touchable>
-      </View>
-
-      {/* Fuera de pantalla: solo existe para sacarle la foto. */}
-      <View style={styles.offscreen} pointerEvents="none" aria-hidden>
-        <StoryCard ref={card} variant={cardStyle} text={cardText} reference={shareRef} marks={MARKS[d.id]} />
+        <View style={{ flex: 1 }}>
+          <ShareCardButton
+            variant="outline"
+            label="Compartir imagen"
+            design={designsForDay()[0]}
+            text={cardText}
+            reference={shareRef}
+            marks={MARKS[d.id]}
+          />
+        </View>
       </View>
     </View>
   );
@@ -159,5 +138,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: { fontFamily: Fonts.uiBold, fontSize: 16 },
-  offscreen: { position: 'absolute', left: -CARD_WIDTH * 3, top: 0 },
 });

@@ -30,7 +30,7 @@ export default function Hoy() {
   const c = usePalette();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { saved, days, lastRead, plans } = useSettings();
+  const { saved, days, lastRead, plans, name } = useSettings();
   const [now] = useState(() => new Date());
   const moment = momentOf(now);
   const today = devocionalDelDia(now);
@@ -105,6 +105,7 @@ export default function Hoy() {
         <Animated.View entering={FadeInDown.duration(500)}>
           <T variant="title" style={{ marginTop: Space.sm }}>
             {GREETING[moment]}
+            {name ? `, ${name}` : ''}
           </T>
         </Animated.View>
 
@@ -190,9 +191,9 @@ export default function Hoy() {
             Para tus historias
           </T>
           <T variant="muted" style={{ marginBottom: Space.md }}>
-            El versículo de hoy en cuatro diseños. Deslizá y compartí.
+            Tres diseños nuevos cada día. Deslizá y compartí.
           </T>
-          <VersiculoDelDia devocional={today} />
+          <VersiculoDelDia devocional={today} date={now} />
         </View>
 
         {savedList.length > 0 && (

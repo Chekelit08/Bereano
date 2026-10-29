@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, use, useEffect, useState, type ReactNode } from 'react';
 
-import { CARD_STYLES, type CardStyle } from '@/components/story-card';
+import { cleanName, parseGoals, type Goal } from '@/data/onboarding';
 import { dayKey, parseDays, type Activity, type Days } from '@/lib/dias';
 import { parsePlans, type PlanState } from '@/lib/planes';
 
@@ -12,7 +12,10 @@ type Settings = {
   fontStep: number;
   lastRead: LastRead | null;
   saved: string[];
-  cardStyle: CardStyle;
+  /** Onboarding: si ya lo vio, cómo quiere que lo saludemos y qué lo trae. */
+  onboarded: boolean;
+  name: string;
+  goals: Goal[];
   days: Days;
   plans: Record<string, PlanState>;
 };
@@ -22,7 +25,9 @@ const DEFAULTS: Settings = {
   fontStep: 2,
   lastRead: null,
   saved: [],
-  cardStyle: 'editorial',
+  onboarded: false,
+  name: '',
+  goals: [],
   days: {},
   plans: {},
 };
@@ -33,7 +38,9 @@ type Ctx = Settings & {
   setLastRead: (r: LastRead) => void;
   /** Guarda o quita un devocional de la lista de guardados. */
   toggleSaved: (id: string) => void;
-  setCardStyle: (s: CardStyle) => void;
+  /** Ya cargó lo guardado (antes de eso no se sabe si vio el onboarding). */
+  loaded: boolean;
+  finishOnboarding: (o: { name: string; goals: Goal[] }) => void;
   /** Registra que hoy hizo algo (para la racha y el momento de hoy). */
   markDay: (a: Activity) => void;
   /** Planes de lectura: empezar, marcar un día como leído (o desmarcarlo) y dejar. */
@@ -63,10 +70,16 @@ function parse(raw: string | null): Settings {
     const saved = Array.isArray(v.saved)
       ? v.saved.filter((id: unknown) => typeof id === 'string' && /^[a-z0-9-]{1,40}$/.test(id)).slice(0, 500)
       : [];
-    const cardStyle = CARD_STYLES.some((c) => c.id === v.cardStyle)
-      ? (v.cardStyle as CardStyle)
-      : DEFAULTS.cardStyle;
-    return { fontStep, lastRead, saved, cardStyle, days: parseDays(v.days), plans: parsePlans(v.plans) };
+    return {
+      fontStep,
+      lastRead,
+      saved,
+      onboarded: v.onboarded === true,
+      name: cleanName(v.name),
+      goals: parseGoals(v.goals),
+      days: parseDays(v.days),
+      plans: parsePlans(v.plans),
+    };
   } catch {
     return DEFAULTS;
   }
@@ -126,7 +139,14 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         if (s.days[k]?.[a]) return s;
         return { ...s, days: { ...s.days, [k]: { ...s.days[k], [a]: 1 } } };
       }),
-    setCardStyle: (cardStyle) => setSettings((s) => ({ ...s, cardStyle })),
+    loaded,
+    finishOnboarding: ({ name, goals }) =>
+      setSettings((s) => ({
+        ...s,
+        onboarded: true,
+        name: cleanName(name),
+        goals: parseGoals(goals),
+      })),
     toggleSaved: (id) =>
       setSettings((s) => ({
         ...s,

@@ -1,110 +1,91 @@
-import { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, type ViewInstance } from 'react-native';
+import { useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { Touchable } from '@/components/press-link';
-import { CARD_HEIGHT, CARD_STYLES, CARD_WIDTH, StoryCard } from '@/components/story-card';
+import { CardThumb } from '@/components/card-thumb';
+import { ShareCardButton } from '@/components/share-card-button';
+import { CARD_WIDTH } from '@/components/story-card';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { shareRange, shareText, type Devocional } from '@/data/devocionales';
+import { designName, designsForDay } from '@/data/disenos';
 import { MARKS } from '@/data/marcas';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
-import { useSettings } from '@/lib/settings';
-import { shareCard } from '@/lib/share';
+import { usePlus } from '@/lib/plus';
 
 const SCALE = 0.62;
-const W = CARD_WIDTH * SCALE;
-const H = CARD_HEIGHT * SCALE;
 const GAP = 12;
 
-/** El versículo del día en cuatro diseños para historias. Se elige deslizando. */
-export function VersiculoDelDia({ devocional: d }: { devocional: Devocional }) {
+/** El versículo del día en 3 diseños que cambian cada día. El primero es gratis; los otros, de Plus. */
+export function VersiculoDelDia({ devocional: d, date }: { devocional: Devocional; date: Date }) {
   const c = usePalette();
-  const { cardStyle, setCardStyle } = useSettings();
-  const card = useRef<ViewInstance>(null);
-  const [busy, setBusy] = useState(false);
+  const { isPlus } = usePlus();
+  const designs = designsForDay(date);
+  const [index, setIndex] = useState(0);
+  const W = CARD_WIDTH * SCALE;
 
   const [a, b] = shareRange(d);
   const text = shareText(getChapter(d.book, d.chapter)!.slice(a - 1, b));
   const reference = formatRef(getBook(d.book)!, d.chapter, a, b);
-  const index = Math.max(
-    0,
-    CARD_STYLES.findIndex((s) => s.id === cardStyle),
-  );
+  const locked = (i: number) => i > 0 && !isPlus;
 
   return (
     <View>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        snapToInterval={W + GAP}
+        snapToInterval={W + GAP + 6}
         decelerationRate="fast"
         contentContainerStyle={{ gap: GAP, paddingHorizontal: Space.lg }}
         style={{ marginHorizontal: -Space.lg }}
-        contentOffset={{ x: index * (W + GAP), y: 0 }}
         onMomentumScrollEnd={(e) => {
-          const i = Math.round(e.nativeEvent.contentOffset.x / (W + GAP));
-          const s = CARD_STYLES[Math.min(CARD_STYLES.length - 1, Math.max(0, i))];
-          if (s) setCardStyle(s.id);
+          const i = Math.round(e.nativeEvent.contentOffset.x / (W + GAP + 6));
+          setIndex(Math.min(designs.length - 1, Math.max(0, i)));
         }}>
-        {CARD_STYLES.map((s) => (
-          <Touchable
-            key={s.id}
-            accessibilityRole="button"
-            accessibilityLabel={`Diseño ${s.name}`}
-            accessibilityState={{ selected: s.id === cardStyle }}
-            onPress={() => setCardStyle(s.id)}
-            style={[styles.preview, { borderColor: s.id === cardStyle ? c.accent : 'transparent' }]}>
-            <View style={{ width: W, height: H, overflow: 'hidden', borderRadius: 14 }}>
-              <View style={{ transform: [{ scale: SCALE }], transformOrigin: 'top left' }}>
-                <StoryCard variant={s.id} text={text} reference={reference} marks={MARKS[d.id]} />
-              </View>
-            </View>
-          </Touchable>
+        {designs.map((design, i) => (
+          <CardThumb
+            key={`${design.style}-${design.tone}`}
+            design={design}
+            text={text}
+            reference={reference}
+            marks={MARKS[d.id]}
+            scale={SCALE}
+            selected={i === index}
+            locked={locked(i)}
+            onPress={() => setIndex(i)}
+          />
         ))}
       </ScrollView>
 
       <View style={styles.row}>
-        <View style={styles.dots}>
-          {CARD_STYLES.map((s) => (
+        <View style={styles.names}>
+          {designs.map((design, i) => (
             <T
-              key={s.id}
+              key={i}
               style={{
-                fontFamily: s.id === cardStyle ? Fonts.displayItalic : Fonts.ui,
+                fontFamily: i === index ? Fonts.uiBold : Fonts.ui,
                 fontSize: 14,
-                color: s.id === cardStyle ? c.accent : c.muted,
+                color: i === index ? c.text : c.muted,
               }}>
-              {s.name}
+              {designName(design)}
             </T>
           ))}
         </View>
-        <Touchable
-          accessibilityRole="button"
-          disabled={busy}
-          onPress={async () => {
-            setBusy(true);
-            await shareCard(card, `“${text}”\n— ${reference} (RV1909)\n\nBereano`, reference);
-            setBusy(false);
-          }}
-          style={({ pressed }) => [
-            styles.share,
-            { backgroundColor: c.fill, opacity: pressed || busy ? 0.7 : 1 },
-          ]}>
-          <T style={{ color: c.fillInk, fontFamily: Fonts.uiBold, fontSize: 16 }}>Compartir en historias</T>
-        </Touchable>
-      </View>
-
-      {/* Tamaño real, fuera de pantalla: es la que se exporta. */}
-      <View style={styles.offscreen} pointerEvents="none" aria-hidden>
-        <StoryCard ref={card} variant={cardStyle} text={text} reference={reference} marks={MARKS[d.id]} />
+        <ShareCardButton
+          design={designs[index]}
+          text={text}
+          reference={reference}
+          marks={MARKS[d.id]}
+          locked={locked(index)}
+        />
+        <T variant="muted" style={{ textAlign: 'center', fontSize: 13 }}>
+          Para compartir otro versículo, tocalo en la Biblia.
+        </T>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  preview: { borderWidth: 2, borderRadius: 17, padding: 1 },
   row: { marginTop: Space.md, gap: Space.md },
-  dots: { flexDirection: 'row', justifyContent: 'center', gap: Space.lg },
-  share: { borderRadius: 999, paddingVertical: 14, alignItems: 'center' },
-  offscreen: { position: 'absolute', left: -CARD_WIDTH * 3, top: 0 },
+  names: { flexDirection: 'row', justifyContent: 'center', gap: Space.lg },
 });

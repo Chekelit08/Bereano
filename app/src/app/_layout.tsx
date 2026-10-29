@@ -1,5 +1,10 @@
 import { Archivo_700Bold, Archivo_800ExtraBold } from '@expo-google-fonts/archivo';
+import { BebasNeue_400Regular } from '@expo-google-fonts/bebas-neue';
 import { Caveat_700Bold } from '@expo-google-fonts/caveat';
+import {
+  DMSerifDisplay_400Regular,
+  DMSerifDisplay_400Regular_Italic,
+} from '@expo-google-fonts/dm-serif-display';
 import { Newsreader_400Regular_Italic, Newsreader_500Medium } from '@expo-google-fonts/newsreader';
 import {
   Inter_400Regular,
@@ -47,6 +52,9 @@ export default function RootLayout() {
     Archivo_700Bold,
     Archivo_800ExtraBold,
     Caveat_700Bold,
+    BebasNeue_400Regular,
+    DMSerifDisplay_400Regular,
+    DMSerifDisplay_400Regular_Italic,
   });
 
   useEffect(() => {
@@ -73,6 +81,8 @@ export default function RootLayout() {
             <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />
             <Stack.Screen name="ayuda" options={{ title: 'No estás solo', presentation: 'modal' }} />
             <Stack.Screen name="plus" options={{ title: '', presentation: 'modal' }} />
+            <Stack.Screen name="compartir" options={{ title: 'Compartir' }} />
+            <Stack.Screen name="bienvenida" options={{ headerShown: false, gestureEnabled: false }} />
           </Stack>
         </PlusProvider>
       </SettingsProvider>

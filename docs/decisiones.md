@@ -109,3 +109,10 @@ A Ezequiel no le gustaron los grabados de Doré, así que se sacaron todos (hero
 - **Gratis siempre:** Biblia, buscador, devocional, versículo del día y el plan de Juan. **Plus:** compañero (30 preguntas por día) y planes por tema. Sin Plus, el compañero da 3 preguntas de regalo en total y los planes por tema dejan leer el día 1.
 - **El servidor decide:** RevenueCat avisa por webhook y guardamos la suscripción en `subscriptions` (el id de RevenueCat es el mismo que el de Supabase). El compañero consulta `is_plus` antes de contar la pregunta. Así nadie se da Plus tocando la app.
 - La pantalla de Plus muestra precio, período, prueba gratis, renovación automática y cómo cancelar, como piden Apple y Google.
+
+## Diseños para historias y onboarding
+
+- **12 estilos × 3 tonos** (`app/src/components/cards`). Cada día `designsForDay` propone 3 distintos: cada 4 días pasan los 12 estilos, mezclados distinto en cada vuelta. El primero es gratis; los otros dos, de Plus.
+- **Compartir cualquier versículo (Plus):** en el lector se tocan hasta 5 versículos seguidos y se abre `/compartir`. Gratis: el diseño Minimal. Plus: los 36. El texto siempre sale de la Biblia de la app (se valida el pasaje de la URL).
+- **Onboarding** (`/bienvenida`): objetivo, nombre opcional (queda solo en el teléfono) y un "primer momento" con el versículo de hoy, una pregunta sugerida para el compañero y un plan recomendado según el objetivo.
+- Tipografías nuevas en las tarjetas: DM Serif Display y Bebas Neue (licencia OFL, gratis para uso comercial).
