@@ -107,3 +107,20 @@ test('las comillas tienen que coincidir con el texto real', () => {
 test('la clave de caché ignora mayúsculas, acentos y signos', () => {
   assert.equal(cacheText('¿Qué es la GRACIA?'), cacheText('que es la gracia'));
 });
+
+test('la charla guardada se valida (si la tocan, la app no se rompe)', async () => {
+  const { parseChat } = await import('../src/lib/chat-parse');
+  const cit = { ref: 'Juan 3:16', code: 'jhn', chapter: 3, from: 16, to: 16, text: ['Porque…'] };
+  const r = parseChat([
+    { id: 'a', role: 'user', text: 'hola' },
+    { id: 'b', role: 'assistant', text: 'resp', citations: [cit, { code: '../x' }, null, 'x'] },
+    { id: 'c', role: 'assistant', text: 'sin citas', citations: 'no' },
+    { role: 'system', text: 'x' },
+    { id: 'd', role: 'user', text: 5 },
+    null,
+  ]);
+  assert.equal(r.length, 3);
+  assert.deepEqual(r[1], { id: 'b', role: 'assistant', text: 'resp', citations: [cit] });
+  assert.deepEqual(r[2], { id: 'c', role: 'assistant', text: 'sin citas', citations: [] });
+  assert.deepEqual(parseChat('x'), []);
+});

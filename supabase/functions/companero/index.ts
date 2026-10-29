@@ -207,6 +207,8 @@ async function ask(messages: Anthropic.MessageParam[]): Promise<Answer | null> {
   return response.parsed_output ?? null;
 }
 
+const MAX_BODY = 16_384;
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST")
@@ -221,9 +223,15 @@ Deno.serve(async (req) => {
   const userId = auth.user.id;
 
   // 2. Validar la entrada.
+  // Tope de tamaño antes de parsear: una pregunta con su historial ocupa unos pocos KB.
+  if (Number(req.headers.get("content-length") ?? 0) > MAX_BODY)
+    return json({ type: "error", message: "Pedido demasiado grande" }, 413);
   let body: unknown;
   try {
-    body = await req.json();
+    const raw = await req.text();
+    if (raw.length > MAX_BODY)
+      return json({ type: "error", message: "Pedido demasiado grande" }, 413);
+    body = JSON.parse(raw);
   } catch {
     return json({ type: "error", message: "Pedido inválido" }, 400);
   }

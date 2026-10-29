@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FunctionsHttpError } from '@supabase/supabase-js';
 
+import { parseChat } from '@/lib/chat-parse';
 import { ensureSession, supabase } from '@/lib/supabase';
 
 export type CompanionCitation = {
@@ -41,10 +42,7 @@ const MAX_SAVED = 60;
 export async function loadChat(): Promise<ChatMessage[]> {
   try {
     const raw = await AsyncStorage.getItem(KEY);
-    const v = raw ? JSON.parse(raw) : [];
-    return Array.isArray(v)
-      ? v.filter((m) => m && typeof m.text === 'string' && (m.role === 'user' || m.role === 'assistant'))
-      : [];
+    return parseChat(raw ? JSON.parse(raw) : []);
   } catch {
     return [];
   }
