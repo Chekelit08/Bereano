@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
-import { StyleSheet, View, type ViewInstance } from 'react-native';
+import { Platform, StyleSheet, View, type ViewInstance } from 'react-native';
 
 import { IconLock } from '@/components/icons';
 import { Touchable } from '@/components/press-link';
@@ -52,7 +52,8 @@ export function ShareCardButton({ design, text, reference, marks, locked, label,
           {locked ? 'Desbloquear con Plus' : (label ?? 'Compartir en historias')}
         </T>
       </Touchable>
-      {!locked && (
+      {/* En la web se comparte texto: la tarjeta oculta solo agrandaba la página. */}
+      {!locked && Platform.OS !== 'web' && (
         <View style={styles.offscreen} pointerEvents="none" aria-hidden>
           <StoryCard ref={card} design={design} text={text} reference={reference} marks={marks} />
         </View>

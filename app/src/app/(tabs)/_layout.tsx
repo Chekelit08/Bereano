@@ -64,6 +64,9 @@ const styles = StyleSheet.create({
   wrap: { paddingHorizontal: Space.md, paddingTop: Space.xs },
   bar: {
     flexDirection: 'row',
+    width: '100%',
+    maxWidth: 520,
+    alignSelf: 'center',
     borderRadius: Radius.pill,
     padding: 6,
     borderWidth: StyleSheet.hairlineWidth,
