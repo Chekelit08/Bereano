@@ -3,7 +3,20 @@ import { createContext, use, useEffect, useState, type ReactNode } from 'react';
 
 import { cleanName, parseGoals, type Goal } from '@/data/onboarding';
 import { dayKey, parseDays, type Activity, type Days } from '@/lib/dias';
+import {
+  NOTE_MAX,
+  PRAYER_MAX,
+  parseHighlights,
+  parsePrayers,
+  parseReminder,
+  parseTheme,
+  type Highlight,
+  type HighlightColor,
+  type Prayer,
+  type Reminder,
+} from '@/lib/personal';
 import { parsePlans, type PlanState } from '@/lib/planes';
+import { setThemePref, type ThemePref } from '@/lib/scheme';
 
 export const FONT_SIZES = [16, 18, 20, 22, 25, 28] as const;
 
@@ -18,6 +31,13 @@ type Settings = {
   goals: Goal[];
   days: Days;
   plans: Record<string, PlanState>;
+  /** Resaltados por versículo ("jhn.3.16"), con nota opcional. */
+  highlights: Record<string, Highlight>;
+  prayers: Prayer[];
+  reminder: Reminder;
+  theme: ThemePref;
+  /** Ya se anotó para recibir el devocional por email (no se guarda el email). */
+  emailJoined: boolean;
 };
 
 const KEY = 'bereano.settings.v1';
@@ -30,6 +50,11 @@ const DEFAULTS: Settings = {
   goals: [],
   days: {},
   plans: {},
+  highlights: {},
+  prayers: [],
+  reminder: null,
+  theme: 'system',
+  emailJoined: false,
 };
 
 type Ctx = Settings & {
@@ -47,6 +72,15 @@ type Ctx = Settings & {
   startPlan: (id: string) => void;
   togglePlanDay: (id: string, day: number) => void;
   leavePlan: (id: string) => void;
+  /** Resalta (o quita, con null) varios versículos a la vez. */
+  setHighlight: (keys: string[], color: HighlightColor | null) => void;
+  setNote: (key: string, note: string) => void;
+  addPrayer: (text: string) => void;
+  togglePrayer: (id: string) => void;
+  removePrayer: (id: string) => void;
+  setReminder: (r: Reminder) => void;
+  setTheme: (t: ThemePref) => void;
+  setEmailJoined: () => void;
 };
 
 const SettingsContext = createContext<Ctx | null>(null);
@@ -77,6 +111,11 @@ function parse(raw: string | null): Settings {
       onboarded: v.onboarded === true,
       name: cleanName(v.name),
       goals: parseGoals(v.goals),
+      highlights: parseHighlights(v.highlights),
+      prayers: parsePrayers(v.prayers),
+      reminder: parseReminder(v.reminder),
+      theme: parseTheme(v.theme),
+      emailJoined: v.emailJoined === true,
       days: parseDays(v.days),
       plans: parsePlans(v.plans),
     };
@@ -96,6 +135,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       .catch(() => {})
       .finally(() => setLoaded(true));
   }, []);
+
+  // El tema elegido se aplica en toda la app (usePalette lo lee de lib/scheme).
+  useEffect(() => {
+    setThemePref(settings.theme);
+  }, [settings.theme]);
 
   useEffect(() => {
     if (loaded) AsyncStorage.setItem(KEY, JSON.stringify(settings)).catch(() => {});
@@ -152,6 +196,48 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         ...s,
         saved: s.saved.includes(id) ? s.saved.filter((x) => x !== id) : [id, ...s.saved],
       })),
+    setHighlight: (keys, color) =>
+      setSettings((s) => {
+        const highlights = { ...s.highlights };
+        for (const k of keys) {
+          if (color) highlights[k] = { ...highlights[k], c: color, t: Date.now() };
+          else delete highlights[k];
+        }
+        return { ...s, highlights };
+      }),
+    setNote: (key, note) =>
+      setSettings((s) => {
+        const h = s.highlights[key] ?? { c: 'amarillo' as const, t: Date.now() };
+        const n = note.trim().slice(0, NOTE_MAX);
+        const next: Highlight = { c: h.c, t: h.t, ...(n && { n }) };
+        return { ...s, highlights: { ...s.highlights, [key]: next } };
+      }),
+    addPrayer: (text) =>
+      setSettings((s) => {
+        const t = text.replace(/\s+/g, ' ').trim().slice(0, PRAYER_MAX);
+        if (!t) return s;
+        const p: Prayer = {
+          id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
+          text: t,
+          at: Date.now(),
+        };
+        return { ...s, prayers: [p, ...s.prayers].slice(0, 500) };
+      }),
+    togglePrayer: (id) =>
+      setSettings((s) => ({
+        ...s,
+        prayers: s.prayers.map((p) =>
+          p.id !== id
+            ? p
+            : p.answered
+              ? { id: p.id, text: p.text, at: p.at }
+              : { ...p, answered: Date.now() },
+        ),
+      })),
+    removePrayer: (id) => setSettings((s) => ({ ...s, prayers: s.prayers.filter((p) => p.id !== id) })),
+    setReminder: (reminder) => setSettings((s) => ({ ...s, reminder })),
+    setTheme: (theme) => setSettings((s) => ({ ...s, theme })),
+    setEmailJoined: () => setSettings((s) => ({ ...s, emailJoined: true })),
   };
 
   return <SettingsContext value={value}>{children}</SettingsContext>;

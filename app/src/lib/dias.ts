@@ -38,3 +38,23 @@ export function parseDays(v: unknown): Days {
   }
   return Object.fromEntries(Object.entries(out).sort().slice(-400));
 }
+
+/** La racha más larga de días seguidos con actividad. */
+export function bestStreak(days: Days): number {
+  const active = Object.keys(days)
+    .filter((k) => Object.keys(days[k]).length > 0)
+    .sort();
+  let best = 0;
+  let run = 0;
+  let prev: number | null = null;
+  for (const k of active) {
+    const [y, m, d] = k.split('-').map(Number);
+    const n = Date.UTC(y, m - 1, d) / 86_400_000;
+    run = prev !== null && n - prev === 1 ? run + 1 : 1;
+    best = Math.max(best, run);
+    prev = n;
+  }
+  return best;
+}
+
+export const MILESTONES = [3, 7, 14, 30, 50, 100] as const;

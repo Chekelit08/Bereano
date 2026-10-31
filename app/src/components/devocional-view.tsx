@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
+import { EmailCapture } from '@/components/email-capture';
 import { PressLink, Touchable } from '@/components/press-link';
 import { ShareCardButton } from '@/components/share-card-button';
 import { T } from '@/components/text';
@@ -7,6 +8,7 @@ import { Fonts, Space, usePalette } from '@/constants/theme';
 import { shareRange, shareText, type Devocional } from '@/data/devocionales';
 import { designsForDay } from '@/data/disenos';
 import { MARKS } from '@/data/marcas';
+import { track } from '@/lib/analytics';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
 import { dayKey } from '@/lib/dias';
 import { success } from '@/lib/haptics';
@@ -14,7 +16,7 @@ import { useSettings } from '@/lib/settings';
 
 export function DevocionalView({ devocional: d, kicker }: { devocional: Devocional; kicker: string }) {
   const c = usePalette();
-  const { saved, toggleSaved, fontSize, days, markDay } = useSettings();
+  const { saved, toggleSaved, fontSize, days, markDay, emailJoined } = useSettings();
   const read = !!days[dayKey()]?.devo;
 
   // El pasaje sale siempre de la Biblia de la app: nunca se escribe a mano.
@@ -74,6 +76,7 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
         accessibilityState={{ checked: read }}
         onPress={() => {
           if (!read) success();
+          if (!read) track('devocional_leido', { id: d.id });
           markDay('devo');
         }}
         style={({ pressed }) => [
@@ -85,9 +88,18 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
         </T>
       </Touchable>
 
+      {read && !emailJoined && (
+        <View style={{ marginTop: Space.md }}>
+          <EmailCapture origen="devocional" />
+        </View>
+      )}
+
       <View style={styles.actions}>
         <Touchable
-          onPress={() => toggleSaved(d.id)}
+          onPress={() => {
+            if (!isSaved) track('devocional_guardado', { id: d.id });
+            toggleSaved(d.id);
+          }}
           accessibilityRole="button"
           accessibilityState={{ selected: isSaved }}
           style={({ pressed }) => [

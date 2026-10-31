@@ -9,6 +9,7 @@ import { T } from '@/components/text';
 import { Fonts, usePalette } from '@/constants/theme';
 import type { Design } from '@/data/disenos';
 import type { Marks } from '@/data/marcas';
+import { track } from '@/lib/analytics';
 import { shareCard } from '@/lib/share';
 
 type Props = {
@@ -37,7 +38,11 @@ export function ShareCardButton({ design, text, reference, marks, locked, label,
         accessibilityRole="button"
         disabled={busy}
         onPress={async () => {
-          if (locked) return router.push('/plus');
+          if (locked) {
+            track('diseno_bloqueado', { estilo: design.style });
+            return router.push('/plus');
+          }
+          track('compartir_imagen', { estilo: design.style });
           setBusy(true);
           await shareCard(card, `“${text}”\n— ${reference} (RV1909)\n\nBereano`, reference);
           setBusy(false);

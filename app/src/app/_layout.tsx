@@ -18,21 +18,23 @@ import {
   Literata_500Medium,
 } from '@expo-google-fonts/literata';
 import { useFonts } from 'expo-font';
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { useEffect, useRef } from 'react';
 
 import { Fonts, usePalette } from '@/constants/theme';
+import { screenName } from '@/lib/analytics-core';
+import { track } from '@/lib/analytics';
 import { PlusProvider } from '@/lib/plus';
+import { useScheme } from '@/lib/scheme';
 import { SettingsProvider } from '@/lib/settings';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const c = usePalette();
-  const dark = useColorScheme() === 'dark';
+  const dark = useScheme() === 'dark';
   // Tema de navegación con los colores de la marca (fondo de pantallas y pestañas).
   const base = dark ? DarkTheme : DefaultTheme;
   const navTheme = {
@@ -67,7 +69,8 @@ export default function RootLayout() {
     <ThemeProvider value={navTheme}>
       <SettingsProvider>
         <PlusProvider>
-          <StatusBar style="auto" />
+          <StatusBar style={dark ? 'light' : 'dark'} />
+          <ScreenTracker />
           <Stack
             screenOptions={{
               headerStyle: { backgroundColor: c.bg },
@@ -82,10 +85,29 @@ export default function RootLayout() {
             <Stack.Screen name="ayuda" options={{ title: 'No estás solo', presentation: 'modal' }} />
             <Stack.Screen name="plus" options={{ title: '', presentation: 'modal' }} />
             <Stack.Screen name="compartir" options={{ title: 'Compartir' }} />
+            <Stack.Screen name="ajustes" options={{ title: '' }} />
+            <Stack.Screen name="oracion" options={{ title: '' }} />
+            <Stack.Screen name="racha" options={{ title: '' }} />
+            <Stack.Screen name="resaltados" options={{ title: '' }} />
             <Stack.Screen name="bienvenida" options={{ headerShown: false, gestureEnabled: false }} />
           </Stack>
         </PlusProvider>
       </SettingsProvider>
     </ThemeProvider>
   );
+}
+
+/** Registra cada pantalla que se abre (para el panel de estadísticas). */
+function ScreenTracker() {
+  const segments = useSegments();
+  const name = screenName(segments);
+  const opened = useRef(false);
+  useEffect(() => {
+    if (!opened.current) {
+      opened.current = true;
+      track('app_abierta');
+    }
+    track('screen_view', {}, name);
+  }, [name]);
+  return null;
 }

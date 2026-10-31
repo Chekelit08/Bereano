@@ -1,5 +1,5 @@
 import { Stack, useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Linking, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import type { PurchasesPackage } from 'react-native-purchases';
 
@@ -8,6 +8,7 @@ import { Touchable } from '@/components/press-link';
 import { T } from '@/components/text';
 import { FALLBACK_PRICES, PLUS_DAILY_QUESTIONS, SITE_URL } from '@/constants/config';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
+import { track } from '@/lib/analytics';
 import { success } from '@/lib/haptics';
 import { usePlus } from '@/lib/plus';
 
@@ -46,7 +47,12 @@ export default function Plus() {
   const annualPerMonth = annual?.product.pricePerMonthString ?? FALLBACK_PRICES.annualPerMonth;
   const trial = choice === 'annual'; // la prueba de 7 días va en el plan anual (oferta introductoria)
 
+  useEffect(() => {
+    track('paywall_visto');
+  }, []);
+
   async function buy() {
+    track('compra_intento', { plan: choice });
     if (status !== 'ready' || !pkg) {
       Alert.alert(
         'Vista previa',

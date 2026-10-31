@@ -63,6 +63,16 @@ export default function Biblia() {
           <IconChevron color={c.muted} />
         </PressLink>
 
+        <PressLink
+          href="/resaltados"
+          style={({ pressed }) => [styles.plans, { backgroundColor: pressed ? c.surface2 : c.surface }]}>
+          <View style={{ flex: 1 }}>
+            <T style={{ fontFamily: Fonts.uiBold, fontSize: 16 }}>Mis resaltados y notas</T>
+            <T variant="muted">Tocá un versículo para resaltarlo o anotarlo</T>
+          </View>
+          <IconChevron color={c.muted} />
+        </PressLink>
+
         {/* Antiguo / Nuevo Testamento */}
         <View
           style={[styles.segment, { backgroundColor: c.surface, borderColor: c.line }]}

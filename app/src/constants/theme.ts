@@ -1,5 +1,6 @@
 // Estilo Apple: blanco, negro y grises neutros, con el azul de Apple como único acento. Inter para títulos e interfaz, Literata para leer.
-import { useColorScheme } from 'react-native';
+
+import { useScheme } from '@/lib/scheme';
 
 export const Colors = {
   light: {
@@ -29,7 +30,7 @@ export const Colors = {
 export type Palette = { [K in keyof typeof Colors.light]: string };
 
 export function usePalette(): Palette {
-  return Colors[useColorScheme() === 'dark' ? 'dark' : 'light'];
+  return Colors[useScheme()];
 }
 
 // Nombres con los que se cargan en _layout.tsx.

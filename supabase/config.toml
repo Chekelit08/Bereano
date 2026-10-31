@@ -420,3 +420,6 @@ enabled = true
 # RevenueCat no manda un JWT de Supabase: la función valida su propio header (ver index.ts).
 [functions.revenuecat-webhook]
 verify_jwt = false
+
+[functions.panel]
+verify_jwt = false

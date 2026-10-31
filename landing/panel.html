@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel · Bereano</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main class="panel">
+      <header class="panel__head">
+        <div>
+          <p class="panel__kicker">Bereano</p>
+          <h1>Panel de uso</h1>
+        </div>
+        <div class="panel__controls" id="controls" hidden>
+          <div class="seg" role="radiogroup" aria-label="Período">
+            <button type="button" role="radio" data-days="7">7 días</button>
+            <button type="button" role="radio" data-days="30" aria-checked="true">30 días</button>
+            <button type="button" role="radio" data-days="90">90 días</button>
+          </div>
+          <button type="button" class="link" id="logout">Salir</button>
+        </div>
+      </header>
+
+      <form id="login" class="card login">
+        <label for="token">Clave del panel</label>
+        <p class="muted">La clave está en las variables de Supabase (PANEL_TOKEN). Queda guardada solo en este navegador.</p>
+        <div class="login__row">
+          <input id="token" type="password" autocomplete="current-password" required minlength="32" />
+          <button type="submit">Entrar</button>
+        </div>
+        <p class="error" id="login-error" hidden></p>
+      </form>
+
+      <div id="content" hidden>
+        <p class="muted" id="status"></p>
+        <section class="tiles" id="tiles"></section>
+
+        <section class="card">
+          <div class="card__head">
+            <h2>Personas por día</h2>
+            <div class="legend" id="legend"></div>
+          </div>
+          <div class="chart" id="daily"></div>
+        </section>
+
+        <div class="grid">
+          <section class="card">
+            <h2>Embudo de la landing</h2>
+            <p class="muted">Personas que llegaron a cada paso.</p>
+            <div id="funnel-landing"></div>
+          </section>
+          <section class="card">
+            <h2>Embudo de la app</h2>
+            <p class="muted">Personas que llegaron a cada paso.</p>
+            <div id="funnel-app"></div>
+          </section>
+        </div>
+
+        <div class="grid">
+          <section class="card">
+            <h2>Pantallas más vistas en la app</h2>
+            <div id="screens"></div>
+          </section>
+          <section class="card">
+            <h2>Emails por origen</h2>
+            <p class="muted" id="emails-note"></p>
+            <div id="emails"></div>
+          </section>
+        </div>
+
+        <section class="card">
+          <h2>Dónde interactúa la gente</h2>
+          <p class="muted">Botones y acciones, de más a menos usados.</p>
+          <div class="table-wrap"><table id="events"></table></div>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="/src/panel.js"></script>
+  </body>
+</html>
