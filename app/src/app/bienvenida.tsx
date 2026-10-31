@@ -11,6 +11,7 @@ import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { devocionalDelDia, shareRange, shareText } from '@/data/devocionales';
 import { GOALS, GOAL_INFO, NAME_MAX, recommendation, type Goal } from '@/data/onboarding';
 import { getPlan } from '@/data/planes';
+import { track } from '@/lib/analytics';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
 import { tap } from '@/lib/haptics';
 import { useSettings } from '@/lib/settings';
@@ -34,6 +35,7 @@ export default function Bienvenida() {
   /** Termina la bienvenida y abre la primera experiencia sobre la pantalla de Hoy. */
   function finish(to?: Href) {
     finishOnboarding({ name, goals });
+    track('onboarding_fin', { objetivos: goals.join(','), con_nombre: !!name.trim() });
     router.replace('/');
     if (to) router.push(to);
   }

@@ -2,6 +2,7 @@
 // los eventos que ocurren antes de que cargue quedan en cola y se envían después.
 
 import { canPersist } from './consent.js';
+import { record } from './stats.js';
 
 const key = import.meta.env.VITE_POSTHOG_KEY;
 const host = import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com';
@@ -10,6 +11,7 @@ let posthog = null;
 const queue = [];
 
 export function initAnalytics() {
+  record('page_view', { ref: referrerHost() });
   if (!key) {
     if (import.meta.env.DEV) console.info('[analytics] Sin VITE_POSTHOG_KEY: los eventos solo se muestran en consola.');
     return;
@@ -46,7 +48,17 @@ export function enablePersistence() {
 
 export function track(event, properties = {}) {
   if (import.meta.env.DEV) console.info('[analytics]', event, properties);
+  record(event, properties);
   if (!key) return;
   if (posthog) posthog.capture(event, properties);
   else queue.push([event, properties]);
+}
+
+/** De qué sitio viene la visita (solo el dominio, nunca la dirección completa). */
+function referrerHost() {
+  try {
+    return document.referrer ? new URL(document.referrer).hostname : 'directo';
+  } catch {
+    return 'otro';
+  }
 }

@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { CardThumb } from '@/components/card-thumb';
@@ -10,6 +10,7 @@ import { CARD_HEIGHT, CARD_WIDTH, StoryCard } from '@/components/story-card';
 import { T } from '@/components/text';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { DESIGN_STYLES, FREE_DESIGN, TONES, designName, sameDesign, type Design } from '@/data/disenos';
+import { track } from '@/lib/analytics';
 import { sharePassage } from '@/lib/compartir';
 import { usePlus } from '@/lib/plus';
 
@@ -22,6 +23,9 @@ export default function Compartir() {
   const { isPlus } = usePlus();
   const params = useLocalSearchParams<{ book: string; chapter: string; from: string; to?: string }>();
   const passage = sharePassage(params);
+  useEffect(() => {
+    track('compartir_versiculo_abierto');
+  }, []);
   const [design, setDesign] = useState<Design>(FREE_DESIGN);
   if (!passage) return <NotFound />;
 

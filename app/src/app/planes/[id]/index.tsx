@@ -7,6 +7,7 @@ import { PressLink, Touchable } from '@/components/press-link';
 import { T } from '@/components/text';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { getPlan, readingLabel } from '@/data/planes';
+import { track } from '@/lib/analytics';
 import { getBook } from '@/lib/bible';
 import { planProgress } from '@/lib/planes';
 import { usePlus } from '@/lib/plus';
@@ -59,7 +60,10 @@ export default function PlanDetalle() {
         accessibilityRole="button"
         onPress={() => {
           if (locked && prog.next > 0) return router.push('/plus');
-          if (!prog.started) startPlan(plan.id);
+          if (!prog.started) {
+            startPlan(plan.id);
+            track('plan_empezado', { plan: plan.id });
+          }
           goTo(prog.next);
         }}
         style={({ pressed }) => [styles.cta, { backgroundColor: c.fill, opacity: pressed ? 0.85 : 1 }]}>

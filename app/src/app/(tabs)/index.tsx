@@ -5,7 +5,18 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { PlanCard } from '@/components/plan-card';
-import { IconBook, IconChat, IconCheck, IconChevron, IconFlame, IconSun } from '@/components/icons';
+import { EmailCapture } from '@/components/email-capture';
+import {
+  IconBook,
+  IconChat,
+  IconCheck,
+  IconChevron,
+  IconFlame,
+  IconGear,
+  IconPen,
+  IconPray,
+  IconSun,
+} from '@/components/icons';
 import { PressLink, Touchable } from '@/components/press-link';
 import { GREETING, momentOf } from '@/components/momento';
 import { T } from '@/components/text';
@@ -30,7 +41,9 @@ export default function Hoy() {
   const c = usePalette();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { saved, days, lastRead, plans, name } = useSettings();
+  const { saved, days, lastRead, plans, name, prayers, highlights, emailJoined } = useSettings();
+  const openPrayers = prayers.filter((p) => !p.answered).length;
+  const marks = Object.keys(highlights).length;
   const [now] = useState(() => new Date());
   const moment = momentOf(now);
   const today = devocionalDelDia(now);
@@ -95,14 +108,30 @@ export default function Hoy() {
           <T variant="label">
             {now.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' })}
           </T>
-          {racha > 0 && (
-            <View style={[styles.streak, { backgroundColor: c.fill }]}>
-              <IconFlame color={c.fillInk} />
-              <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: c.fillInk }}>
+          <View style={styles.headerActions}>
+            <PressLink
+              href="/racha"
+              accessibilityLabel={`Racha: ${racha} ${racha === 1 ? 'día' : 'días'}`}
+              style={({ pressed }) => [
+                styles.streak,
+                { backgroundColor: racha > 0 ? c.fill : c.surface, opacity: pressed ? 0.8 : 1 },
+              ]}>
+              <IconFlame color={racha > 0 ? c.fillInk : c.muted} />
+              <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: racha > 0 ? c.fillInk : c.muted }}>
                 {racha} {racha === 1 ? 'día' : 'días'}
               </T>
-            </View>
-          )}
+            </PressLink>
+            <PressLink
+              href="/ajustes"
+              accessibilityLabel="Ajustes"
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.gear,
+                { backgroundColor: c.surface, opacity: pressed ? 0.7 : 1 },
+              ]}>
+              <IconGear color={c.text} size={20} />
+            </PressLink>
+          </View>
         </View>
         <Animated.View entering={FadeInDown.duration(500)}>
           <T variant="title" style={{ marginTop: Space.sm }}>
@@ -189,6 +218,34 @@ export default function Hoy() {
         </View>
 
         <View style={styles.section}>
+          <T variant="heading" style={{ fontSize: 20, marginBottom: Space.sm }}>
+            Tu espacio
+          </T>
+          <View style={styles.tiles}>
+            <Tile
+              href="/oracion"
+              Icon={IconPray}
+              title="Oración"
+              detail={
+                openPrayers ? `${openPrayers} ${openPrayers === 1 ? 'pedido' : 'pedidos'}` : 'Tu diario'
+              }
+            />
+            <Tile
+              href="/resaltados"
+              Icon={IconPen}
+              title="Resaltados"
+              detail={marks ? `${marks} ${marks === 1 ? 'versículo' : 'versículos'}` : 'Y tus notas'}
+            />
+          </View>
+        </View>
+
+        {!emailJoined && (
+          <View style={styles.section}>
+            <EmailCapture origen="hoy" />
+          </View>
+        )}
+
+        <View style={styles.section}>
           <T variant="heading" style={{ fontSize: 20 }}>
             Para tus historias
           </T>
@@ -225,7 +282,34 @@ export default function Hoy() {
   );
 }
 
+function Tile({
+  href,
+  Icon,
+  title,
+  detail,
+}: {
+  href: Href;
+  Icon: ComponentType<{ color: string; size?: number }>;
+  title: string;
+  detail: string;
+}) {
+  const c = usePalette();
+  return (
+    <PressLink
+      href={href}
+      style={({ pressed }) => [styles.tile, { backgroundColor: pressed ? c.surface2 : c.surface }]}>
+      <Icon color={c.accent} size={24} />
+      <T style={{ fontFamily: Fonts.uiBold, fontSize: 16, marginTop: Space.sm }}>{title}</T>
+      <T variant="muted">{detail}</T>
+    </PressLink>
+  );
+}
+
 const styles = StyleSheet.create({
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: Space.sm },
+  gear: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
+  tiles: { flexDirection: 'row', gap: Space.sm },
+  tile: { flex: 1, borderRadius: Radius.md, padding: Space.md },
   header: { paddingHorizontal: Space.lg },
   headerTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', minHeight: 30 },
   streak: {

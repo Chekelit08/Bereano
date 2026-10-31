@@ -18,7 +18,7 @@ end $$;
 \echo 'ok   RLS activado en todas las tablas'
 
 -- 2. Políticas abiertas (using/with check true) solo donde está pensado: lectura del texto
---    bíblico (dominio público) y el INSERT anónimo de la lista de espera.
+--    bíblico (dominio público) y el INSERT anónimo de la lista de espera y de los eventos.
 do $$
 declare t text;
 begin
@@ -27,7 +27,7 @@ begin
   where schemaname in ('public', 'private')
     and (coalesce(qual, '') = 'true' or coalesce(with_check, '') = 'true')
     and not (tablename in ('bible_versions', 'bible_books', 'bible_verses') and cmd = 'SELECT')
-    and not (tablename = 'waitlist' and cmd = 'INSERT');
+    and not (tablename in ('waitlist', 'analytics_events') and cmd = 'INSERT');
   if t is not null then
     raise exception 'FALLO: políticas abiertas a todos: %', t;
   end if;
@@ -43,7 +43,7 @@ begin
   from pg_policies
   where schemaname in ('public', 'private')
     and 'authenticated' = any(roles)
-    and tablename not in ('bible_versions', 'bible_books', 'bible_verses', 'waitlist')
+    and tablename not in ('bible_versions', 'bible_books', 'bible_verses', 'waitlist', 'analytics_events')
     and coalesce(qual, '') || coalesce(with_check, '') not like '%auth.uid()%';
   if t is not null then
     raise exception 'FALLO: políticas para authenticated sin "solo el dueño": %', t;

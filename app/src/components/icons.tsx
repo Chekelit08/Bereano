@@ -129,3 +129,47 @@ export function IconLock({ size = 14, color }: P) {
     </Svg>
   );
 }
+
+export function IconGear({ size = 22, color }: P) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
+      <Circle cx="12" cy="12" r="3.2" />
+      <Path
+        d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2 5.5 5.5"
+        strokeLinecap="round"
+      />
+    </Svg>
+  );
+}
+
+export function IconPray({ size = 24, color }: P) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth={1.8}
+      strokeLinejoin="round">
+      <Path d="M12 3.5c-1.2 1.6-2 3.8-2 6.2V15l-3.6 2.4a1.6 1.6 0 0 0-.4 2.3L7 21h5V3.5Z" />
+      <Path d="M12 3.5c1.2 1.6 2 3.8 2 6.2V15l3.6 2.4a1.6 1.6 0 0 1 .4 2.3L17 21h-5" />
+    </Svg>
+  );
+}
+
+export function IconPen({ size = 20, color }: P) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth={1.8}
+      strokeLinejoin="round">
+      <Path d="M4 20h4L19 9a2.1 2.1 0 0 0-4-4L4 16v4Z" />
+      <Path d="m13.5 6.5 4 4" strokeLinecap="round" />
+    </Svg>
+  );
+}

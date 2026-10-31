@@ -1,6 +1,6 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, type ScrollViewInstance } from 'react-native';
+import { ScrollView, StyleSheet, TextInput, View, type ScrollViewInstance } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { NotFound } from '@/components/not-found';
@@ -8,7 +8,9 @@ import { PressLink, Touchable } from '@/components/press-link';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { formatRef, getBook, getChapter, neighbors, type Book } from '@/lib/bible';
+import { track } from '@/lib/analytics';
 import { MAX_SHARE_VERSES } from '@/lib/compartir';
+import { HIGHLIGHT_COLORS, HIGHLIGHT_HEX, NOTE_MAX, verseKey } from '@/lib/personal';
 import { FONT_SIZES, useSettings } from '@/lib/settings';
 
 export default function Reader() {
@@ -20,7 +22,9 @@ export default function Reader() {
   const verses = book && Number.isInteger(chapter) ? getChapter(book.code, chapter) : undefined;
   const target = Number(params.v) || 0;
 
-  const { fontSize, fontStep, changeFont, setLastRead, markDay } = useSettings();
+  const { fontSize, fontStep, changeFont, setLastRead, markDay, highlights, setHighlight, setNote } =
+    useSettings();
+  const [noteDraft, setNoteDraft] = useState<string | null>(null);
   const scroll = useRef<ScrollViewInstance>(null);
   const router = useRouter();
   // Versículos elegidos para compartir: un rango seguido.
@@ -79,7 +83,7 @@ export default function Reader() {
       />
       <ScrollView
         ref={scroll}
-        contentContainerStyle={[styles.page, { paddingBottom: insets.bottom + Space.xl }]}>
+        contentContainerStyle={[styles.page, { paddingBottom: insets.bottom + (sel ? 240 : Space.xl) }]}>
         <T variant="label">{book.name}</T>
         <T style={[styles.chapterNum, { color: c.text }]}>{chapter}</T>
 
@@ -87,13 +91,17 @@ export default function Reader() {
           const n = i + 1;
           const highlighted = n === target;
           const selected = !!sel && n >= sel.from && n <= sel.to;
+          const mark = highlights[verseKey(book.code, chapter, n)];
           return (
             <Touchable
               key={n}
               accessibilityRole="button"
               accessibilityState={{ selected }}
-              accessibilityHint="Elegir para compartir"
-              onPress={() => toggle(n)}
+              accessibilityHint="Elegir para resaltar, anotar o compartir"
+              onPress={() => {
+                setNoteDraft(null);
+                toggle(n);
+              }}
               onLayout={
                 highlighted
                   ? (e) =>
@@ -106,7 +114,11 @@ export default function Reader() {
               style={[
                 styles.verse,
                 highlighted && { backgroundColor: c.surface, borderColor: c.accent },
-                selected && { backgroundColor: c.surface2, borderColor: c.fill },
+                mark && { backgroundColor: `${HIGHLIGHT_HEX[mark.c]}4D` },
+                selected && {
+                  borderColor: c.fill,
+                  backgroundColor: mark ? `${HIGHLIGHT_HEX[mark.c]}4D` : c.surface2,
+                },
               ]}>
               <T style={{ fontFamily: Fonts.read, fontSize, lineHeight }}>
                 <T style={[styles.verseNum, { color: c.muted, fontSize: Math.round(fontSize * 0.6) }]}>
@@ -114,6 +126,9 @@ export default function Reader() {
                 </T>
                 {text}
               </T>
+              {mark?.n && (
+                <T style={[styles.note, { color: c.muted, borderColor: HIGHLIGHT_HEX[mark.c] }]}>{mark.n}</T>
+              )}
             </Touchable>
           );
         })}
@@ -126,37 +141,135 @@ export default function Reader() {
 
       {sel && (
         <View style={[styles.shareBar, { bottom: insets.bottom + Space.md }]}>
-          <View style={[styles.sharePill, { backgroundColor: c.text }]}>
-            <T style={{ flex: 1, color: c.bg, fontFamily: Fonts.uiBold, fontSize: 15 }} numberOfLines={1}>
-              {formatRef(book, chapter, sel.from, sel.to)}
-            </T>
-            <Touchable
-              accessibilityRole="button"
-              onPress={() =>
-                router.push({
-                  pathname: '/compartir',
-                  params: { book: book.code, chapter, from: sel.from, to: sel.to },
-                })
-              }
-              style={({ pressed }) => [
-                styles.shareBtn,
-                { backgroundColor: c.fill, opacity: pressed ? 0.8 : 1 },
-              ]}>
-              <T style={{ color: c.fillInk, fontFamily: Fonts.uiBold, fontSize: 15 }}>Compartir imagen</T>
-            </Touchable>
-            <Touchable
-              accessibilityRole="button"
-              accessibilityLabel="Quitar selección"
-              hitSlop={10}
-              onPress={() => setSel(null)}
-              style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1, paddingHorizontal: 4 })}>
-              <T style={{ color: c.bg, fontSize: 20 }}>×</T>
-            </Touchable>
+          <View style={[styles.sheet, { backgroundColor: c.bg, borderColor: c.line, shadowColor: '#000' }]}>
+            <View style={styles.sheetHead}>
+              <T style={{ flex: 1, fontFamily: Fonts.uiBold, fontSize: 15 }} numberOfLines={1}>
+                {formatRef(book, chapter, sel.from, sel.to)}
+              </T>
+              <Touchable
+                accessibilityRole="button"
+                accessibilityLabel="Cerrar"
+                hitSlop={10}
+                onPress={() => {
+                  setSel(null);
+                  setNoteDraft(null);
+                }}
+                style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1, paddingHorizontal: 4 })}>
+                <T style={{ color: c.muted, fontSize: 22 }}>×</T>
+              </Touchable>
+            </View>
+
+            {noteDraft === null ? (
+              <>
+                <View style={styles.colors}>
+                  {HIGHLIGHT_COLORS.map((color) => {
+                    const keys = selKeys(book.code, chapter, sel);
+                    const active = keys.every((k) => highlights[k]?.c === color);
+                    return (
+                      <Touchable
+                        key={color}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Resaltar en ${color}`}
+                        accessibilityState={{ selected: active }}
+                        onPress={() => {
+                          setHighlight(keys, active ? null : color);
+                          if (!active) track('resaltado', { color });
+                        }}
+                        style={[
+                          styles.color,
+                          { backgroundColor: HIGHLIGHT_HEX[color] },
+                          active && { borderWidth: 3, borderColor: c.text },
+                        ]}
+                      />
+                    );
+                  })}
+                  {selKeys(book.code, chapter, sel).some((k) => highlights[k]) && (
+                    <Touchable
+                      accessibilityRole="button"
+                      accessibilityLabel="Quitar resaltado"
+                      onPress={() => setHighlight(selKeys(book.code, chapter, sel), null)}
+                      style={[styles.color, styles.clear, { borderColor: c.muted }]}>
+                      <T style={{ color: c.muted, fontSize: 16 }}>⌀</T>
+                    </Touchable>
+                  )}
+                </View>
+                <View style={styles.actions}>
+                  <Touchable
+                    accessibilityRole="button"
+                    onPress={() => setNoteDraft(highlights[verseKey(book.code, chapter, sel.from)]?.n ?? '')}
+                    style={({ pressed }) => [
+                      styles.action,
+                      { borderColor: c.text, opacity: pressed ? 0.7 : 1 },
+                    ]}>
+                    <T style={{ fontFamily: Fonts.uiBold, fontSize: 15 }}>
+                      {highlights[verseKey(book.code, chapter, sel.from)]?.n ? 'Editar nota' : 'Nota'}
+                    </T>
+                  </Touchable>
+                  <Touchable
+                    accessibilityRole="button"
+                    onPress={() =>
+                      router.push({
+                        pathname: '/compartir',
+                        params: { book: book.code, chapter, from: sel.from, to: sel.to },
+                      })
+                    }
+                    style={({ pressed }) => [
+                      styles.action,
+                      { backgroundColor: c.fill, borderColor: c.fill, opacity: pressed ? 0.85 : 1 },
+                    ]}>
+                    <T style={{ color: c.fillInk, fontFamily: Fonts.uiBold, fontSize: 15 }}>
+                      Compartir imagen
+                    </T>
+                  </Touchable>
+                </View>
+              </>
+            ) : (
+              <View style={{ gap: Space.sm }}>
+                <TextInput
+                  value={noteDraft}
+                  onChangeText={(t) => setNoteDraft(t.slice(0, NOTE_MAX))}
+                  placeholder="¿Qué te dice este versículo?"
+                  placeholderTextColor={c.muted}
+                  multiline
+                  autoFocus
+                  accessibilityLabel="Nota"
+                  style={[styles.noteInput, { color: c.text, backgroundColor: c.surface }]}
+                />
+                <View style={styles.actions}>
+                  <Touchable
+                    accessibilityRole="button"
+                    onPress={() => setNoteDraft(null)}
+                    style={({ pressed }) => [
+                      styles.action,
+                      { borderColor: c.text, opacity: pressed ? 0.7 : 1 },
+                    ]}>
+                    <T style={{ fontFamily: Fonts.uiBold, fontSize: 15 }}>Cancelar</T>
+                  </Touchable>
+                  <Touchable
+                    accessibilityRole="button"
+                    onPress={() => {
+                      setNote(verseKey(book.code, chapter, sel.from), noteDraft);
+                      if (noteDraft.trim()) track('nota_guardada');
+                      setNoteDraft(null);
+                    }}
+                    style={({ pressed }) => [
+                      styles.action,
+                      { backgroundColor: c.fill, borderColor: c.fill, opacity: pressed ? 0.85 : 1 },
+                    ]}>
+                    <T style={{ color: c.fillInk, fontFamily: Fonts.uiBold, fontSize: 15 }}>Guardar nota</T>
+                  </Touchable>
+                </View>
+              </View>
+            )}
           </View>
         </View>
       )}
     </>
   );
+}
+
+function selKeys(book: string, chapter: number, sel: { from: number; to: number }) {
+  return Array.from({ length: sel.to - sel.from + 1 }, (_, i) => verseKey(book, chapter, sel.from + i));
 }
 
 function FontButton({
@@ -248,16 +361,39 @@ const styles = StyleSheet.create({
   },
   navItem: { flex: 1, paddingVertical: Space.sm },
   shareBar: { position: 'absolute', left: Space.md, right: Space.md, alignItems: 'center' },
-  sharePill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Space.sm,
+  sheet: {
     width: '100%',
     maxWidth: 520,
-    borderRadius: 999,
-    paddingLeft: Space.lg,
-    paddingRight: Space.sm,
-    paddingVertical: 8,
+    borderRadius: 22,
+    borderWidth: StyleSheet.hairlineWidth,
+    padding: Space.md,
+    gap: Space.md,
+    shadowOpacity: 0.18,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 10,
   },
-  shareBtn: { borderRadius: 999, paddingHorizontal: Space.md, paddingVertical: 10 },
+  sheetHead: { flexDirection: 'row', alignItems: 'center' },
+  colors: { flexDirection: 'row', gap: Space.sm, alignItems: 'center' },
+  color: { width: 36, height: 36, borderRadius: 18 },
+  clear: { borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
+  actions: { flexDirection: 'row', gap: Space.sm },
+  action: { flex: 1, borderWidth: 1, borderRadius: 999, paddingVertical: 12, alignItems: 'center' },
+  noteInput: {
+    fontFamily: Fonts.ui,
+    fontSize: 16,
+    minHeight: 80,
+    maxHeight: 160,
+    borderRadius: 12,
+    padding: Space.md,
+    textAlignVertical: 'top',
+  },
+  note: {
+    fontFamily: Fonts.readItalic,
+    fontSize: 15,
+    lineHeight: 22,
+    marginTop: 6,
+    paddingLeft: Space.sm,
+    borderLeftWidth: 2,
+  },
 });

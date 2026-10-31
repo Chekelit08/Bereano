@@ -16,6 +16,7 @@ import { PageHeader } from '@/components/page-header';
 import { T } from '@/components/text';
 import { FREE_QUESTIONS, PLUS_DAILY_QUESTIONS } from '@/constants/config';
 import { Fonts, Space, usePalette } from '@/constants/theme';
+import { track } from '@/lib/analytics';
 import { useSettings } from '@/lib/settings';
 import { ask, clearChat, loadChat, newId, saveChat, type ChatMessage } from '@/lib/companero';
 
@@ -60,6 +61,7 @@ export default function Companero() {
     setInput('');
     setNotice(null);
     setBusy(true);
+    track('companero_pregunta', { con_historial: previous.length > 0 });
     const res = await ask(question, previous);
     setBusy(false);
     if (res.type === 'answer') {
@@ -73,6 +75,7 @@ export default function Companero() {
       // La pregunta no se guarda si no hubo respuesta.
       setMessages(previous);
       if (res.type !== 'crisis') setInput(question);
+      if (res.type === 'limit') track('companero_limite', { motivo: res.reason });
       if (res.type === 'crisis') router.push('/ayuda');
       else if (res.type === 'limit' && res.reason === 'free') setPaywall(true);
       else if (res.type === 'limit')

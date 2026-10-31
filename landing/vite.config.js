@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
           main: resolve(import.meta.dirname, 'index.html'),
           privacidad: resolve(import.meta.dirname, 'privacidad.html'),
           terminos: resolve(import.meta.dirname, 'terminos.html'),
+          panel: resolve(import.meta.dirname, 'panel.html'),
         },
       },
     },
