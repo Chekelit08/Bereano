@@ -44,9 +44,9 @@ $('#theme-toggle').addEventListener('click', () => {
   }
 });
 
-// ---------- CTA del hero ----------
+// ---------- Botones y enlaces medidos (incluye los accesos a la app y los temas) ----------
 document.querySelectorAll('[data-track]').forEach((el) => {
-  el.addEventListener('click', () => track(el.dataset.track));
+  el.addEventListener('click', () => track(el.dataset.track, el.dataset.tema ? { tema: el.dataset.tema } : {}));
 });
 
 // ---------- Helpers de formulario ----------
