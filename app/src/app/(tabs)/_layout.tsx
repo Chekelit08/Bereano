@@ -6,17 +6,20 @@ import { IconBook, IconChat, IconSun } from '@/components/icons';
 import { T } from '@/components/text';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
 import { tap } from '@/lib/haptics';
+import { useWide } from '@/lib/layout';
 import { useSettings } from '@/lib/settings';
 
 const ICONS = { index: IconSun, companero: IconChat, biblia: IconBook } as const;
 
 export default function TabsLayout() {
   const { loaded, onboarded } = useSettings();
+  // En computadora la navegación va en la barra lateral (ver Shell en el layout raíz).
+  const wide = useWide();
   // Hasta leer lo guardado no se sabe si ya vio la bienvenida.
   if (!loaded) return null;
   if (!onboarded) return <Redirect href="/bienvenida" />;
   return (
-    <Tabs screenOptions={{ headerShown: false }} tabBar={(props) => <TabBar {...props} />}>
+    <Tabs screenOptions={{ headerShown: false }} tabBar={(props) => (wide ? null : <TabBar {...props} />)}>
       <Tabs.Screen name="index" options={{ title: 'Hoy' }} />
       <Tabs.Screen name="companero" options={{ title: 'Compañero' }} />
       <Tabs.Screen name="biblia" options={{ title: 'Biblia' }} />

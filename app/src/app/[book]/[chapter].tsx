@@ -3,12 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, TextInput, View, type ScrollViewInstance } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { IconChevron } from '@/components/icons';
 import { NotFound } from '@/components/not-found';
 import { PressLink, Touchable } from '@/components/press-link';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { formatRef, getBook, getChapter, neighbors, type Book } from '@/lib/bible';
 import { track } from '@/lib/analytics';
+import { useWide } from '@/lib/layout';
 import { MAX_SHARE_VERSES } from '@/lib/compartir';
 import { HIGHLIGHT_COLORS, HIGHLIGHT_HEX, NOTE_MAX, verseKey } from '@/lib/personal';
 import { FONT_SIZES, useSettings } from '@/lib/settings';
@@ -25,6 +27,7 @@ export default function Reader() {
   const { fontSize, fontStep, changeFont, setLastRead, markDay, highlights, setHighlight, setNote } =
     useSettings();
   const [noteDraft, setNoteDraft] = useState<string | null>(null);
+  const wide = useWide();
   const scroll = useRef<ScrollViewInstance>(null);
   const router = useRouter();
   // Versículos elegidos para compartir: un rango seguido.
@@ -264,7 +267,29 @@ export default function Reader() {
           </View>
         </View>
       )}
+      {wide && prev && <SideArrow to={prev} side="left" />}
+      {wide && next && <SideArrow to={next} side="right" />}
     </>
+  );
+}
+
+/** Flechas a los costados para ir al capítulo anterior o siguiente (en computadora). */
+function SideArrow({ to, side }: { to: { book: Book; chapter: number }; side: 'left' | 'right' }) {
+  const c = usePalette();
+  return (
+    <PressLink
+      href={{ pathname: '/[book]/[chapter]', params: { book: to.book.code, chapter: to.chapter } }}
+      replace
+      accessibilityLabel={`${side === 'left' ? 'Anterior' : 'Siguiente'}: ${to.book.name} ${to.chapter}`}
+      style={({ pressed }) => [
+        styles.side,
+        side === 'left' ? { left: Space.lg } : { right: Space.lg },
+        { backgroundColor: c.surface, borderColor: c.line, opacity: pressed ? 0.7 : 1 },
+      ]}>
+      <View style={side === 'left' ? { transform: [{ rotate: '180deg' }] } : undefined}>
+        <IconChevron color={c.text} size={22} />
+      </View>
+    </PressLink>
   );
 }
 
@@ -361,6 +386,16 @@ const styles = StyleSheet.create({
   },
   navItem: { flex: 1, paddingVertical: Space.sm },
   shareBar: { position: 'absolute', left: Space.md, right: Space.md, alignItems: 'center' },
+  side: {
+    position: 'absolute',
+    top: '45%',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    borderWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   sheet: {
     width: '100%',
     maxWidth: 520,

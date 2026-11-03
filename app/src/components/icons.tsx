@@ -173,3 +173,35 @@ export function IconPen({ size = 20, color }: P) {
     </Svg>
   );
 }
+
+export function IconPlans({ size = 22, color }: P) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth={1.8}
+      strokeLinejoin="round">
+      <Path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Z" />
+      <Path d="M5 17a3 3 0 0 1 3-3h11M9 8h6" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function IconTag({ size = 22, color }: P) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth={1.8}
+      strokeLinejoin="round">
+      <Path d="M3.5 12.5V4.5a1 1 0 0 1 1-1h8l8 8-9 9-8-8Z" />
+      <Circle cx="8.5" cy="8.5" r="1.5" />
+    </Svg>
+  );
+}

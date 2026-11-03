@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { PlanCard } from '@/components/plan-card';
 import { EmailCapture } from '@/components/email-capture';
+import { HeroVerse, SemanaList, TemasBand } from '@/components/hoy-extras';
 import {
   IconBook,
   IconChat,
@@ -27,6 +28,7 @@ import { devocionalDelDia, getDevocional, shareRange, shareText } from '@/data/d
 import { dayKey, streak } from '@/lib/dias';
 import { planProgress } from '@/lib/planes';
 import { formatRef, getBook, getChapter } from '@/lib/bible';
+import { useWide } from '@/lib/layout';
 import { useSettings } from '@/lib/settings';
 
 type Step = {
@@ -45,6 +47,7 @@ export default function Hoy() {
   const openPrayers = prayers.filter((p) => !p.answered).length;
   const marks = Object.keys(highlights).length;
   const [now] = useState(() => new Date());
+  const wide = useWide();
   const moment = momentOf(now);
   const today = devocionalDelDia(now);
   const done = days[dayKey(now)] ?? {};
@@ -102,7 +105,12 @@ export default function Hoy() {
   return (
     <ScrollView
       style={{ backgroundColor: c.bg }}
-      contentContainerStyle={{ paddingBottom: Space.xl, maxWidth: 720, width: '100%', alignSelf: 'center' }}>
+      contentContainerStyle={{
+        paddingBottom: Space.xl,
+        maxWidth: wide ? 1040 : 720,
+        width: '100%',
+        alignSelf: 'center',
+      }}>
       <View style={[styles.header, { paddingTop: insets.top + Space.lg }]}>
         <View style={styles.headerTop}>
           <T variant="label">
@@ -140,14 +148,18 @@ export default function Hoy() {
           </T>
         </Animated.View>
 
-        {/* Versículo del día sobre una textura suave */}
-        <Animated.View
-          entering={FadeInDown.delay(120).duration(600)}
-          style={[styles.verseCard, { backgroundColor: c.surface }]}>
-          <T variant="label">Versículo del día</T>
-          <T style={[styles.verse, { color: c.text }]}>{verse}</T>
-          <T style={[styles.verseRef, { color: c.muted }]}>{verseRef}</T>
-        </Animated.View>
+        {/* Versículo del día: en computadora, portada a dos columnas con el diseño del día */}
+        {wide ? (
+          <HeroVerse devocional={today} date={now} />
+        ) : (
+          <Animated.View
+            entering={FadeInDown.delay(120).duration(600)}
+            style={[styles.verseCard, { backgroundColor: c.surface }]}>
+            <T variant="label">Versículo del día</T>
+            <T style={[styles.verse, { color: c.text }]}>{verse}</T>
+            <T style={[styles.verseRef, { color: c.muted }]}>{verseRef}</T>
+          </Animated.View>
+        )}
       </View>
 
       <View style={[styles.sheet, { backgroundColor: c.bg }]}>
@@ -239,6 +251,10 @@ export default function Hoy() {
           </View>
         </View>
 
+        <View style={styles.section}>
+          <TemasBand />
+        </View>
+
         {!emailJoined && (
           <View style={styles.section}>
             <EmailCapture origen="hoy" />
@@ -253,6 +269,13 @@ export default function Hoy() {
             Tres diseños nuevos cada día. Deslizá y compartí.
           </T>
           <VersiculoDelDia devocional={today} date={now} />
+        </View>
+
+        <View style={styles.section}>
+          <T variant="heading" style={{ fontSize: 20, marginBottom: Space.xs }}>
+            Versículos de esta semana
+          </T>
+          <SemanaList date={now} />
         </View>
 
         {savedList.length > 0 && (
