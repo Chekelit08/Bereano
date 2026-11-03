@@ -1,10 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 
+import { Cover } from '@/components/cover';
 import { IconChevron } from '@/components/icons';
 import { PressLink } from '@/components/press-link';
 import { T } from '@/components/text';
 import { Fonts, Radius, Space, usePalette } from '@/constants/theme';
-import type { Plan } from '@/data/planes';
+import { PLAN_COLORS, type Plan } from '@/data/planes';
 import { planProgress } from '@/lib/planes';
 import { usePlus } from '@/lib/plus';
 import { useSettings } from '@/lib/settings';
@@ -20,6 +21,12 @@ export function PlanCard({ plan }: { plan: Plan }) {
       href={{ pathname: '/planes/[id]', params: { id: plan.id } }}
       accessibilityLabel={`${plan.title}, ${plan.days.length} días`}
       style={({ pressed }) => [styles.card, { backgroundColor: pressed ? c.surface2 : c.surface }]}>
+      <Cover
+        id={plan.id}
+        title={plan.title}
+        colors={PLAN_COLORS[plan.id] ?? ['#495057', '#868E96']}
+        size={76}
+      />
       <View style={{ flex: 1 }}>
         <T variant="label">
           {plan.days.length} días{!plan.premium ? ' · Gratis' : isPlus ? '' : ' · Plus'}
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: Space.md,
-    padding: Space.lg,
+    padding: Space.md,
     borderRadius: Radius.md,
   },
   title: { fontFamily: Fonts.display, fontSize: 22, letterSpacing: -0.5, marginTop: 4 },

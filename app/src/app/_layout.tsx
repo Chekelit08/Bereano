@@ -18,14 +18,17 @@ import {
   Literata_500Medium,
 } from '@expo-google-fonts/literata';
 import { useFonts } from 'expo-font';
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider, useSegments } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider, usePathname, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
+import { View } from 'react-native';
 
+import { Sidebar } from '@/components/sidebar';
 import { Fonts, usePalette } from '@/constants/theme';
 import { screenName } from '@/lib/analytics-core';
 import { track } from '@/lib/analytics';
+import { useWide } from '@/lib/layout';
 import { PlusProvider } from '@/lib/plus';
 import { useScheme } from '@/lib/scheme';
 import { SettingsProvider } from '@/lib/settings';
@@ -71,26 +74,30 @@ export default function RootLayout() {
         <PlusProvider>
           <StatusBar style={dark ? 'light' : 'dark'} />
           <ScreenTracker />
-          <Stack
-            screenOptions={{
-              headerStyle: { backgroundColor: c.bg },
-              headerTintColor: c.accent,
-              headerTitleStyle: { fontFamily: Fonts.uiBold, color: c.text },
-              headerShadowVisible: false,
-              headerBackButtonDisplayMode: 'minimal',
-              contentStyle: { backgroundColor: c.bg },
-            }}>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />
-            <Stack.Screen name="ayuda" options={{ title: 'No estás solo', presentation: 'modal' }} />
-            <Stack.Screen name="plus" options={{ title: '', presentation: 'modal' }} />
-            <Stack.Screen name="compartir" options={{ title: 'Compartir' }} />
-            <Stack.Screen name="ajustes" options={{ title: '' }} />
-            <Stack.Screen name="oracion" options={{ title: '' }} />
-            <Stack.Screen name="racha" options={{ title: '' }} />
-            <Stack.Screen name="resaltados" options={{ title: '' }} />
-            <Stack.Screen name="bienvenida" options={{ headerShown: false, gestureEnabled: false }} />
-          </Stack>
+          <Shell>
+            <Stack
+              screenOptions={{
+                headerStyle: { backgroundColor: c.bg },
+                headerTintColor: c.accent,
+                headerTitleStyle: { fontFamily: Fonts.uiBold, color: c.text },
+                headerShadowVisible: false,
+                headerBackButtonDisplayMode: 'minimal',
+                contentStyle: { backgroundColor: c.bg },
+              }}>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />
+              <Stack.Screen name="ayuda" options={{ title: 'No estás solo', presentation: 'modal' }} />
+              <Stack.Screen name="plus" options={{ title: '', presentation: 'modal' }} />
+              <Stack.Screen name="compartir" options={{ title: 'Compartir' }} />
+              <Stack.Screen name="ajustes" options={{ title: '' }} />
+              <Stack.Screen name="oracion" options={{ title: '' }} />
+              <Stack.Screen name="racha" options={{ title: '' }} />
+              <Stack.Screen name="resaltados" options={{ title: '' }} />
+              <Stack.Screen name="temas/index" options={{ title: '' }} />
+              <Stack.Screen name="temas/[id]" options={{ title: '' }} />
+              <Stack.Screen name="bienvenida" options={{ headerShown: false, gestureEnabled: false }} />
+            </Stack>
+          </Shell>
         </PlusProvider>
       </SettingsProvider>
     </ThemeProvider>
@@ -110,4 +117,17 @@ function ScreenTracker() {
     track('screen_view', {}, name);
   }, [name]);
   return null;
+}
+
+/** En computadora, barra lateral fija a la izquierda en todas las pantallas (menos la bienvenida). */
+function Shell({ children }: { children: ReactNode }) {
+  const wide = useWide();
+  const pathname = usePathname();
+  if (!wide || pathname.startsWith('/bienvenida')) return children;
+  return (
+    <View style={{ flex: 1, flexDirection: 'row' }}>
+      <Sidebar />
+      <View style={{ flex: 1 }}>{children}</View>
+    </View>
+  );
 }

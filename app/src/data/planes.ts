@@ -291,3 +291,13 @@ export function readingLabel(bookName: string, r: Reading): string {
   if (!r.from) return `${bookName} ${r.chapter}`;
   return `${bookName} ${r.chapter}:${r.from}${r.to && r.to > r.from ? `-${r.to}` : ''}`;
 }
+
+/** Colores de la tapa de cada plan. */
+export const PLAN_COLORS: Record<string, [string, string]> = {
+  ansiedad: ['#4C6EF5', '#15AABF'],
+  perdon: ['#C2255C', '#F06595'],
+  familia: ['#D9480F', '#FFA94D'],
+  tormenta: ['#1864AB', '#495057'],
+  duelo: ['#5F3DC4', '#868E96'],
+  juan: ['#0CA678', '#74B816'],
+};

@@ -64,6 +64,16 @@ export default function Biblia() {
         </PressLink>
 
         <PressLink
+          href="/temas"
+          style={({ pressed }) => [styles.plans, { backgroundColor: pressed ? c.surface2 : c.surface }]}>
+          <View style={{ flex: 1 }}>
+            <T style={{ fontFamily: Fonts.uiBold, fontSize: 16 }}>Versículos por tema</T>
+            <T variant="muted">Ansiedad, amor, fortaleza, paz, perdón…</T>
+          </View>
+          <IconChevron color={c.muted} />
+        </PressLink>
+
+        <PressLink
           href="/resaltados"
           style={({ pressed }) => [styles.plans, { backgroundColor: pressed ? c.surface2 : c.surface }]}>
           <View style={{ flex: 1 }}>

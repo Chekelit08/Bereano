@@ -26,6 +26,8 @@ const SCREENS = {
   racha: 'Racha',
   resaltados: 'Mis resaltados',
   ayuda: 'Ayuda en crisis',
+  temas: 'Versículos por tema',
+  'temas/[id]': 'Tema',
 };
 const EVENTS = {
   app_abierta: 'Abrió la app',
@@ -48,6 +50,7 @@ const EVENTS = {
   recordatorio_desactivado: 'Desactivó el recordatorio',
   tema_cambiado: 'Cambió el tema',
   email_registrado: 'Dejó su email (app)',
+  tema_abierto: 'Abrió un tema (versículos sobre…)',
   page_view: 'Visitó la landing',
   waitlist_form_iniciado: 'Empezó el formulario',
   waitlist_form_enviar_click: 'Tocó enviar el formulario',
