@@ -9,8 +9,8 @@
       content="Bereano es un compañero de estudio bíblico con inteligencia artificial que te ayuda a entender y vivir la Biblia cada día. Súmate a la lista de espera."
     />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#efe7d8" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0f0c0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta property="og:title" content="Bereano · Entiende la Biblia. Vívela cada día." />
     <meta
       property="og:description"
@@ -26,6 +26,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="%VITE_SITE_URL%/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!-- Aplica el tema guardado antes de pintar, para evitar el parpadeo. -->
     <script src="/theme.js"></script>
   </head>
@@ -44,10 +45,7 @@
     <header class="topbar">
       <div class="wrap topbar__inner">
         <a class="brand" href="/" aria-label="Bereano, inicio">
-          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
-            <path d="M16 7c-3-2-7-2.5-11-1.5v19c4-1 8-.5 11 1.5 3-2 7-2.5 11-1.5v-19C23 4.5 19 5 16 7Z" />
-            <path d="M16 7v19" />
-          </svg>
+          <img class="brand__logo" src="/favicon.svg" alt="" width="28" height="28" />
           <span>Bereano</span>
         </a>
         <nav class="topnav" aria-label="Explorar la app">
@@ -226,10 +224,7 @@
               <div class="phone__screen">
                 <div class="phone__status mono" aria-hidden="true"><span>9:41</span><span class="phone__island"></span><span>100%</span></div>
                 <div class="phone__head">
-                  <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
-                    <path d="M16 7c-3-2-7-2.5-11-1.5v19c4-1 8-.5 11 1.5 3-2 7-2.5 11-1.5v-19C23 4.5 19 5 16 7Z" />
-                    <path d="M16 7v19" />
-                  </svg>
+                  <img class="brand__logo" src="/favicon.svg" alt="" width="28" height="28" />
                   <div>
                     <strong>Compañero</strong>
                     <span class="mono">Leyendo Mateo 5</span>
@@ -403,6 +398,43 @@
       </section>
 
       <!-- Precio -->
+      <!-- Gratis y Plus -->
+      <section class="section section--rule" aria-labelledby="plus-titulo">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="label mono"><span>Plus</span> Lo esencial, gratis siempre</p>
+            <h2 class="section__title" id="plus-titulo">Gratis para leer. <em>Plus para ir más hondo.</em></h2>
+          </div>
+          <div class="tiers">
+            <div class="tier">
+              <h3>Gratis, siempre</h3>
+              <ul>
+                <li>La Biblia completa (Reina-Valera 1909), sin conexión</li>
+                <li>Devocional diario y versículo del día</li>
+                <li>Versículos por tema</li>
+                <li>Plan del Evangelio de Juan</li>
+                <li>Diario de oración, resaltados y notas</li>
+                <li>Racha y recordatorio diario</li>
+                <li>3 preguntas de regalo al compañero</li>
+              </ul>
+            </div>
+            <div class="tier tier--plus">
+              <h3>Bereano Plus</h3>
+              <ul>
+                <li>Compañero con IA: hasta 30 preguntas por día</li>
+                <li>Escuchar la Biblia, capítulo por capítulo</li>
+                <li>Oración guiada (Salmo 23, orar por otros y más)</li>
+                <li>La Biblia en un año y planes por tema</li>
+                <li>Memorizar versículos con repaso espaciado</li>
+                <li>Diario del devocional sin límite</li>
+                <li>Todos los diseños para tus historias</li>
+              </ul>
+              <a class="btn btn--primary" href="/app/plus" data-track="cta_plus_landing">Probar 7 días gratis <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section section--rule" aria-labelledby="precio-titulo">
         <div class="wrap">
           <div class="section__head" data-reveal>

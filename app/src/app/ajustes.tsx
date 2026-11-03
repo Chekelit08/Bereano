@@ -18,7 +18,7 @@ const THEME_LABEL: Record<ThemePref, string> = { system: 'Automático', light: '
 export default function Ajustes() {
   const c = usePalette();
   const { theme, setTheme, fontStep, changeFont, fontSize, reminder, setReminder } = useSettings();
-  const { isPlus } = usePlus();
+  const { isPlus, status, preview, setPreview } = usePlus();
 
   async function chooseReminder(r: Reminder) {
     const ok = await scheduleReminder(r);
@@ -111,8 +111,28 @@ export default function Ajustes() {
           <T style={{ fontFamily: Fonts.uiBold, fontSize: 16 }}>
             {isPlus ? 'Tu suscripción' : 'Conocer Plus'}
           </T>
-          <T variant="muted">{isPlus ? 'Activa' : '7 días gratis'}</T>
+          <T variant="muted">{preview ? 'De prueba' : isPlus ? 'Activa' : '7 días gratis'}</T>
         </PressLink>
+        {status === 'demo' && (
+          <Touchable
+            accessibilityRole="switch"
+            accessibilityState={{ checked: preview }}
+            onPress={() => setPreview(!preview)}
+            style={({ pressed }) => [
+              styles.row,
+              { backgroundColor: c.surface, marginTop: Space.sm, opacity: pressed ? 0.7 : 1 },
+            ]}>
+            <View style={{ flex: 1 }}>
+              <T style={{ fontSize: 16 }}>Plus de prueba</T>
+              <T variant="muted" style={{ fontSize: 13 }}>
+                Vista previa mientras no estén las tiendas. No se cobra nada.
+              </T>
+            </View>
+            <View style={[styles.toggle, { backgroundColor: preview ? c.fill : c.surface2 }]}>
+              <View style={[styles.knob, preview && { alignSelf: 'flex-end' }]} />
+            </View>
+          </Touchable>
+        )}
       </Section>
 
       <Section title="Más">
@@ -217,6 +237,8 @@ const styles = StyleSheet.create({
   fontBtn: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: Space.sm, marginTop: Space.md },
   chip: { borderRadius: Radius.pill, paddingHorizontal: 16, paddingVertical: 10 },
+  toggle: { width: 50, height: 30, borderRadius: 15, padding: 3, justifyContent: 'center' },
+  knob: { width: 24, height: 24, borderRadius: 12, backgroundColor: '#ffffff' },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',

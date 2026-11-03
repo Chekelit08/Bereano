@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import Purchases, { type CustomerInfo, type PurchasesPackage } from 'react-native-purchases';
 
 import { PLUS_ENTITLEMENT, REVENUECAT_ANDROID_KEY, REVENUECAT_IOS_KEY } from '@/constants/config';
+import { useSettings } from '@/lib/settings';
 import { ensureSession, supabase } from '@/lib/supabase';
 
 type Status = 'loading' | 'ready' | 'demo';
@@ -11,6 +12,13 @@ type Ctx = {
   /** Lo que muestra la app. Quien decide de verdad (por ejemplo, el compañero) es el servidor. */
   isPlus: boolean;
   status: Status;
+  /**
+   * Plus de prueba, para probar la app antes de que existan las tiendas. Solo funciona en modo
+   * demostración (sin claves de RevenueCat): con tiendas configuradas se ignora. No da más preguntas
+   * al compañero: ese límite lo decide el servidor.
+   */
+  preview: boolean;
+  setPreview: (on: boolean) => void;
   annual: PurchasesPackage | null;
   monthly: PurchasesPackage | null;
   purchase: (pkg: PurchasesPackage) => Promise<'ok' | 'cancelled' | 'error'>;
@@ -32,6 +40,8 @@ export function PlusProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<Status>(apiKey() ? 'loading' : 'demo');
   const [annual, setAnnual] = useState<PurchasesPackage | null>(null);
   const [monthly, setMonthly] = useState<PurchasesPackage | null>(null);
+  const { plusPreview, setPlusPreview } = useSettings();
+  const preview = status === 'demo' && plusPreview;
 
   useEffect(() => {
     const key = apiKey();
@@ -67,8 +77,10 @@ export function PlusProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value: Ctx = {
-    isPlus,
+    isPlus: isPlus || preview,
     status,
+    preview,
+    setPreview: setPlusPreview,
     annual,
     monthly,
     purchase: async (pkg) => {

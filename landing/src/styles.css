@@ -2305,3 +2305,64 @@ mark {
   object-fit: cover;
   object-position: top;
 }
+
+/* Logo: la misma tesela azul que el ícono de la app */
+.brand__logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  flex: none;
+}
+
+/* ---------- Gratis y Plus ---------- */
+.tiers {
+  display: grid;
+  gap: 16px;
+  margin-top: 40px;
+}
+@media (min-width: 760px) {
+  .tiers {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.tier {
+  padding: 32px;
+  border-radius: 24px;
+  background: var(--surface);
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+.tier h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+.tier ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.tier li {
+  padding-left: 28px;
+  position: relative;
+}
+.tier li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--accent);
+}
+.tier--plus {
+  background: var(--inv-bg);
+  color: var(--inv-text);
+}
+.tier--plus li::before {
+  color: #2997ff;
+}
+.tier--plus .btn {
+  justify-self: start;
+}

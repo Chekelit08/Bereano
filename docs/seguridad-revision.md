@@ -54,3 +54,8 @@ datos (migraciones y producción), Edge Functions, app, landing, secretos y CI.
 ./scripts/check-secrets.sh      # claves en el repo
 cd app && npm test              # validaciones de la app y de las Edge Functions
 ```
+
+## Actualización (3 de noviembre de 2026)
+
+- **Emails en el panel:** `analytics_emails()` (solo service_role) devuelve la lista de espera. La Edge Function `panel` la entrega únicamente con `PANEL_TOKEN`. Desde la app o la landing nadie puede leer emails: la tabla sigue sin SELECT y anon/authenticated no pueden ejecutar la función (verificado en producción). El CSV se arma en el navegador y no se guarda.
+- **Plus de prueba:** solo existe sin tiendas configuradas (modo demostración). Desbloquea funciones que controla la app (diseños, planes, escuchar, oración guiada, memorizar, diario); el límite del compañero lo sigue decidiendo el servidor con `is_plus`.

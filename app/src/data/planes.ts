@@ -2,6 +2,8 @@
 // pregunta para aplicar. Los rangos se verifican en test/planes.test.ts.
 // `premium`: los planes por tema irán detrás del paywall cuando exista (CLAUDE.md).
 
+import booksData from './bible/books.json';
+
 export type Reading = { book: string; chapter: number; from?: number; to?: number };
 export type PlanDay = { title: string; readings: Reading[]; focus: string };
 export type Plan = {
@@ -44,6 +46,40 @@ const JUAN_FOCUS = [
   '¿Dónde necesitas ver a Jesús resucitado?',
   '¿Qué te responde Jesús cuando te pregunta "¿me amas?"?',
 ];
+
+// La Biblia en un año: los 1189 capítulos en orden, repartidos parejo en 365 días (3 o 4 por día).
+const ANIO_FOCUS = [
+  '¿Qué te muestra hoy este pasaje sobre quién es Dios?',
+  '¿Qué frase te gustaría recordar durante el día?',
+  '¿Hay algo para agradecer, confesar o pedir en lo que leíste?',
+  '¿Cómo podés poner en práctica algo de lo que leíste hoy?',
+  '¿Qué pregunta te deja la lectura? Podés hacérsela al compañero.',
+];
+
+function bibliaEnUnAnio(): PlanDay[] {
+  const chapters = (booksData as { code: string; name: string; chapters: number }[]).flatMap((b) =>
+    Array.from({ length: b.chapters }, (_, i) => ({ book: b.code, name: b.name, chapter: i + 1 })),
+  );
+  const days: PlanDay[] = [];
+  for (let d = 0; d < 365; d++) {
+    const part = chapters.slice(
+      Math.floor((d * chapters.length) / 365),
+      Math.floor(((d + 1) * chapters.length) / 365),
+    );
+    const first = part[0];
+    const last = part[part.length - 1];
+    const title =
+      first.book === last.book
+        ? `${first.name} ${first.chapter}${last.chapter > first.chapter ? `–${last.chapter}` : ''}`
+        : `${first.name} ${first.chapter} – ${last.name} ${last.chapter}`;
+    days.push({
+      title,
+      readings: part.map((c) => r(c.book, c.chapter)),
+      focus: ANIO_FOCUS[d % ANIO_FOCUS.length],
+    });
+  }
+  return days;
+}
 
 export const PLANES: Plan[] = [
   {
@@ -280,6 +316,15 @@ export const PLANES: Plan[] = [
       focus: JUAN_FOCUS[i],
     })),
   },
+  {
+    id: 'biblia-anio',
+    title: 'La Biblia en un año',
+    subtitle: 'De Génesis a Apocalipsis',
+    description:
+      'Toda la Biblia en 365 días, en orden: tres o cuatro capítulos por día, unos 15 minutos. Con Bereano Plus (el día 1 es gratis).',
+    premium: true,
+    days: bibliaEnUnAnio(),
+  },
 ];
 
 export function getPlan(id: string | undefined): Plan | undefined {
@@ -300,4 +345,5 @@ export const PLAN_COLORS: Record<string, [string, string]> = {
   tormenta: ['#1864AB', '#495057'],
   duelo: ['#5F3DC4', '#868E96'],
   juan: ['#0CA678', '#74B816'],
+  'biblia-anio': ['#0B7285', '#5C7CFA'],
 };

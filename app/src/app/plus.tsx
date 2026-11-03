@@ -22,12 +22,28 @@ const BENEFITS = [
     detail: 'Ansiedad, perdón, familia, fe en la tormenta, duelo y los que vienen.',
   },
   {
+    title: 'Escuchar la Biblia',
+    detail: 'Cada capítulo leído en voz alta, versículo por versículo, a tu velocidad.',
+  },
+  {
+    title: 'Oración guiada',
+    detail: 'Orar el Salmo 23, orar por otros y más: pasos con un versículo y un rato en silencio.',
+  },
+  {
+    title: 'Memorizar y diario sin límite',
+    detail: 'Repaso espaciado de versículos y tu diario de cada devocional.',
+  },
+  {
+    title: 'La Biblia en un año',
+    detail: 'De Génesis a Apocalipsis en 365 días, 15 minutos por día.',
+  },
+  {
     title: 'Diseños para historias',
     detail: 'Los 3 diseños de cada día y 36 más para compartir cualquier versículo.',
   },
   {
     title: 'Lo esencial, gratis siempre',
-    detail: 'La Biblia, el buscador, el devocional y el plan de Juan no se cobran.',
+    detail: 'La Biblia, el devocional, los temas, el plan de Juan, la oración y los resaltados no se cobran.',
   },
 ];
 
@@ -37,7 +53,7 @@ type Choice = 'annual' | 'monthly';
 export default function Plus() {
   const c = usePalette();
   const router = useRouter();
-  const { isPlus, status, annual, monthly, purchase, restore } = usePlus();
+  const { isPlus, status, annual, monthly, purchase, restore, preview, setPreview } = usePlus();
   const [choice, setChoice] = useState<Choice>('annual');
   const [busy, setBusy] = useState(false);
 
@@ -54,10 +70,13 @@ export default function Plus() {
   async function buy() {
     track('compra_intento', { plan: choice });
     if (status !== 'ready' || !pkg) {
-      Alert.alert(
-        'Vista previa',
-        'Las compras se activan cuando estén configuradas la App Store y Google Play. Por ahora es una demostración.',
-      );
+      // Sin tiendas todavía: se activa Plus de prueba para poder probar todo (no se cobra nada).
+      if (status === 'demo') {
+        setPreview(true);
+        track('plus_prueba_activado');
+        success();
+        router.back();
+      }
       return;
     }
     setBusy(true);
@@ -94,11 +113,22 @@ export default function Plus() {
 
       {isPlus ? (
         <View style={[styles.box, { backgroundColor: c.surface, marginTop: Space.xl }]}>
-          <T style={{ fontFamily: Fonts.uiBold, fontSize: 17 }}>Ya tenés Bereano Plus</T>
-          <T variant="muted" style={{ marginTop: 4 }}>
-            Gracias por acompañar el proyecto. Podés administrar la suscripción desde la tienda de tu
-            teléfono.
+          <T style={{ fontFamily: Fonts.uiBold, fontSize: 17 }}>
+            {preview ? 'Plus de prueba activado' : 'Ya tenés Bereano Plus'}
           </T>
+          <T variant="muted" style={{ marginTop: 4 }}>
+            {preview
+              ? 'Es una vista previa para probar todas las funciones: no se cobra nada. Las preguntas al compañero siguen con el límite gratis.'
+              : 'Gracias por acompañar el proyecto. Podés administrar la suscripción desde la tienda de tu teléfono.'}
+          </T>
+          {preview && (
+            <Touchable
+              accessibilityRole="button"
+              onPress={() => setPreview(false)}
+              style={({ pressed }) => ({ marginTop: Space.md, opacity: pressed ? 0.6 : 1 })}>
+              <T style={{ fontFamily: Fonts.uiBold, color: c.accent }}>Desactivar Plus de prueba</T>
+            </Touchable>
+          )}
         </View>
       ) : (
         <>
@@ -144,7 +174,11 @@ export default function Plus() {
               <ActivityIndicator color={c.fillInk} />
             ) : (
               <T style={{ fontFamily: Fonts.uiBold, fontSize: 17, color: c.fillInk }}>
-                {trial ? 'Empezar 7 días gratis' : 'Suscribirme'}
+                {status === 'demo'
+                  ? 'Activar Plus de prueba'
+                  : trial
+                    ? 'Empezar 7 días gratis'
+                    : 'Suscribirme'}
               </T>
             )}
           </Touchable>
@@ -171,7 +205,7 @@ export default function Plus() {
       </View>
       {status === 'demo' && (
         <T variant="muted" style={{ textAlign: 'center', marginTop: Space.sm, fontSize: 12 }}>
-          Vista previa: todavía no se cobra nada.
+          Vista previa: todavía no se cobra nada. El botón activa Plus de prueba para recorrer la app.
         </T>
       )}
     </ScrollView>

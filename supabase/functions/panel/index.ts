@@ -2,7 +2,8 @@
 //
 // Seguridad: solo responde si el header Authorization trae `Bearer <PANEL_TOKEN>` (variable de
 // entorno, al menos 32 caracteres). Lee un resumen agregado con la service_role; nunca devuelve
-// eventos sueltos ni emails. verify_jwt = false en supabase/config.toml: no usa sesión de Supabase.
+// eventos sueltos. Con ?emails=1 devuelve la lista de espera (datos personales).
+// verify_jwt = false en supabase/config.toml: no usa sesión de Supabase.
 import { createClient } from '@supabase/supabase-js';
 
 const TOKEN = Deno.env.get('PANEL_TOKEN') ?? '';
@@ -35,7 +36,19 @@ Deno.serve(async (req) => {
     return Response.json({ error: 'Clave incorrecta' }, { status: 401, headers: cors });
   }
 
-  const days = Math.min(180, Math.max(1, Number(new URL(req.url).searchParams.get('days')) || 30));
+  const params = new URL(req.url).searchParams;
+
+  // Lista de emails de la lista de espera (datos personales: solo con la clave del panel).
+  if (params.get('emails') === '1') {
+    const { data, error } = await db.rpc('analytics_emails', { p_limit: 2000 });
+    if (error) {
+      console.error('panel: error al leer los emails', error.code);
+      return Response.json({ error: 'No se pudieron leer los emails' }, { status: 500, headers: cors });
+    }
+    return Response.json({ emails: data }, { headers: { ...cors, 'Cache-Control': 'no-store' } });
+  }
+
+  const days = Math.min(180, Math.max(1, Number(params.get('days')) || 30));
   const { data, error } = await db.rpc('analytics_summary', { p_days: days });
   if (error) {
     console.error('panel: error al leer el resumen', error.code);

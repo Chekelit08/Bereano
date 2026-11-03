@@ -44,6 +44,14 @@ const MAIN: Item[] = [
 ];
 const MINE: Item[] = [
   { label: 'Diario de oración', href: '/oracion', Icon: IconPray, match: (p) => p === '/oracion' },
+  {
+    label: 'Oración guiada',
+    href: '/oracion-guiada',
+    Icon: IconPray,
+    match: (p) => p.startsWith('/oracion-guiada'),
+  },
+  { label: 'Memorizar', href: '/memorizar', Icon: IconBook, match: (p) => p === '/memorizar' },
+  { label: 'Mi diario', href: '/diario', Icon: IconPen, match: (p) => p === '/diario' },
   { label: 'Mis resaltados', href: '/resaltados', Icon: IconPen, match: (p) => p === '/resaltados' },
   { label: 'Racha', href: '/racha', Icon: IconFlame, match: (p) => p === '/racha' },
   { label: 'Ajustes', href: '/ajustes', Icon: IconGear, match: (p) => p === '/ajustes' },
