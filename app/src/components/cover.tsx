@@ -1,3 +1,4 @@
+import { useSvgId } from '@/lib/svg-id';
 import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
@@ -17,6 +18,7 @@ export function Cover({
   size?: number;
   ratio?: number;
 }) {
+  const gid = `cv${useSvgId()}`;
   const w = size;
   const h = size * ratio;
   const seed = [...id].reduce((a, ch) => a + ch.charCodeAt(0), 0);
@@ -25,12 +27,12 @@ export function Cover({
     <View style={{ width: w, height: h, borderRadius: Math.max(12, size / 12), overflow: 'hidden' }}>
       <Svg style={StyleSheet.absoluteFill} width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
         <Defs>
-          <LinearGradient id={`cv-${id}`} x1="0" y1="0" x2="1" y2="1">
+          <LinearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
             <Stop offset="0" stopColor={colors[0]} />
             <Stop offset="1" stopColor={colors[1]} />
           </LinearGradient>
         </Defs>
-        <Rect width={w} height={h} fill={`url(#cv-${id})`} />
+        <Rect width={w} height={h} fill={`url(#${gid})`} />
         <Circle
           cx={w * (0.75 + (seed % 3) * 0.05)}
           cy={h * 0.22}
