@@ -30,12 +30,14 @@ select pg_temp.debe_fallar('anon: SELECT', 'select * from public.analytics_event
 select pg_temp.debe_fallar('anon: UPDATE', $q$update public.analytics_events set name = 'x_y'$q$);
 select pg_temp.debe_fallar('anon: DELETE', 'delete from public.analytics_events');
 select pg_temp.debe_fallar('anon: resumen del panel', 'select public.analytics_summary(30)');
+select pg_temp.debe_fallar('anon: emails del panel', 'select * from public.analytics_emails(10)');
 reset role;
 
 set local role authenticated;
 insert into public.analytics_events (source, name) values ('app', 'devocional_leido');
 select pg_temp.debe_fallar('authenticated: SELECT', 'select * from public.analytics_events');
 select pg_temp.debe_fallar('authenticated: resumen del panel', 'select public.analytics_summary(30)');
+select pg_temp.debe_fallar('authenticated: emails del panel', 'select * from public.analytics_emails(10)');
 reset role;
 
 -- Email desde la app
@@ -60,6 +62,15 @@ begin
   end if;
 end $$;
 \echo 'ok   resumen del panel (service_role)'
+set local role service_role;
+do $$
+begin
+  if not exists (select 1 from public.analytics_emails(10) where email = 'app-email@test.com' and source = 'app_devocional_email') then
+    raise exception 'FALLO: la lista de emails del panel no trae el email nuevo';
+  end if;
+end $$;
+\echo 'ok   emails del panel (solo service_role)'
+reset role;
 reset role;
 
 -- Límite por IP: 600 eventos por hora.

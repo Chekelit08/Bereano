@@ -249,6 +249,11 @@ export default function Hoy() {
               detail={marks ? `${marks} ${marks === 1 ? 'versículo' : 'versículos'}` : 'Y tus notas'}
             />
           </View>
+          <View style={[styles.tiles, { marginTop: Space.sm }]}>
+            <Tile href="/oracion-guiada" Icon={IconPray} title="Oración guiada" detail="5 minutos con Dios" />
+            <Tile href="/memorizar" Icon={IconBook} title="Memorizar" detail="Guardá la Palabra" />
+            <Tile href="/diario" Icon={IconPen} title="Mi diario" detail="Tus respuestas" />
+          </View>
         </View>
 
         <View style={styles.section}>

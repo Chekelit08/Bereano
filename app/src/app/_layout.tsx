@@ -95,6 +95,10 @@ export default function RootLayout() {
               <Stack.Screen name="resaltados" options={{ title: '' }} />
               <Stack.Screen name="temas/index" options={{ title: '' }} />
               <Stack.Screen name="temas/[id]" options={{ title: '' }} />
+              <Stack.Screen name="memorizar" options={{ title: '' }} />
+              <Stack.Screen name="diario" options={{ title: '' }} />
+              <Stack.Screen name="oracion-guiada/index" options={{ title: '' }} />
+              <Stack.Screen name="oracion-guiada/[id]" options={{ title: '' }} />
               <Stack.Screen name="bienvenida" options={{ headerShown: false, gestureEnabled: false }} />
             </Stack>
           </Shell>

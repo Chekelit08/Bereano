@@ -3,15 +3,19 @@ import { createContext, use, useEffect, useState, type ReactNode } from 'react';
 
 import { cleanName, parseGoals, type Goal } from '@/data/onboarding';
 import { dayKey, parseDays, type Activity, type Days } from '@/lib/dias';
+import { parseMemory, review, type MemoryItem } from '@/lib/memoria';
 import {
+  JOURNAL_MAX,
   NOTE_MAX,
   PRAYER_MAX,
   parseHighlights,
+  parseJournal,
   parsePrayers,
   parseReminder,
   parseTheme,
   type Highlight,
   type HighlightColor,
+  type JournalEntry,
   type Prayer,
   type Reminder,
 } from '@/lib/personal';
@@ -38,6 +42,11 @@ type Settings = {
   theme: ThemePref;
   /** Ya se anotó para recibir el devocional por email (no se guarda el email). */
   emailJoined: boolean;
+  /** Plus de prueba: solo sin tiendas configuradas (vista previa para probar la app). */
+  plusPreview: boolean;
+  /** Versículos para memorizar ('jhn.3.16') y el diario del devocional (por día). */
+  memory: Record<string, MemoryItem>;
+  journal: Record<string, JournalEntry>;
 };
 
 const KEY = 'bereano.settings.v1';
@@ -55,6 +64,9 @@ const DEFAULTS: Settings = {
   reminder: null,
   theme: 'system',
   emailJoined: false,
+  plusPreview: false,
+  memory: {},
+  journal: {},
 };
 
 type Ctx = Settings & {
@@ -81,6 +93,12 @@ type Ctx = Settings & {
   setReminder: (r: Reminder) => void;
   setTheme: (t: ThemePref) => void;
   setEmailJoined: () => void;
+  setPlusPreview: (on: boolean) => void;
+  addMemory: (key: string) => void;
+  reviewMemory: (key: string, knew: boolean) => void;
+  removeMemory: (key: string) => void;
+  /** Guarda (o borra, si está vacío) la respuesta del diario de un día. */
+  setJournal: (day: string, id: string, text: string) => void;
 };
 
 const SettingsContext = createContext<Ctx | null>(null);
@@ -116,6 +134,9 @@ function parse(raw: string | null): Settings {
       reminder: parseReminder(v.reminder),
       theme: parseTheme(v.theme),
       emailJoined: v.emailJoined === true,
+      plusPreview: v.plusPreview === true,
+      memory: parseMemory(v.memory),
+      journal: parseJournal(v.journal),
       days: parseDays(v.days),
       plans: parsePlans(v.plans),
     };
@@ -238,6 +259,31 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     setReminder: (reminder) => setSettings((s) => ({ ...s, reminder })),
     setTheme: (theme) => setSettings((s) => ({ ...s, theme })),
     setEmailJoined: () => setSettings((s) => ({ ...s, emailJoined: true })),
+    setPlusPreview: (plusPreview) => setSettings((s) => ({ ...s, plusPreview })),
+    addMemory: (key) =>
+      setSettings((s) =>
+        s.memory[key]
+          ? s
+          : { ...s, memory: { ...s.memory, [key]: { added: Date.now(), streak: 0, due: dayKey() } } },
+      ),
+    reviewMemory: (key, knew) =>
+      setSettings((s) =>
+        s.memory[key] ? { ...s, memory: { ...s.memory, [key]: review(s.memory[key], knew) } } : s,
+      ),
+    removeMemory: (key) =>
+      setSettings((s) => {
+        const memory = { ...s.memory };
+        delete memory[key];
+        return { ...s, memory };
+      }),
+    setJournal: (day, id, text) =>
+      setSettings((s) => {
+        const journal = { ...s.journal };
+        const t = text.trim().slice(0, JOURNAL_MAX);
+        if (t) journal[day] = { id, text: t, t: Date.now() };
+        else delete journal[day];
+        return { ...s, journal };
+      }),
   };
 
   return <SettingsContext value={value}>{children}</SettingsContext>;

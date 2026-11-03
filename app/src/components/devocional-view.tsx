@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 
 import { EmailCapture } from '@/components/email-capture';
+import { JournalBox } from '@/components/journal-box';
 import { PressLink, Touchable } from '@/components/press-link';
 import { ShareCardButton } from '@/components/share-card-button';
 import { T } from '@/components/text';
@@ -70,6 +71,8 @@ export function DevocionalView({ devocional: d, kicker }: { devocional: Devocion
         </T>
         <T style={styles.questionText}>{d.question}</T>
       </View>
+
+      <JournalBox devocionalId={d.id} />
 
       <Touchable
         accessibilityRole="button"

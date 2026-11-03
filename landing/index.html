@@ -9,8 +9,8 @@
       content="Bereano es un compañero de estudio bíblico con inteligencia artificial que te ayuda a entender y vivir la Biblia cada día. Súmate a la lista de espera."
     />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#efe7d8" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0f0c0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta property="og:title" content="Bereano · Entiende la Biblia. Vívela cada día." />
     <meta
       property="og:description"
@@ -26,6 +26,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="%VITE_SITE_URL%/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!-- Aplica el tema guardado antes de pintar, para evitar el parpadeo. -->
     <script src="/theme.js"></script>
   </head>
@@ -44,13 +45,15 @@
     <header class="topbar">
       <div class="wrap topbar__inner">
         <a class="brand" href="/" aria-label="Bereano, inicio">
-          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
-            <path d="M16 7c-3-2-7-2.5-11-1.5v19c4-1 8-.5 11 1.5 3-2 7-2.5 11-1.5v-19C23 4.5 19 5 16 7Z" />
-            <path d="M16 7v19" />
-          </svg>
+          <img class="brand__logo" src="/favicon.svg" alt="" width="28" height="28" />
           <span>Bereano</span>
         </a>
-        <p class="topbar__status mono"><span class="dot" aria-hidden="true"></span> Lista de espera abierta</p>
+        <nav class="topnav" aria-label="Explorar la app">
+          <a href="/app/biblia" data-track="nav_biblia">Biblia</a>
+          <a href="/app/" data-track="nav_versiculo">Versículo del día</a>
+          <a href="/app/temas" data-track="nav_temas">Temas</a>
+          <a href="/app/planes" data-track="nav_planes">Planes</a>
+        </nav>
         <div class="topbar__actions">
           <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Cambiar entre modo claro y oscuro">
             <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true">
@@ -61,7 +64,7 @@
               <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
             </svg>
           </button>
-          <a class="btn btn--small" href="#lista" data-track="cta_header">Unirme <span aria-hidden="true">→</span></a>
+          <a class="btn btn--small btn--primary" href="/app/" data-track="cta_abrir_app">Abrir la app <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </header>
@@ -88,10 +91,13 @@
               tu vida y sostener el hábito de leer, un día a la vez. Siempre con el texto bíblico como base.
             </p>
             <div class="hero__actions">
-              <a class="btn btn--primary" href="#lista" data-track="cta_hero" data-magnetic>
-                Quiero estar entre los primeros <span aria-hidden="true">→</span>
+              <a class="btn btn--primary" href="/app/" data-track="cta_hero" data-magnetic>
+                Empezar gratis en la web <span aria-hidden="true">→</span>
               </a>
-              <p class="mono hero__note">Lectura de la Biblia gratis, siempre</p>
+              <a class="btn btn--ghost" href="#lista" data-track="cta_hero_tiendas">
+                Avisame cuando esté en las tiendas
+              </a>
+              <p class="mono hero__note">Sin cuenta · La Biblia gratis, siempre</p>
             </div>
             <a class="seal" href="#lista" aria-label="Ir a la lista de espera" data-cursor="Unirme">
               <svg class="seal__ring" viewBox="0 0 200 200" aria-hidden="true">
@@ -116,6 +122,87 @@
         </div>
       </div>
 
+      <!-- Explorar ya: accesos directos a la app web -->
+      <section class="explore" aria-label="Explorar Bereano">
+        <div class="wrap explore__grid">
+          <a class="explore__card" href="/app/biblia" data-track="cta_leer_biblia">
+            <p class="label mono"><span>Gratis</span> Reina-Valera 1909</p>
+            <h2>Leé la Biblia en línea</h2>
+            <p>Los 66 libros, con buscador («Juan 3 16» o una frase), resaltados en colores y notas.</p>
+            <span class="explore__link">Empezar a leer <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="explore__card explore__card--accent" href="/app/" data-track="cta_versiculo_hoy">
+            <p class="label mono"><span>Hoy</span> Cambia cada día</p>
+            <h2>Versículo y devocional de hoy</h2>
+            <p>Un pasaje, una reflexión corta y una pregunta para aplicar. Tres diseños nuevos para tus historias.</p>
+            <span class="explore__link">Ver el de hoy <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+        <div class="wrap">
+          <div class="topics">
+            <h2 class="topics__title">Versículos bíblicos sobre…</h2>
+            <div class="topics__chips">
+            <a class="chip" href="/app/temas/ansiedad" data-track="tema_landing" data-tema="ansiedad">Ansiedad</a>
+            <a class="chip" href="/app/temas/amor" data-track="tema_landing" data-tema="amor">Amor</a>
+            <a class="chip" href="/app/temas/fortaleza" data-track="tema_landing" data-tema="fortaleza">Fortaleza</a>
+            <a class="chip" href="/app/temas/esperanza" data-track="tema_landing" data-tema="esperanza">Esperanza</a>
+            <a class="chip" href="/app/temas/paz" data-track="tema_landing" data-tema="paz">Paz</a>
+            <a class="chip" href="/app/temas/miedo" data-track="tema_landing" data-tema="miedo">Miedo</a>
+            <a class="chip" href="/app/temas/perdon" data-track="tema_landing" data-tema="perdon">Perdón</a>
+            <a class="chip" href="/app/temas/fe" data-track="tema_landing" data-tema="fe">Fe</a>
+            <a class="chip" href="/app/temas/sanidad" data-track="tema_landing" data-tema="sanidad">Sanidad</a>
+            <a class="chip" href="/app/temas/familia" data-track="tema_landing" data-tema="familia">Familia</a>
+            <a class="chip" href="/app/temas/gratitud" data-track="tema_landing" data-tema="gratitud">Gratitud</a>
+            <a class="chip" href="/app/temas/duelo" data-track="tema_landing" data-tema="duelo">Duelo</a>
+            <a class="chip" href="/app/temas/sabiduria" data-track="tema_landing" data-tema="sabiduria">Sabiduría</a>
+            <a class="chip" href="/app/temas/oracion" data-track="tema_landing" data-tema="oracion">Oración</a>
+            <a class="chip" href="/app/temas/proposito" data-track="tema_landing" data-tema="proposito">Propósito</a>
+            <a class="chip" href="/app/temas/amistad" data-track="tema_landing" data-tema="amistad">Amistad</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Así se ve: capturas reales de la app -->
+      <section class="section showcase" aria-labelledby="showcase-titulo">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="label mono"><span>App</span> Capturas reales</p>
+            <h2 class="section__title" id="showcase-titulo">Así se ve. <em>Probala ahora en la web.</em></h2>
+          </div>
+          <div class="showcase__row">
+            <figure class="shot"><img src="/img/app-hoy.webp" alt="Pantalla Hoy: saludo, versículo del día y el momento de hoy" width="390" height="844" loading="lazy" /><figcaption>Tu momento de hoy</figcaption></figure>
+            <figure class="shot shot--lift"><img src="/img/app-historias.webp" alt="Diseños del versículo del día para historias" width="390" height="844" loading="lazy" /><figcaption>3 diseños nuevos cada día</figcaption></figure>
+            <figure class="shot"><img src="/img/app-lector.webp" alt="Lector de la Biblia con un versículo resaltado" width="390" height="844" loading="lazy" /><figcaption>Resaltá y anotá</figcaption></figure>
+          </div>
+          <p class="showcase__cta"><a class="btn btn--primary" href="/app/" data-track="cta_showcase">Abrir Bereano en la web <span aria-hidden="true">→</span></a></p>
+        </div>
+      </section>
+
+      <!-- Todo lo que trae -->
+      <section class="section section--rule" aria-labelledby="todo-titulo">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="label mono"><span>Funciones</span> Todo en un lugar</p>
+            <h2 class="section__title" id="todo-titulo">Mucho más que <em>una Biblia.</em></h2>
+          </div>
+          <div class="features">
+            <a class="feature" href="/app/temas" data-track="feature_temas">
+              <img src="/img/app-temas.webp" alt="Versículos por tema" width="390" height="844" loading="lazy" />
+              <div><h3>Versículos por tema</h3><p>Ansiedad, miedo, perdón, duelo: pasajes para lo que estás viviendo.</p></div>
+            </a>
+            <a class="feature" href="/app/planes" data-track="feature_planes">
+              <img src="/img/app-planes.webp" alt="Planes de lectura" width="390" height="844" loading="lazy" />
+              <div><h3>Planes de lectura</h3><p>Un pasaje por día y una pregunta para aplicarlo. Juan en 21 días, gratis.</p></div>
+            </a>
+            <a class="feature" href="/app/oracion" data-track="feature_oracion">
+              <img src="/img/app-oracion.webp" alt="Diario de oración" width="390" height="844" loading="lazy" />
+              <div><h3>Diario de oración</h3><p>Anotá tus pedidos y marcá cuando Dios responde. Queda solo en tu teléfono.</p></div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <!-- Demo del compañero: vista previa de la app -->
       <section class="section demo" aria-labelledby="demo-titulo">
         <div class="wrap demo__grid">
@@ -137,10 +224,7 @@
               <div class="phone__screen">
                 <div class="phone__status mono" aria-hidden="true"><span>9:41</span><span class="phone__island"></span><span>100%</span></div>
                 <div class="phone__head">
-                  <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
-                    <path d="M16 7c-3-2-7-2.5-11-1.5v19c4-1 8-.5 11 1.5 3-2 7-2.5 11-1.5v-19C23 4.5 19 5 16 7Z" />
-                    <path d="M16 7v19" />
-                  </svg>
+                  <img class="brand__logo" src="/favicon.svg" alt="" width="28" height="28" />
                   <div>
                     <strong>Compañero</strong>
                     <span class="mono">Leyendo Mateo 5</span>
@@ -220,7 +304,7 @@
       <section class="plans" aria-labelledby="planes-titulo" data-hscroll>
         <div class="plans__sticky">
           <div class="wrap plans__head">
-            <p class="label mono"><span>(04)</span> Planes por tema · Próximamente</p>
+            <p class="label mono"><span>(04)</span> Planes por tema · <a href="/app/planes" data-track="cta_planes_web">Probalos en la web →</a></p>
             <h2 class="section__title" id="planes-titulo">Un plan para <em>cada etapa.</em></h2>
           </div>
           <div class="plans__viewport">
@@ -314,6 +398,43 @@
       </section>
 
       <!-- Precio -->
+      <!-- Gratis y Plus -->
+      <section class="section section--rule" aria-labelledby="plus-titulo">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="label mono"><span>Plus</span> Lo esencial, gratis siempre</p>
+            <h2 class="section__title" id="plus-titulo">Gratis para leer. <em>Plus para ir más hondo.</em></h2>
+          </div>
+          <div class="tiers">
+            <div class="tier">
+              <h3>Gratis, siempre</h3>
+              <ul>
+                <li>La Biblia completa (Reina-Valera 1909), sin conexión</li>
+                <li>Devocional diario y versículo del día</li>
+                <li>Versículos por tema</li>
+                <li>Plan del Evangelio de Juan</li>
+                <li>Diario de oración, resaltados y notas</li>
+                <li>Racha y recordatorio diario</li>
+                <li>3 preguntas de regalo al compañero</li>
+              </ul>
+            </div>
+            <div class="tier tier--plus">
+              <h3>Bereano Plus</h3>
+              <ul>
+                <li>Compañero con IA: hasta 30 preguntas por día</li>
+                <li>Escuchar la Biblia, capítulo por capítulo</li>
+                <li>Oración guiada (Salmo 23, orar por otros y más)</li>
+                <li>La Biblia en un año y planes por tema</li>
+                <li>Memorizar versículos con repaso espaciado</li>
+                <li>Diario del devocional sin límite</li>
+                <li>Todos los diseños para tus historias</li>
+              </ul>
+              <a class="btn btn--primary" href="/app/plus" data-track="cta_plus_landing">Probar 7 días gratis <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section section--rule" aria-labelledby="precio-titulo">
         <div class="wrap">
           <div class="section__head" data-reveal>
@@ -446,7 +567,7 @@
       <div class="wrap">
         <div class="footer__row mono">
           <p>Bereano no reemplaza a tu iglesia local ni a tu pastor.</p>
-          <p>© <span id="year"></span> · <a href="/privacidad.html">Privacidad</a> · <a href="/terminos.html">Términos</a></p>
+          <p>© <span id="year"></span> · <a href="/app/">App web</a> · <a href="/app/temas">Temas</a> · <a href="/privacidad.html">Privacidad</a> · <a href="/terminos.html">Términos</a></p>
         </div>
         <p class="footer__word" aria-hidden="true">Bereano</p>
       </div>

@@ -28,6 +28,10 @@ const SCREENS = {
   ayuda: 'Ayuda en crisis',
   temas: 'Versículos por tema',
   'temas/[id]': 'Tema',
+  memorizar: 'Memorizar',
+  diario: 'Mi diario',
+  'oracion-guiada': 'Oración guiada',
+  'oracion-guiada/[id]': 'Guía de oración',
 };
 const EVENTS = {
   app_abierta: 'Abrió la app',
@@ -51,6 +55,23 @@ const EVENTS = {
   tema_cambiado: 'Cambió el tema',
   email_registrado: 'Dejó su email (app)',
   tema_abierto: 'Abrió un tema (versículos sobre…)',
+  plus_prueba_activado: 'Activó Plus de prueba',
+  escuchar: 'Escuchó un capítulo',
+  memoria_agregado: 'Agregó un versículo para memorizar',
+  memoria_repaso: 'Repasó un versículo',
+  oracion_guiada_completa: 'Completó una oración guiada',
+  diario_guardado: 'Escribió en su diario',
+  cta_abrir_app: 'Landing: Abrir la app',
+  cta_leer_biblia: 'Landing: Leé la Biblia en línea',
+  cta_versiculo_hoy: 'Landing: Versículo de hoy',
+  cta_showcase: 'Landing: Abrir Bereano en la web',
+  cta_plus_landing: 'Landing: Probar Plus',
+  cta_hero_tiendas: 'Landing: Avisame (tiendas)',
+  tema_landing: 'Landing: tocó un tema',
+  nav_biblia: 'Landing: menú Biblia',
+  nav_versiculo: 'Landing: menú Versículo del día',
+  nav_temas: 'Landing: menú Temas',
+  nav_planes: 'Landing: menú Planes',
   page_view: 'Visitó la landing',
   waitlist_form_iniciado: 'Empezó el formulario',
   waitlist_form_enviar_click: 'Tocó enviar el formulario',
@@ -123,6 +144,74 @@ async function load() {
     return;
   }
   render(await res.json());
+  loadEmails(token);
+}
+
+let emails = [];
+
+async function loadEmails(token) {
+  try {
+    const res = await fetch(`${API}?emails=1`, { headers: { Authorization: `Bearer ${token}` } });
+    if (!res.ok) throw new Error(String(res.status));
+    emails = (await res.json()).emails ?? [];
+  } catch {
+    $('emails-count').textContent = 'No se pudieron cargar los emails.';
+    return;
+  }
+  renderEmails();
+}
+
+function filteredEmails() {
+  const q = $('emails-search').value.trim().toLowerCase();
+  if (!q) return emails;
+  return emails.filter((e) =>
+    [e.email, e.name, e.country, SOURCES[e.source] ?? e.source].some((v) => v && String(v).toLowerCase().includes(q)),
+  );
+}
+
+function renderEmails() {
+  const rows = filteredEmails();
+  $('emails-count').textContent = `${fmt.format(rows.length)} de ${fmt.format(emails.length)} emails (los más nuevos primero).`;
+  const table = $('emails-table');
+  if (!rows.length) {
+    table.replaceChildren(el('caption', { class: 'muted' }, emails.length ? 'Nada coincide con la búsqueda.' : 'Todavía no hay emails.'));
+    return;
+  }
+  table.replaceChildren(
+    el('thead', {}, el('tr', {}, el('th', {}, 'Email'), el('th', {}, 'Nombre'), el('th', {}, 'País'), el('th', {}, 'Origen'), el('th', {}, 'Fecha'))),
+    el(
+      'tbody',
+      {},
+      ...rows.slice(0, 500).map((e) =>
+        el(
+          'tr',
+          {},
+          el('td', {}, e.email),
+          el('td', {}, e.name ?? '—'),
+          el('td', {}, e.country ?? '—'),
+          el('td', {}, SOURCES[e.source] ?? e.source),
+          el('td', {}, new Date(e.created_at).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' })),
+        ),
+      ),
+    ),
+  );
+}
+
+/** CSV para Excel o Google Sheets. Se arma en el navegador: los emails no se guardan en ningún lado. */
+function downloadCsv() {
+  const esc = (v) => `"${String(v ?? '').replaceAll('"', '""')}"`;
+  const lines = [
+    ['email', 'nombre', 'pais', 'origen', 'fecha'].join(','),
+    ...filteredEmails().map((e) => [e.email, e.name, e.country, e.source, e.created_at].map(esc).join(',')),
+  ];
+  const blob = new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+  const a = el('a', { href: URL.createObjectURL(blob), download: `bereano-emails-${new Date().toISOString().slice(0, 10)}.csv` });
+  document.body.append(a);
+  a.click();
+  setTimeout(() => {
+    URL.revokeObjectURL(a.href);
+    a.remove();
+  }, 0);
 }
 
 function showLogin(error) {
@@ -299,10 +388,13 @@ $('login').addEventListener('submit', (e) => {
   } catch {}
   load();
 });
+$('emails-search').addEventListener('input', renderEmails);
+$('emails-csv').addEventListener('click', downloadCsv);
 $('logout').addEventListener('click', () => {
   try {
     localStorage.removeItem(TOKEN_KEY);
   } catch {}
+  emails = [];
   showLogin();
 });
 for (const b of document.querySelectorAll('[data-days]')) {

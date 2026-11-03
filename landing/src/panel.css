@@ -121,3 +121,8 @@ th { color: var(--muted); font-size: 13px; font-weight: 600; }
 .chip { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; border: 1.5px solid; }
 .chip--app { border-color: var(--s-app); }
 .chip--landing { border-color: var(--s-landing); }
+
+.emails__tools { display: flex; gap: 8px; flex-wrap: wrap; }
+.emails__tools input { font: inherit; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--text); min-width: 0; width: 260px; max-width: 100%; }
+.btn-small { border: 0; border-radius: 999px; background: var(--fill); color: #fff; font-weight: 700; padding: 8px 16px; }
+#emails-table td:first-child { font-weight: 600; word-break: break-all; }

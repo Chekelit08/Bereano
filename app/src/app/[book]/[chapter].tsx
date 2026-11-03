@@ -9,10 +9,14 @@ import { PressLink, Touchable } from '@/components/press-link';
 import { T } from '@/components/text';
 import { Fonts, Space, usePalette } from '@/constants/theme';
 import { formatRef, getBook, getChapter, neighbors, type Book } from '@/lib/bible';
+import * as Speech from 'expo-speech';
+
 import { track } from '@/lib/analytics';
 import { useWide } from '@/lib/layout';
 import { MAX_SHARE_VERSES } from '@/lib/compartir';
+import { FREE_MEMORY } from '@/lib/memoria';
 import { HIGHLIGHT_COLORS, HIGHLIGHT_HEX, NOTE_MAX, verseKey } from '@/lib/personal';
+import { usePlus } from '@/lib/plus';
 import { FONT_SIZES, useSettings } from '@/lib/settings';
 
 export default function Reader() {
@@ -24,14 +28,42 @@ export default function Reader() {
   const verses = book && Number.isInteger(chapter) ? getChapter(book.code, chapter) : undefined;
   const target = Number(params.v) || 0;
 
-  const { fontSize, fontStep, changeFont, setLastRead, markDay, highlights, setHighlight, setNote } =
-    useSettings();
+  const {
+    fontSize,
+    fontStep,
+    changeFont,
+    setLastRead,
+    markDay,
+    highlights,
+    setHighlight,
+    setNote,
+    memory,
+    addMemory,
+  } = useSettings();
+  const { isPlus } = usePlus();
+  // Escuchar el capítulo (Plus): índice del versículo que se está leyendo en voz alta.
+  const [playing, setPlaying] = useState<number | null>(null);
+  const [rate, setRate] = useState(1);
   const [noteDraft, setNoteDraft] = useState<string | null>(null);
   const wide = useWide();
   const scroll = useRef<ScrollViewInstance>(null);
   const router = useRouter();
   // Versículos elegidos para compartir: un rango seguido.
   const [sel, setSel] = useState<{ from: number; to: number } | null>(null);
+
+  // Lee un versículo y, al terminar, pasa al siguiente. Se corta al salir o cambiar de capítulo.
+  useEffect(() => {
+    if (playing === null || !verses || playing >= verses.length) return;
+    Speech.speak(verses[playing], {
+      language: 'es-ES',
+      rate,
+      // Al terminar el último versículo, se apaga solo.
+      onDone: () => setPlaying((p) => (p === null || p + 1 >= verses.length ? null : p + 1)),
+    });
+    return () => {
+      Speech.stop();
+    };
+  }, [playing, verses, rate]);
 
   useEffect(() => {
     if (book && verses) setLastRead({ book: book.code, chapter });
@@ -67,6 +99,25 @@ export default function Reader() {
           title: `${book.name} ${chapter}`,
           headerRight: () => (
             <View style={styles.fontButtons}>
+              <Touchable
+                accessibilityRole="button"
+                accessibilityLabel={playing === null ? 'Escuchar el capítulo' : 'Detener'}
+                hitSlop={8}
+                onPress={() => {
+                  if (playing !== null) return setPlaying(null);
+                  if (!isPlus) return router.push('/plus');
+                  track('escuchar', { libro: book.code });
+                  setSel(null);
+                  setPlaying(0);
+                }}
+                style={({ pressed }) => [
+                  styles.listen,
+                  { backgroundColor: c.surface, opacity: pressed ? 0.6 : 1 },
+                ]}>
+                <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: c.accent }}>
+                  {playing === null ? '▶︎ Escuchar' : '■ Detener'}
+                </T>
+              </Touchable>
               <FontButton
                 label="A−"
                 hint="Achicar letra"
@@ -117,6 +168,7 @@ export default function Reader() {
               style={[
                 styles.verse,
                 highlighted && { backgroundColor: c.surface, borderColor: c.accent },
+                playing === n - 1 && { backgroundColor: c.surface, borderColor: c.fill },
                 mark && { backgroundColor: `${HIGHLIGHT_HEX[mark.c]}4D` },
                 selected && {
                   borderColor: c.fill,
@@ -225,6 +277,23 @@ export default function Reader() {
                     </T>
                   </Touchable>
                 </View>
+                <Touchable
+                  accessibilityRole="button"
+                  onPress={() => {
+                    const key = verseKey(book.code, chapter, sel.from);
+                    if (!memory[key] && !isPlus && Object.keys(memory).length >= FREE_MEMORY)
+                      return router.push('/plus');
+                    addMemory(key);
+                    track('memoria_agregado');
+                    router.push('/memorizar');
+                  }}
+                  style={({ pressed }) => ({ alignSelf: 'center', opacity: pressed ? 0.6 : 1 })}>
+                  <T style={{ fontFamily: Fonts.uiBold, color: c.accent }}>
+                    {memory[verseKey(book.code, chapter, sel.from)]
+                      ? 'Repasar en Memorizar →'
+                      : 'Memorizar este versículo →'}
+                  </T>
+                </Touchable>
               </>
             ) : (
               <View style={{ gap: Space.sm }}>
@@ -264,6 +333,39 @@ export default function Reader() {
                 </View>
               </View>
             )}
+          </View>
+        </View>
+      )}
+      {playing !== null && !sel && (
+        <View style={[styles.shareBar, { bottom: insets.bottom + Space.md }]}>
+          <View
+            style={[
+              styles.sheet,
+              styles.player,
+              { backgroundColor: c.bg, borderColor: c.line, shadowColor: '#000' },
+            ]}>
+            <T style={{ flex: 1, fontFamily: Fonts.uiBold }}>
+              {book.name} {chapter}:{playing + 1}
+            </T>
+            {[0.8, 1, 1.25].map((r) => (
+              <Touchable
+                key={r}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: rate === r }}
+                onPress={() => setRate(r)}
+                style={[styles.rate, { backgroundColor: rate === r ? c.fill : c.surface }]}>
+                <T style={{ fontFamily: Fonts.uiBold, fontSize: 13, color: rate === r ? c.fillInk : c.text }}>
+                  {r}×
+                </T>
+              </Touchable>
+            ))}
+            <Touchable
+              accessibilityRole="button"
+              accessibilityLabel="Detener"
+              onPress={() => setPlaying(null)}
+              hitSlop={8}>
+              <T style={{ fontSize: 20, color: c.muted }}>■</T>
+            </Touchable>
           </View>
         </View>
       )}
@@ -396,6 +498,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  listen: { borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6, marginRight: 8 },
+  player: { flexDirection: 'row', alignItems: 'center', gap: Space.sm },
+  rate: { borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6 },
   sheet: {
     width: '100%',
     maxWidth: 520,

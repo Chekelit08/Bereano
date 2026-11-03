@@ -92,3 +92,22 @@ export function parseTheme(v: unknown): ThemePref {
 /** "7:00", "21:30". */
 export const timeLabel = (r: { hour: number; minute: number }) =>
   `${r.hour}:${String(r.minute).padStart(2, '0')}`;
+
+/** Diario del devocional: la respuesta a la pregunta de cada día. */
+export type JournalEntry = { id: string; text: string; t: number };
+export const JOURNAL_MAX = 2000;
+/** Sin Plus se pueden guardar 3 respuestas; con Plus, sin límite. */
+export const FREE_JOURNAL = 3;
+
+export function parseJournal(v: unknown): Record<string, JournalEntry> {
+  if (!v || typeof v !== 'object') return {};
+  const out: Record<string, JournalEntry> = {};
+  for (const [k, e] of Object.entries(v as Record<string, unknown>).slice(-1000)) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(k) || !e || typeof e !== 'object') continue;
+    const { id, text, t } = e as Record<string, unknown>;
+    if (typeof id !== 'string' || !/^[a-z0-9-]{1,40}$/.test(id)) continue;
+    if (typeof text !== 'string' || !text.trim() || typeof t !== 'number') continue;
+    out[k] = { id, text: text.slice(0, JOURNAL_MAX), t };
+  }
+  return out;
+}
