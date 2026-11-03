@@ -1,3 +1,4 @@
+import { useSvgId } from '@/lib/svg-id';
 import { StyleSheet, Text, View, type TextStyle } from 'react-native';
 import Svg, { Defs, Ellipse, LinearGradient, Path, RadialGradient, Rect, Stop } from 'react-native-svg';
 
@@ -36,6 +37,7 @@ const EDITORIAL = [
 
 export function Editorial({ text, reference, marks = {}, tone, ref }: CardProps) {
   const p = EDITORIAL[tone] ?? EDITORIAL[0];
+  const u = useSvgId();
   const fs = fit(text, 29);
   const words = text.split(' ');
   const underline = marks.underline?.split(' ') ?? [];
@@ -45,18 +47,18 @@ export function Editorial({ text, reference, marks = {}, tone, ref }: CardProps)
     <View ref={ref} collapsable={false} style={cardStyles.card}>
       <Svg style={StyleSheet.absoluteFill} width={CARD_WIDTH} height={CARD_HEIGHT}>
         <Defs>
-          <LinearGradient id={`sky${tone}`} x1="0" y1="0" x2="0" y2="1">
+          <LinearGradient id={`sky${tone}${u}`} x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor={p.sky[0]} />
             <Stop offset="0.45" stopColor={p.sky[1]} />
             <Stop offset="1" stopColor={p.sky[2]} />
           </LinearGradient>
-          <RadialGradient id={`sun${tone}`} cx="0.75" cy="0.12" r="0.7">
+          <RadialGradient id={`sun${tone}${u}`} cx="0.75" cy="0.12" r="0.7">
             <Stop offset="0" stopColor={p.sun} stopOpacity="0.55" />
             <Stop offset="1" stopColor={p.sun} stopOpacity="0" />
           </RadialGradient>
         </Defs>
-        <Rect width="100%" height="100%" fill={`url(#sky${tone})`} />
-        <Rect width="100%" height="100%" fill={`url(#sun${tone})`} />
+        <Rect width="100%" height="100%" fill={`url(#sky${tone}${u})`} />
+        <Rect width="100%" height="100%" fill={`url(#sun${tone}${u})`} />
         <Path
           d="M0 470 L60 420 L110 445 L180 380 L240 430 L300 395 L360 440 L360 640 L0 640 Z"
           fill={p.hills[0]}
@@ -141,28 +143,29 @@ const NOCHE = [
 
 export function Noche({ text, reference, tone, ref }: CardProps) {
   const p = NOCHE[tone] ?? NOCHE[0];
+  const u = useSvgId();
   const fs = fit(text, 30);
   return (
     <View ref={ref} collapsable={false} style={cardStyles.card}>
       <Svg style={StyleSheet.absoluteFill} width={CARD_WIDTH} height={CARD_HEIGHT}>
         <Defs>
-          <LinearGradient id={`night${tone}`} x1="0" y1="0" x2="0" y2="1">
+          <LinearGradient id={`night${tone}${u}`} x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor={p.sky[0]} />
             <Stop offset="0.6" stopColor={p.sky[1]} />
             <Stop offset="1" stopColor={p.sky[2]} />
           </LinearGradient>
-          <RadialGradient id={`nebula${tone}`} cx="0.2" cy="0.15" r="0.55">
+          <RadialGradient id={`nebula${tone}${u}`} cx="0.2" cy="0.15" r="0.55">
             <Stop offset="0" stopColor={p.nebula} stopOpacity="0.35" />
             <Stop offset="1" stopColor={p.nebula} stopOpacity="0" />
           </RadialGradient>
-          <RadialGradient id={`horizon${tone}`} cx="0.5" cy="1" r="0.6">
+          <RadialGradient id={`horizon${tone}${u}`} cx="0.5" cy="1" r="0.6">
             <Stop offset="0" stopColor={p.horizon} stopOpacity="0.35" />
             <Stop offset="1" stopColor={p.horizon} stopOpacity="0" />
           </RadialGradient>
         </Defs>
-        <Rect width="100%" height="100%" fill={`url(#night${tone})`} />
-        <Rect width="100%" height="100%" fill={`url(#nebula${tone})`} />
-        <Rect width="100%" height="100%" fill={`url(#horizon${tone})`} />
+        <Rect width="100%" height="100%" fill={`url(#night${tone}${u})`} />
+        <Rect width="100%" height="100%" fill={`url(#nebula${tone}${u})`} />
+        <Rect width="100%" height="100%" fill={`url(#horizon${tone}${u})`} />
         {STARS.map((s, i) => (
           <Rect key={i} x={s.x} y={s.y} width={s.r} height={s.r} rx={s.r / 2} fill="#ffffff" opacity={s.o} />
         ))}
@@ -255,6 +258,7 @@ const NEON = [
 
 export function Neon({ text, reference, tone, ref }: CardProps) {
   const p = NEON[tone] ?? NEON[0];
+  const u = useSvgId();
   const fs = fit(text, 29);
   const glow = {
     textShadowColor: p.halo,
@@ -265,7 +269,7 @@ export function Neon({ text, reference, tone, ref }: CardProps) {
     <View ref={ref} collapsable={false} style={[cardStyles.card, { backgroundColor: '#0a0a0c' }]}>
       <Svg style={StyleSheet.absoluteFill} width={CARD_WIDTH} height={CARD_HEIGHT}>
         <Defs>
-          <RadialGradient id={`halo${tone}`} cx="0.5" cy="0.25" r="0.45">
+          <RadialGradient id={`halo${tone}${u}`} cx="0.5" cy="0.25" r="0.45">
             <Stop offset="0" stopColor={p.halo} stopOpacity="0.45" />
             <Stop offset="1" stopColor={p.halo} stopOpacity="0" />
           </RadialGradient>
@@ -280,7 +284,7 @@ export function Neon({ text, reference, tone, ref }: CardProps) {
             fill="none"
           />
         ))}
-        <Rect width="100%" height="100%" fill={`url(#halo${tone})`} />
+        <Rect width="100%" height="100%" fill={`url(#halo${tone}${u})`} />
         {[
           { w: 14, o: 0.15 },
           { w: 7, o: 0.35 },

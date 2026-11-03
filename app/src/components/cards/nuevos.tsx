@@ -1,3 +1,4 @@
+import { useSvgId } from '@/lib/svg-id';
 import { StyleSheet, Text, View, type TextStyle } from 'react-native';
 import Svg, { Circle, Defs, G, LinearGradient, Path, RadialGradient, Rect, Stop } from 'react-native-svg';
 
@@ -102,13 +103,14 @@ const BLOBS = [
 
 export function Acuarela({ text, reference, tone, ref }: CardProps) {
   const p = ACUARELA[tone] ?? ACUARELA[0];
+  const u = useSvgId();
   const fs = fit(text, 29);
   return (
     <View ref={ref} collapsable={false} style={[cardStyles.card, { backgroundColor: p.bg }]}>
       <Svg style={StyleSheet.absoluteFill} width={CARD_WIDTH} height={CARD_HEIGHT}>
         <Defs>
           {BLOBS.map((_, i) => (
-            <RadialGradient key={i} id={`blob${tone}-${i}`} cx="0.5" cy="0.5" r="0.5">
+            <RadialGradient key={i} id={`blob${tone}${u}-${i}`} cx="0.5" cy="0.5" r="0.5">
               <Stop offset="0" stopColor={p.blobs[i]} stopOpacity="0.9" />
               <Stop offset="0.6" stopColor={p.blobs[i]} stopOpacity="0.45" />
               <Stop offset="1" stopColor={p.blobs[i]} stopOpacity="0" />
@@ -122,7 +124,7 @@ export function Acuarela({ text, reference, tone, ref }: CardProps) {
             y={b.cy - b.ry}
             width={b.rx * 2}
             height={b.ry * 2}
-            fill={`url(#blob${tone}-${i})`}
+            fill={`url(#blob${tone}${u}-${i})`}
           />
         ))}
       </Svg>
@@ -333,6 +335,7 @@ const ATARDECER = [
 
 export function Atardecer({ text, reference, tone, ref }: CardProps) {
   const p = ATARDECER[tone] ?? ATARDECER[0];
+  const u = useSvgId();
   const fs = Math.max(16, fit(text, 22));
   const horizon = 470;
   const bandH = (CARD_HEIGHT - horizon) / p.bands.length;
@@ -340,17 +343,17 @@ export function Atardecer({ text, reference, tone, ref }: CardProps) {
     <View ref={ref} collapsable={false} style={cardStyles.card}>
       <Svg style={StyleSheet.absoluteFill} width={CARD_WIDTH} height={CARD_HEIGHT}>
         <Defs>
-          <LinearGradient id={`dusk${tone}`} x1="0" y1="0" x2="0" y2="1">
+          <LinearGradient id={`dusk${tone}${u}`} x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor={p.sky[0]} />
             <Stop offset="1" stopColor={p.sky[1]} />
           </LinearGradient>
-          <LinearGradient id={`sol${tone}`} x1="0" y1="0" x2="0" y2="1">
+          <LinearGradient id={`sol${tone}${u}`} x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor={p.sun[0]} />
             <Stop offset="1" stopColor={p.sun[1]} />
           </LinearGradient>
         </Defs>
-        <Rect width="100%" height="100%" fill={`url(#dusk${tone})`} />
-        <Circle cx={180} cy={horizon} r={110} fill={`url(#sol${tone})`} />
+        <Rect width="100%" height="100%" fill={`url(#dusk${tone}${u})`} />
+        <Circle cx={180} cy={horizon} r={110} fill={`url(#sol${tone}${u})`} />
         {/* Rayas que cortan el sol, cada vez más gruesas */}
         {[0, 1, 2, 3, 4].map((i) => (
           <Rect key={i} x={60} y={horizon - 46 + i * 9} width={240} height={1.5 + i * 1.3} fill={p.sky[1]} />

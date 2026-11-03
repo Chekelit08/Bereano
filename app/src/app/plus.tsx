@@ -12,39 +12,67 @@ import { track } from '@/lib/analytics';
 import { success } from '@/lib/haptics';
 import { usePlus } from '@/lib/plus';
 
-const BENEFITS = [
+// La oferta sigue la ecuación de valor (ver docs/oferta.md): promesa, de dónde a dónde te lleva,
+// qué lo hace probable, en cuánto tiempo y con qué poco esfuerzo. Primero el resultado, después la función.
+
+/** El puente: dónde está la persona hoy y adónde la lleva Plus. */
+const BRIDGE = {
+  hoy: ['Empezás a leer y a los pocos días lo dejás.', 'Leés y te quedan dudas.', 'No sabés cómo aplicarlo.'],
+  plus: [
+    'Un plan que te lleva día a día.',
+    'Alguien que te explica cada pasaje.',
+    'Una forma concreta de vivirlo.',
+  ],
+};
+
+const GROUPS = [
   {
-    title: 'Compañero de estudio',
-    detail: `Hasta ${PLUS_DAILY_QUESTIONS} preguntas por día, siempre con citas verificadas.`,
+    title: 'Entendé lo que leés',
+    items: [
+      {
+        title: 'Compañero de estudio',
+        detail: `Preguntá lo que no entendés: hasta ${PLUS_DAILY_QUESTIONS} preguntas por día, siempre con citas verificadas en la Biblia.`,
+      },
+    ],
   },
   {
-    title: 'Planes por tema',
-    detail: 'Ansiedad, perdón, familia, fe en la tormenta, duelo y los que vienen.',
+    title: 'Sostenelo cada día',
+    items: [
+      {
+        title: 'La Biblia en un año y planes por tema',
+        detail:
+          'Sabés qué leer cada día: de Génesis a Apocalipsis, o ansiedad, perdón, familia, duelo y más.',
+      },
+      {
+        title: 'Escuchar la Biblia',
+        detail: 'Para los días sin tiempo: cada capítulo en voz alta, mientras viajás o cocinás.',
+      },
+    ],
   },
   {
-    title: 'Escuchar la Biblia',
-    detail: 'Cada capítulo leído en voz alta, versículo por versículo, a tu velocidad.',
+    title: 'Vivilo',
+    items: [
+      {
+        title: 'Oración guiada',
+        detail: 'Orar el Salmo 23, orar por otros y más: pasos con un versículo y un rato en silencio.',
+      },
+      {
+        title: 'Memorizar y diario sin límite',
+        detail: 'Guardá los versículos en el corazón con repaso espaciado y escribí lo que Dios te muestra.',
+      },
+      {
+        title: 'Diseños para historias',
+        detail: 'Compartí lo que te habló: los 3 diseños de cada día y 36 más.',
+      },
+    ],
   },
-  {
-    title: 'Oración guiada',
-    detail: 'Orar el Salmo 23, orar por otros y más: pasos con un versículo y un rato en silencio.',
-  },
-  {
-    title: 'Memorizar y diario sin límite',
-    detail: 'Repaso espaciado de versículos y tu diario de cada devocional.',
-  },
-  {
-    title: 'La Biblia en un año',
-    detail: 'De Génesis a Apocalipsis en 365 días, 15 minutos por día.',
-  },
-  {
-    title: 'Diseños para historias',
-    detail: 'Los 3 diseños de cada día y 36 más para compartir cualquier versículo.',
-  },
-  {
-    title: 'Lo esencial, gratis siempre',
-    detail: 'La Biblia, el devocional, los temas, el plan de Juan, la oración y los resaltados no se cobran.',
-  },
+];
+
+/** Tiempo y esfuerzo: lo que tarda y lo que cuesta empezar. */
+const SIMPLE = [
+  { n: '1 min', t: 'para tu primera respuesta' },
+  { n: '10 min', t: 'por día alcanzan' },
+  { n: '0', t: 'cosas que configurar' },
 ];
 
 type Choice = 'annual' | 'monthly';
@@ -105,9 +133,9 @@ export default function Plus() {
       <Stack.Screen options={{ title: '', presentation: 'modal' }} />
       <T variant="label">Bereano Plus</T>
       <T variant="title" style={{ marginTop: 4 }}>
-        Estudiá más a fondo.{' '}
+        Leé la Biblia cada día.{' '}
         <T variant="title" style={{ color: c.muted }}>
-          Cada día.
+          Y entendé lo que leés.
         </T>
       </T>
 
@@ -132,17 +160,56 @@ export default function Plus() {
         </View>
       ) : (
         <>
-          <View style={{ marginTop: Space.xl, gap: Space.md }}>
-            {BENEFITS.map((b) => (
-              <View key={b.title} style={styles.benefit}>
-                <IconCheck color={c.fill} filled size={24} />
-                <View style={{ flex: 1 }}>
-                  <T style={{ fontFamily: Fonts.uiBold, fontSize: 16 }}>{b.title}</T>
-                  <T variant="muted">{b.detail}</T>
+          <View style={styles.bridge}>
+            <View style={[styles.side, { backgroundColor: c.surface }]}>
+              <T variant="label">Hoy</T>
+              {BRIDGE.hoy.map((t) => (
+                <T key={t} variant="muted" style={{ marginTop: 6 }}>
+                  {t}
+                </T>
+              ))}
+            </View>
+            <View style={[styles.side, { backgroundColor: c.fill }]}>
+              <T variant="label" style={{ color: c.fillInk, opacity: 0.85 }}>
+                Con Plus
+              </T>
+              {BRIDGE.plus.map((t) => (
+                <T key={t} style={{ marginTop: 6, color: c.fillInk, fontFamily: Fonts.uiSemi }}>
+                  {t}
+                </T>
+              ))}
+            </View>
+          </View>
+
+          {GROUPS.map((g) => (
+            <View key={g.title} style={{ marginTop: Space.xl, gap: Space.md }}>
+              <T style={{ fontFamily: Fonts.uiBold, fontSize: 19 }}>{g.title}</T>
+              {g.items.map((b) => (
+                <View key={b.title} style={styles.benefit}>
+                  <IconCheck color={c.fill} filled size={24} />
+                  <View style={{ flex: 1 }}>
+                    <T style={{ fontFamily: Fonts.uiBold, fontSize: 16 }}>{b.title}</T>
+                    <T variant="muted">{b.detail}</T>
+                  </View>
                 </View>
+              ))}
+            </View>
+          ))}
+
+          <View style={[styles.simple, { borderColor: c.line }]}>
+            {SIMPLE.map((s) => (
+              <View key={s.t} style={{ flex: 1, alignItems: 'center' }}>
+                <T style={{ fontFamily: Fonts.uiBold, fontSize: 22 }}>{s.n}</T>
+                <T variant="muted" style={{ fontSize: 13, textAlign: 'center' }}>
+                  {s.t}
+                </T>
               </View>
             ))}
           </View>
+
+          <T variant="muted" style={{ marginTop: Space.md, textAlign: 'center' }}>
+            La Biblia, el devocional, los temas y la oración siguen gratis siempre.
+          </T>
 
           <View style={{ marginTop: Space.xl, gap: Space.sm }} accessibilityRole="radiogroup">
             <Option
@@ -150,7 +217,7 @@ export default function Plus() {
               onPress={() => setChoice('annual')}
               title="Anual"
               price={`${annualPrice} al año`}
-              note={`${annualPerMonth} por mes · 7 días gratis`}
+              note={`${annualPerMonth} por mes, menos que un café · 7 días gratis`}
               badge="Ahorrás 52%"
             />
             <Option
@@ -160,6 +227,13 @@ export default function Plus() {
               price={`${monthlyPrice} por mes`}
               note="Cancelás cuando quieras"
             />
+          </View>
+
+          <View style={[styles.guarantee, { backgroundColor: c.surface }]}>
+            <IconCheck color={c.fill} size={20} />
+            <T style={{ flex: 1, fontFamily: Fonts.uiSemi, fontSize: 14 }}>
+              7 días gratis. Si no te sirve, cancelás antes y no pagás nada.
+            </T>
           </View>
 
           <Touchable
@@ -253,6 +327,23 @@ const styles = StyleSheet.create({
   page: { padding: Space.lg, paddingBottom: Space.xxl, maxWidth: 560, width: '100%', alignSelf: 'center' },
   box: { padding: Space.lg, borderRadius: Radius.md },
   benefit: { flexDirection: 'row', gap: Space.md, alignItems: 'flex-start' },
+  bridge: { flexDirection: 'row', flexWrap: 'wrap', gap: Space.sm, marginTop: Space.xl },
+  side: { flexGrow: 1, flexBasis: 220, padding: Space.md, borderRadius: Radius.md },
+  simple: {
+    flexDirection: 'row',
+    marginTop: Space.xl,
+    paddingVertical: Space.md,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  guarantee: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Space.sm,
+    marginTop: Space.lg,
+    padding: Space.md,
+    borderRadius: Radius.md,
+  },
   option: {
     flexDirection: 'row',
     alignItems: 'center',
