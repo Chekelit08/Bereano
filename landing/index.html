@@ -163,6 +163,36 @@
         </div>
       </section>
 
+      <!-- Video de presentación (38 s, con voz). Arranca sin sonido; el botón lo activa. -->
+      <section class="section video-intro" aria-labelledby="video-titulo">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="label mono"><span>Video</span> 38 segundos</p>
+            <h2 class="section__title" id="video-titulo">Bereano en un minuto. <em>Subí el volumen.</em></h2>
+          </div>
+          <figure class="video-intro__frame">
+            <video
+              class="video-intro__video"
+              src="/video/bereano.mp4"
+              poster="/video/bereano-poster.webp"
+              width="1280"
+              height="720"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="Video de presentación de Bereano: devocional diario, compañero con citas verificadas, planes de lectura y oración guiada"
+              data-video
+              data-src-vertical="/video/bereano-vertical.mp4"
+              data-poster-vertical="/video/bereano-vertical-poster.webp"
+            ></video>
+            <button class="video-intro__sound" type="button" data-video-sound aria-pressed="false">
+              <span aria-hidden="true">🔊</span> <span data-video-sound-label>Activar sonido</span>
+            </button>
+          </figure>
+        </div>
+      </section>
+
       <!-- Así se ve: capturas reales de la app -->
       <section class="section showcase" aria-labelledby="showcase-titulo">
         <div class="wrap">
