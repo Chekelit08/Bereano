@@ -1,0 +1,10 @@
+{
+  "name": "bereano-contenido",
+  "private": true,
+  "type": "module",
+  "description": "Carruseles para TikTok y Reels, con el texto de la Biblia de la app.",
+  "scripts": {
+    "carruseles": "node --no-warnings generar.mjs",
+    "test": "node --no-warnings --test"
+  }
+}
