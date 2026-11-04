@@ -1,6 +1,6 @@
 # Videos de Bereano (Remotion)
 
-**Video de presentación** (43 s, con voz), en dos formatos:
+**Video de presentación** (38 s, con voz enérgica y música pop), en dos formatos:
 
 | Composición | Tamaño | Para |
 |---|---|---|
@@ -27,7 +27,7 @@ ffmpeg -i out/bereano-vertical.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5 -c:a aac
 
 - **Voz:** Magnific (ElevenLabs v4, voz "Casilda Escudero"), una toma por escena, en `public/voz/`. Las marcas de tiempo de cada palabra están en `src/voz.ts`. De ahí salen los subtítulos y lo que cada escena muestra en sincronía.
   - **Para cambiar el guion:** generá la toma nueva en Magnific, reemplazá el mp3 y actualizá las palabras en `src/voz.ts`.
-- **Música:** Magnific (Lyria 3 Pro), `public/musica.mp3`, a −20 dB debajo de la voz.
+- **Música:** Magnific (Lyria 3 Pro), `public/musica.mp3`, debajo de la voz (pop movido, 120 bpm).
 - **Pantallas:** capturas reales de la app en producción (`node scripts/capturas.mjs`) en `public/app/`.
 - **Escenas:** `src/escenas/`:
   - Gancho;

@@ -1,32 +1,33 @@
-import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
+import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { Escena, useEntrada, useVertical } from '../partes/Escena';
 import { C, UI } from '../tema';
 import { VOZ } from '../voz';
 
 const DIAS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
-/** La semana que empieza bien y se corta: tres días hechos y el resto se apaga. */
-export function Gancho() {
+/** La semana que arranca bien (✓ ✓ ✓) y se corta: los días siguientes se tachan con una sacudida. */
+export function Gancho({ corte = 3.36 }: { corte?: number }) {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
   const vertical = useVertical();
-  const entra = useEntrada(4);
-  const d = vertical ? 112 : 96;
+  const entra = useEntrada(2);
+  const d = vertical ? 116 : 98;
+  const sacude = t > corte && t < corte + 0.5 ? Math.sin(t * 70) * 14 * (1 - (t - corte) / 0.5) : 0;
   return (
     <Escena
       palabras={VOZ.gancho.palabras}
       destacar={['dejaste']}
       visual={
-        <div style={{ marginTop: vertical ? 260 : 0, opacity: entra, transform: `translateY(${(1 - entra) * 60}px)` }}>
-          <div style={{ display: 'flex', gap: vertical ? 22 : 18 }}>
+        <div style={{ marginTop: vertical ? 280 : 0, transform: `translateX(${sacude}px) scale(${entra})` }}>
+          <div style={{ display: 'flex', gap: vertical ? 20 : 16 }}>
             {DIAS.map((dia, i) => {
               const hecho = i < 3;
-              const marca = interpolate(t, [0.8 + i * 0.45, 1.05 + i * 0.45], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-              const apaga = interpolate(t, [3.0 + (i - 3) * 0.12, 3.4 + (i - 3) * 0.12], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+              const s = spring({ frame: f - (0.6 + i * 0.35) * fps, fps, config: { damping: 9, stiffness: 200 } });
+              const x = spring({ frame: f - (corte + (i - 3) * 0.08) * fps, fps, config: { damping: 9, stiffness: 220 } });
               return (
                 <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
-                  <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 30, color: C.muted }}>{dia}</span>
+                  <span style={{ fontFamily: UI, fontWeight: 800, fontSize: 32, color: C.muted }}>{dia}</span>
                   <div
                     style={{
                       width: d,
@@ -35,15 +36,16 @@ export function Gancho() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: hecho ? `rgba(0,113,227,${marca})` : C.surface,
-                      border: hecho ? 'none' : `3px dashed rgba(134,134,139,${0.25 + apaga * 0.5})`,
-                      transform: `scale(${hecho ? 0.85 + marca * 0.15 : 1 - apaga * 0.08})`,
-                      color: '#fff',
+                      background: hecho ? C.blue : interpolate(x, [0, 1], [0, 1]) > 0.5 ? '#FFE3E3' : '#fff',
+                      border: hecho ? 'none' : `4px solid ${x > 0.5 ? '#FA5252' : '#E5E5EA'}`,
+                      boxShadow: hecho ? `0 14px 30px ${C.blue}55` : 'none',
+                      transform: `scale(${hecho ? s : 1})`,
+                      color: hecho ? '#fff' : '#FA5252',
                       fontFamily: UI,
-                      fontWeight: 800,
-                      fontSize: d * 0.42,
+                      fontWeight: 900,
+                      fontSize: d * 0.46,
                     }}>
-                    {hecho && marca > 0.5 ? '✓' : ''}
+                    {hecho ? '✓' : <span style={{ transform: `scale(${x})`, display: 'inline-block' }}>✕</span>}
                   </div>
                 </div>
               );

@@ -18,8 +18,8 @@ export function Presentacion() {
         src={staticFile('musica.mp3')}
         durationInFrames={durationInFrames}
         volume={(f) =>
-          // Música baja (−20 dB aprox.) debajo de la voz; entra y sale con fundido.
-          0.1 * interpolate(f, [0, fps, durationInFrames - 2 * fps, durationInFrames], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
+          // Música movida debajo de la voz (−13 dB aprox.); entra y sale con fundido.
+          0.22 * interpolate(f, [0, fps, durationInFrames - 2 * fps, durationInFrames], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
         }
       />
       <Series>

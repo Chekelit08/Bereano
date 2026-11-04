@@ -1,5 +1,5 @@
 import { Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
-import { Escena, useEntrada, useVertical } from '../partes/Escena';
+import { Escena, useVertical } from '../partes/Escena';
 import { Telefono, pantalla } from '../partes/Telefono';
 import { C, UI } from '../tema';
 import { VOZ } from '../voz';
@@ -15,20 +15,19 @@ export function Companero() {
   const { fps } = useVideoConfig();
   const t = f / fps;
   const vertical = useVertical();
-  const entra = useEntrada(0);
   const ancho = vertical ? 660 : 470;
   const k = pantalla(ancho) / 390;
   const pregunta = spring({ frame: f - 0.5 * fps, fps, config: { damping: 200 } });
-  const escribiendo = t > 1.5 && t < 2.9;
-  const letras = Math.round(interpolate(t, [2.9, 5.2], [0, RESPUESTA.length], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
+  const escribiendo = t > 1.3 && t < 2.7;
+  const letras = Math.round(interpolate(t, [2.7, 4.6], [0, RESPUESTA.length], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
   const burbuja = { fontFamily: UI, fontSize: 15.5 * k, lineHeight: 1.4, padding: `${11 * k}px ${14 * k}px`, borderRadius: 20 * k };
   return (
     <Escena
       palabras={VOZ.companero.palabras}
       destacar={['verificados']}
       visual={
-        <div style={{ transform: `translateY(${(1 - entra) * 300}px)`, opacity: entra }}>
-          <Telefono ancho={ancho}>
+        <div>
+          <Telefono ancho={ancho} zoom={interpolate(t, [4.3, 4.8], [0, 0.8], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}>
             <div style={{ position: 'absolute', inset: 0, background: '#fff', padding: `${62 * k}px ${16 * k}px`, display: 'flex', flexDirection: 'column', gap: 12 * k }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 * k, paddingBottom: 12 * k, borderBottom: `1px solid #0000001a` }}>
                 <Img src={staticFile('logo.svg')} style={{ width: 34 * k, height: 34 * k }} />
@@ -61,7 +60,7 @@ export function Companero() {
               )}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 * k }}>
                 {CITAS.map((c, i) => {
-                  const s = spring({ frame: f - (4.6 + i * 0.3) * fps, fps, config: { damping: 12, stiffness: 160 } });
+                  const s = spring({ frame: f - (4.4 + i * 0.25) * fps, fps, config: { damping: 12, stiffness: 160 } });
                   return (
                     <span
                       key={c}

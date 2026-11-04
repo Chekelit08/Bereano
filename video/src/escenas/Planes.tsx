@@ -1,5 +1,5 @@
 import { Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
-import { Escena, useEntrada, useVertical } from '../partes/Escena';
+import { Escena, useVertical } from '../partes/Escena';
 import { Telefono } from '../partes/Telefono';
 import { C, UI } from '../tema';
 import { VOZ } from '../voz';
@@ -7,9 +7,9 @@ import { VOZ } from '../voz';
 // Cada pantalla aparece cuando la voz la nombra.
 const PANTALLAS = [
   { src: 'app/planes.png', desde: 0 },
-  { src: 'app/racha.png', desde: 1.6 },
-  { src: 'app/oracion-guiada.png', desde: 2.5 },
-  { src: 'app/lector.png', desde: 4.15 },
+  { src: 'app/racha.png', desde: 1.2 },
+  { src: 'app/oracion-guiada.png', desde: 1.9 },
+  { src: 'app/lector.png', desde: 3.2 },
 ];
 
 export function Planes() {
@@ -17,15 +17,14 @@ export function Planes() {
   const { fps } = useVideoConfig();
   const t = f / fps;
   const vertical = useVertical();
-  const entra = useEntrada(0);
   const ancho = vertical ? 660 : 470;
-  const offline = spring({ frame: f - 5.9 * fps, fps, config: { damping: 13, stiffness: 150 } });
+  const offline = spring({ frame: f - 4.9 * fps, fps, config: { damping: 13, stiffness: 150 } });
   return (
     <Escena
       palabras={VOZ.planes.palabras}
       destacar={['completa']}
       visual={
-        <div style={{ position: 'relative', transform: `translateY(${(1 - entra) * 300}px)`, opacity: entra }}>
+        <div style={{ position: 'relative' }}>
           <Telefono ancho={ancho}>
             {PANTALLAS.map((p) => {
               const a = interpolate(t, [p.desde, p.desde + 0.25], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });

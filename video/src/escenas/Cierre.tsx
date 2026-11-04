@@ -8,8 +8,9 @@ export function Cierre() {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const vertical = useVertical();
-  const logo = spring({ frame: f - 5.0 * fps, fps, config: { damping: 14, stiffness: 120 } });
-  const cta = spring({ frame: f - 5.5 * fps, fps, config: { damping: 200 } });
+  const logo = spring({ frame: f - 4.9 * fps, fps, config: { damping: 9, stiffness: 140 } });
+  const cta = spring({ frame: f - 5.3 * fps, fps, config: { damping: 10, stiffness: 160 } });
+  const late = 1 + Math.pow(1 - ((f / fps) * 2) % 1, 3) * 0.05 * cta;
   return (
     <Escena
       oscuro
@@ -31,7 +32,8 @@ export function Cierre() {
               padding: '24px 48px',
               borderRadius: 999,
               opacity: cta,
-              transform: `translateY(${(1 - cta) * 30}px)`,
+              transform: `scale(${cta * late})`,
+              boxShadow: '0 20px 50px #00000040',
             }}>
             Probalo gratis
           </div>
