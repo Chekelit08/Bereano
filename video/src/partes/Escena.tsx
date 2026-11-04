@@ -43,11 +43,14 @@ export function Escena({
   destacar,
   visual,
   oscuro = false,
+  tamano,
 }: {
   palabras: Palabra[];
   destacar?: string[];
-  visual: ReactNode;
+  /** Sin visual, la frase va sola y centrada, más grande. */
+  visual?: ReactNode;
   oscuro?: boolean;
+  tamano?: number;
 }) {
   const vertical = useVertical();
   const f = useCurrentFrame();
@@ -56,7 +59,7 @@ export function Escena({
   const frase = (
     <Frase
       palabras={palabras}
-      size={vertical ? 84 : 82}
+      size={tamano ?? (visual ? (vertical ? 84 : 82) : vertical ? 104 : 96)}
       destacar={destacar}
       color={oscuro ? '#fff' : C.text}
       pildora={oscuro ? '#FFD43B' : C.blue}
@@ -67,7 +70,11 @@ export function Escena({
     <AbsoluteFill>
       <Fondo oscuro={oscuro} />
       <AbsoluteFill style={{ transform: `scale(${1.12 - zoom * 0.12})` }}>
-        {vertical ? (
+        {!visual ? (
+          <div style={{ position: 'absolute', left: 90, right: 90, top: 0, bottom: vertical ? 260 : 0, display: 'flex', alignItems: 'center' }}>
+            {frase}
+          </div>
+        ) : vertical ? (
           <>
             <div style={{ position: 'absolute', left: 90, right: 90, top: 160 }}>{frase}</div>
             <div style={{ position: 'absolute', left: 0, right: 0, top: 740, bottom: 0, display: 'flex', justifyContent: 'center' }}>

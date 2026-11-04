@@ -36,6 +36,7 @@ ffmpeg -i out/bereano-vertical.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5 -c:a aac
   - Compañero (la charla de ejemplo de la landing);
   - Planes;
   - Cierre.
+- **Reels:** el guion está en `src/reels/guion.ts`. `node --no-warnings scripts/preparar-reels.mjs textos` imprime lo que tiene que decir la voz; con los mp3 en `public/reels/<id>/<n>.mp3`, `... alinear` genera `src/reels/generado.ts`. Después: `npx remotion render Reel-<id>`.
 - Las fuentes Inter y Literata, y el logo, son los mismos que usan la landing y la app.
 
 Las guías de Remotion que usamos están en `.claude/skills/`.

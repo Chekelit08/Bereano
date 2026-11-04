@@ -14,6 +14,8 @@ export function Frase({
   pildora = C.blue,
   pildoraTexto = '#fff',
   align = 'left',
+  fuente = UI,
+  peso = 900,
 }: {
   palabras: Palabra[];
   size: number;
@@ -22,17 +24,19 @@ export function Frase({
   pildora?: string;
   pildoraTexto?: string;
   align?: 'left' | 'center';
+  fuente?: string;
+  peso?: number;
 }) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   return (
     <p
       style={{
-        fontFamily: UI,
-        fontWeight: 900,
+        fontFamily: fuente,
+        fontWeight: peso,
         fontSize: size,
         lineHeight: 1.12,
-        letterSpacing: '-0.04em',
+        letterSpacing: fuente === UI ? '-0.04em' : '-0.01em',
         margin: 0,
         textAlign: align,
       }}>
