@@ -200,15 +200,14 @@ function Una({ e }: { e: Escena }) {
   }
 }
 
-/** Un reel completo: escenas en serie, cada una con su toma de voz, y la música pop debajo. */
+/** Un reel completo: escenas en serie, cada una con su toma de voz, y su propio tema de fondo. */
 export function Reel({ id }: { id: string }) {
   const r = REELS_LISTOS.find((x) => x.id === id)!;
-  const { durationInFrames, fps } = useVideoConfig();
+  const { durationInFrames } = useVideoConfig();
   return (
     <AbsoluteFill>
       <Audio
-        src={staticFile('musica.mp3')}
-        trimBefore={r.musicaDesde * fps}
+        src={staticFile(r.musica)}
         volume={(f) => 0.2 * interpolate(f, [0, 10, durationInFrames - 30, durationInFrames], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}
       />
       <Series>

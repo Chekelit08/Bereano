@@ -108,7 +108,7 @@ if (modo === 'textos') {
   const reels = REELS.map((r) => ({
     id: r.id,
     titulo: r.titulo,
-    musicaDesde: r.musicaDesde,
+    musica: r.musica,
     escenas: r.escenas.map((e, i) => {
       const audio = `reels/${r.id}/${i + 1}.mp3`;
       const { dur, voz } = medir(`public/${audio}`);

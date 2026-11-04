@@ -14,7 +14,7 @@ export type EscenaGuion =
 export type ReelGuion = {
   id: string;
   titulo: string;
-  musicaDesde: number; // segundo del tema donde arranca, para que no suenen todos igual
+  musica: string; // tema de fondo propio de cada reel (Magnific, Lyria 3 Pro)
   escenas: EscenaGuion[];
   posteo: string; // texto para pegar en TikTok / Instagram (sin hashtags)
   hashtags: string[];
@@ -26,7 +26,7 @@ export const REELS: ReelGuion[] = [
   {
     id: 'ansiedad',
     titulo: '3 versículos para cuando la ansiedad no te deja dormir',
-    musicaDesde: 0,
+    musica: 'musica/lofi.mp3',
     escenas: [
       { tipo: 'frase', texto: '¿La ansiedad no te deja dormir? Guardá estos tres versículos.', destacar: ['ansiedad', 'tres'] },
       { tipo: 'verso', cita: { book: '1pe', chapter: 5, from: 7 } },
@@ -40,7 +40,7 @@ export const REELS: ReelGuion[] = [
   {
     id: 'valle',
     titulo: 'Devocional en 30 segundos: Nada me faltará',
-    musicaDesde: 9,
+    musica: 'musica/cinematica.mp3',
     escenas: [
       { tipo: 'frase', texto: '¿Estás pasando por un valle oscuro? Escuchá esto.', destacar: ['valle', 'oscuro'] },
       { tipo: 'verso', cita: { book: 'psa', chapter: 23, from: 1 } },
@@ -55,7 +55,7 @@ export const REELS: ReelGuion[] = [
   {
     id: 'mansos',
     titulo: '¿Qué significa "bienaventurados los mansos"?',
-    musicaDesde: 18,
+    musica: 'musica/acustica.mp3',
     escenas: [
       { tipo: 'frase', texto: '¿Qué significa «bienaventurados los mansos»? Se lo preguntamos al compañero.', destacar: ['mansos'] },
       { tipo: 'chat', pregunta: '¿Qué significa “bienaventurados los mansos”?', texto: 'Ser manso no es ser débil: es tener fuerza y dejar que Dios la guíe.' },
@@ -69,7 +69,7 @@ export const REELS: ReelGuion[] = [
   {
     id: 'un-anio',
     titulo: 'Cómo leer la Biblia entera en un año',
-    musicaDesde: 27,
+    musica: 'musica.mp3',
     escenas: [
       { tipo: 'frase', texto: '¿Querés leer la Biblia entera? ¡Se puede en un año!', destacar: ['entera', 'año'] },
       { tipo: 'pantalla', captura: 'app/planes.png', texto: 'Quince minutos por día, con un plan que te dice qué leer.', destacar: ['quince', 'minutos'] },
@@ -84,7 +84,7 @@ export const REELS: ReelGuion[] = [
   {
     id: 'orar',
     titulo: 'Orá en 5 minutos',
-    musicaDesde: 36,
+    musica: 'musica/worship.mp3',
     escenas: [
       { tipo: 'frase', texto: '¿No sabés cómo orar? Probá esto: cuatro pasos, cinco minutos.', destacar: ['orar', 'cinco'] },
       { tipo: 'paso', paso: 0, cita: { book: 'psa', chapter: 100, from: 4 }, texto: 'Adorá: empezá mirando a Dios, no a tus problemas.', destacar: ['adorá'] },

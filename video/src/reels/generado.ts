@@ -3,7 +3,7 @@ export const REELS_LISTOS = [
   {
     "id": "ansiedad",
     "titulo": "3 versículos para cuando la ansiedad no te deja dormir",
-    "musicaDesde": 0,
+    "musica": "musica/lofi.mp3",
     "escenas": [
       {
         "tipo": "frase",
@@ -468,7 +468,7 @@ export const REELS_LISTOS = [
   {
     "id": "valle",
     "titulo": "Devocional en 30 segundos: Nada me faltará",
-    "musicaDesde": 9,
+    "musica": "musica/cinematica.mp3",
     "escenas": [
       {
         "tipo": "frase",
@@ -943,7 +943,7 @@ export const REELS_LISTOS = [
   {
     "id": "mansos",
     "titulo": "¿Qué significa \"bienaventurados los mansos\"?",
-    "musicaDesde": 18,
+    "musica": "musica/acustica.mp3",
     "escenas": [
       {
         "tipo": "frase",
@@ -1358,7 +1358,7 @@ export const REELS_LISTOS = [
   {
     "id": "un-anio",
     "titulo": "Cómo leer la Biblia entera en un año",
-    "musicaDesde": 27,
+    "musica": "musica.mp3",
     "escenas": [
       {
         "tipo": "frase",
@@ -1759,7 +1759,7 @@ export const REELS_LISTOS = [
   {
     "id": "orar",
     "titulo": "Orá en 5 minutos",
-    "musicaDesde": 36,
+    "musica": "musica/worship.mp3",
     "escenas": [
       {
         "tipo": "frase",
