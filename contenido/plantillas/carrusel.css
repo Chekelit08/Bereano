@@ -1,0 +1,54 @@
+/* Láminas de los carruseles. 1080×1350 (4:5) o 1080×1920 (historia).
+   Márgenes seguros de TikTok/Reels: nada importante abajo (botones y texto del posteo) ni a la derecha. */
+* { box-sizing: border-box; margin: 0; }
+html, body { width: var(--w); height: var(--h); }
+body {
+  font-family: Inter, system-ui, sans-serif;
+  color: #fff;
+  background: linear-gradient(150deg, var(--c1), var(--c2));
+  position: relative;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.blob { position: absolute; border-radius: 50%; }
+.blob--a { width: 900px; height: 900px; right: -340px; top: -320px; background: #fff; opacity: 0.1; }
+.blob--b { width: 760px; height: 760px; left: -360px; bottom: -300px; background: #000; opacity: 0.1; }
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 120px 140px var(--bottom) 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+.kicker { font-weight: 700; font-size: 34px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85; }
+.titulo { font-weight: 800; font-size: 92px; line-height: 1.04; letter-spacing: -0.03em; text-wrap: balance; }
+.nota { font-weight: 600; font-size: 36px; opacity: 0.85; }
+.verso { font-family: Literata, Georgia, serif; font-size: var(--fs); line-height: 1.32; text-wrap: pretty; }
+.cita { font-weight: 700; font-size: 38px; letter-spacing: 0.02em; }
+.parrafo { font-family: Literata, Georgia, serif; font-size: var(--fs); line-height: 1.4; text-wrap: pretty; }
+.parrafo em { font-style: italic; }
+.marca {
+  position: absolute;
+  left: 96px;
+  top: 72px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-weight: 700;
+  font-size: 34px;
+}
+.marca svg { width: 56px; height: 56px; border-radius: 13px; box-shadow: 0 0 0 3px #ffffff55; }
+.numero { position: absolute; right: 140px; top: 82px; font-weight: 700; font-size: 30px; opacity: 0.75; }
+.pie { position: absolute; left: 96px; bottom: calc(var(--bottom) - 90px); font-weight: 600; font-size: 28px; opacity: 0.7; }
+.cierre .titulo { font-size: 84px; }
+.cta {
+  align-self: flex-start;
+  background: #fff;
+  color: var(--c1);
+  font-weight: 800;
+  font-size: 40px;
+  padding: 26px 44px;
+  border-radius: 999px;
+}

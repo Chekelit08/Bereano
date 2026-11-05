@@ -79,6 +79,8 @@ const EVENTS = {
   waitlist_registro_error: 'Error al anotarse',
   waitlist_form_error_validacion: 'Error de validación',
   demo_visto: 'Vio la demo del compañero',
+  video_visto: 'Vio el video de presentación',
+  video_sonido: 'Activó el sonido del video',
   cta_hero: 'Botón principal (arriba)',
   cta_header: 'Botón del encabezado',
   cta_demo: 'Botón de la demo',

@@ -3,6 +3,7 @@ import './page.js';
 import { enablePersistence, initAnalytics, track } from './analytics.js';
 import { needsBanner, saveConsent } from './consent.js';
 import { initMotion } from './motion.js';
+import { initVideo } from './video.js';
 import { COUNTRIES, DOORS, PRICES, SHARE_TEXT } from './config.js';
 import {
   errorMessage,
@@ -16,6 +17,7 @@ import {
 
 initAnalytics();
 initMotion({ onDemoStart: () => track('demo_visto') });
+initVideo();
 
 const $ = (sel) => document.querySelector(sel);
 

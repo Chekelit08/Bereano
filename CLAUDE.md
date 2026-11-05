@@ -120,6 +120,14 @@ Test de seguridad (migraciones + RLS + anti-spam) en un Postgres temporal, sin D
 
 La CI (`.github/workflows/ci.yml`) corre esto y los tests de la landing en cada push a `main` y en cada PR.
 
+### Carruseles (`/contenido`)
+
+```bash
+cd contenido
+npm run carruseles -- --desde 2026-11-05 --dias 14   # 2 por día en contenido/salida/
+npm test
+```
+
 ### Deploy
 
 Ver `docs/deploy-cloudflare.md`.
